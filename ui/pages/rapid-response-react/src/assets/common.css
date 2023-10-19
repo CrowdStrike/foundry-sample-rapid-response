@@ -1,0 +1,388 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  height: 100%;
+  background-attachment: fixed;
+  color: var(--cs-table-color-foreground);
+  overflow-x: hidden;
+}
+
+.text-cslineargradient {
+  display: inline-block;
+  line-height: 1rem;
+  color:transparent;
+  --g: var(--cs-linear-teal);
+  background: 
+    var(--g),
+    var(--g)  bottom 1px left 0/100% 1px no-repeat; /* adjust the bottom value to control the offset */
+  background-clip: text,padding-box;
+  -webkit-background-clip: text,padding-box;
+}
+
+.text-cslineargradient:hover {
+  --g: var(--cs-linear-teal-hover);
+  background: 
+    var(--g),
+    var(--g)  bottom 1px left 0/100% 1px no-repeat; /* adjust the bottom value to control the offset */
+  background-clip: text,padding-box;
+  -webkit-background-clip: text,padding-box;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  color: var(--cs-input-color-foreground);
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+  color: var(--cs-input-color-foreground);
+}
+
+.theme-light .backgroundLayout {
+    background: #FFFFFF;
+}
+
+/* Header Component */
+.buttonHeader {
+    color: var(--cs-titles-and-attributes);
+}
+
+.buttonHeader:hover {
+  background: var(--cs-surfaces-surface-md);
+}
+
+.active {
+    border-bottom: 3px solid #AF4AFF;
+}
+
+.theme-dark input[type=text], .theme-dark textarea {
+  box-shadow: var(--cs-input-shadow);
+}
+
+/* Shoelace SlSelect component custom styling */
+@media (prefers-color-scheme: dark) {
+  sl-select::part(combobox) {
+    background-color: var(--cs-input-color-background);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  sl-select::part(combobox) {
+    background-color: var(--cs-input-color-background);
+  }
+
+  sl-select::part(tag__base) {
+    background: white;
+    color: black;
+  }
+}
+
+.theme-light sl-select::part(tag__base) {
+  background: var(--cs-input-color-background);
+  color: var(--cs-input-color-foreground);
+}
+
+.theme-light sl-select::part(display-input) {
+  color: black;
+}
+
+.theme-light sl-select::part(listbox) {
+  background-color: white;
+}
+
+.theme-light .csOption::part(base) {
+  color: black;
+}
+
+sl-tooltip::part(base__popup) {
+  background: var(--cs-background);
+  padding: 10px 15px;
+  border-radius: 2px;
+  box-shadow: var(--cs-button-shadow);
+  border: 1px solid var(--cs-table-color-border);
+}
+
+sl-select::part(combobox) {
+  min-height: 32px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--cs-input-color-border);
+  border-radius: 2px;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.36) inset;
+}
+
+sl-select {
+  border:none;
+}
+
+sl-select.error::part(combobox) {
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--cs-input-color-border-invalid) !important;
+}
+
+sl-select::part(tag__base) {
+  height: 24px;
+  border-radius: 2px;
+  background: var(--darkmode-interactive-normal-normal-idle, #4e4f5a);
+  color: var(--darkmode-text-titles-and-attributes, #e2e2e4);
+  padding: 2px 4px;
+}
+
+sl-select::part(tag__remove-button__base) {
+  color: var(--text-titles-and-attributes);
+}
+
+sl-select::part(display-input) {
+  color: var(--text-titles-and-attributes);
+}
+
+sl-select::part(listbox) {
+  padding: 0;
+  border-radius: 2px;
+  border: 1px solid var(--darkmode-surfaces-surface-inner, #1d1c21);
+  background: var(
+    --darkmode-surfaces-surface-2-xl,
+    linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(255, 255, 255, 0.12) 100%
+    ),
+    #222126
+  );
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.csOption::part(base) {
+  padding: 0;
+  background: none;
+  color: var(--darkmode-text-titles-and-attributes, #e2e2e4);
+
+  /* $type-md */
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+/* Shoelace SlDialog component custom styling */
+sl-dialog::part(panel) {
+  background: var(--cs-surface-inner);
+  color: var(--cs-input-color-foreground);
+}
+
+sl-button::part(base) {
+  font-weight: 500;
+  align-items: center;
+}
+
+.slInputRtrPutFiles::part(suffix) {
+  background: var(--cs-table-header-color-background);
+}
+
+/* Button Discard Job */
+.slDialogCustom::part(title) {
+  font-size: 24px;
+}
+
+.slDialogCustom::part(panel) {
+  background: var(--cs-background);
+  border-radius: 2px;
+  padding: 16px;
+  display: flex;
+  gap: 16px;
+}
+
+.slInputRtrPutFiles::part(suffix) {
+  width: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slInputRtrPutFiles > sl-icon {
+  margin-inline-end: 0 !important;
+}
+
+.slDialogCustom::part(overlay) {
+  background: rgba(0, 0, 0, 0.60);
+}
+
+.discardJob[variant="default"]::part(base) {
+  font-weight: 500;
+  background: var(--cs-linear-teal);
+  color: var(--cs-button-color-foreground-primary);
+}
+
+.discardJob[variant="default"]::part(base):hover {
+  background: var(--cs-linear-teal-hover);
+}
+
+.discardJob[variant="default"]::part(base):active {
+  background: var(--cs-linear-teal-pressed);
+}
+
+.clearFilter[variant="default"]::part(base) {
+  background: var(--cs-button-color-background-secondary);
+  color: var(--cs-button-color-foreground-secondary);;
+}
+
+input:-internal-autofill-selected {
+  background-color: initial;
+}
+
+/* AllJobs page */
+.alljobs-table-head > tr > th{
+  width: 10%;
+}
+
+.alljobs-table-body > tr {
+  height: 3.5rem;
+}
+
+/** Text gradient on Id Job for Job details page */
+.gradientTextPurple {
+  background: var(--linearrr, linear-gradient(90deg, #AF4AFF 0%, #763EEC 100%));
+  background-clip: inherit;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.heightWithoutHeader {
+  height: calc(100% - 64px);
+}
+
+.detailsViewHeight {
+  max-height: calc(100% - 160px);
+  overflow-y: auto;
+}
+
+/* React select styling */
+
+.select__control{
+  background-color: var(--cs-input-color-background) !important;
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--cs-input-color-border) !important;
+  box-shadow: var(--cs-input-shadow) !important;
+  border-radius: 2px;
+  outline: none !important;
+}
+
+.select__control--is-focused {
+  border: 2px solid var(--cs-purple) !important;
+}
+
+.select__menu {
+  background-color:  transparent !important;
+}
+
+.select__menu-list {
+  background: var(--cs-surfaces-surface-2-xl);
+  border-radius: 4px;
+}
+
+.select__option {
+  background: transparent;
+}
+
+.select__option--is-focused {
+  background-color: var(--sl-input-background-color-focus) !important;
+}
+
+.select__multi-value {
+  margin: 0;
+  padding: 5px;
+  background: var(--cs-tag-color-background-neutral) !important;
+}
+
+.select__input-container {
+  margin: 0 !important;
+}
+
+.select__input {
+  padding: 5px 0 !important;
+}
+
+.select__multi-value__label {
+  font-size: 100% !important;
+  color: var(--cs-tag-color-foreground-neutral) !important;
+}
+
+input[type="checkbox"] {
+  line-height: 14px;
+}
+
+input[type="checkbox"]:checked::before {
+  background-image: var(--cs-linear-teal);
+}
+
+input[type="radio"]:checked::before {
+  background-image: var(--cs-linear-teal);
+}
+
+input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 10px;
+  top: 2px;
+  left: 5px;
+  border: 3px solid var(--cs-button-color-foreground-primary);
+  border-left: none;
+  border-top: none;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+input[type="radio"]:checked::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  width: 6px;
+  height: 6px;
+  background: var(--cs-checkbox-color-foreground-checked);
+  top: 5px;
+  left: 5px;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  position: relative;
+  cursor: pointer;
+  background: transparent;
+  width: 16px;
+  height: 16px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input[type="checkbox"]::before {
+  content: "";
+  display: inline-block;
+  vertical-align: -25%;
+  height: 16px;
+  width: 16px;
+  background-color: var(--cs-checkbox-color-background);
+  border: var(--cs-checkbox-border);
+  border-radius: 2px;
+  margin-right: 8px;
+  margin-bottom: 2px;
+}
+
+input[type="radio"]::before {
+  content: "";
+  display: inline-block;
+  height: 16px;
+  width: 16px;
+  background-color: var(--cs-checkbox-color-background);
+  border: var(--cs-checkbox-border);
+  border-radius: 50%;
+  margin-right: 8px;
+  margin-bottom: 1px;
+}
