@@ -304,6 +304,10 @@ input:-internal-autofill-selected {
 
 .select__input {
   padding: 5px 0 !important;
+  margin-left: 5px !important;
+  background: none;
+  box-shadow: none !important;
+  color: var(--cs-tag-color-foreground-neutral) !important;
 }
 
 .select__multi-value__label {
