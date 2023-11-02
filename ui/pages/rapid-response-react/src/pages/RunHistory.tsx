@@ -13,6 +13,7 @@ import {
   RunHistoryDataSchema,
   runHistoryDataSchema,
 } from "@/lib/validations/api-validation";
+import { useFilterParams } from "@/lib/hooks/use-filter-params";
 
 export const loader: Loader = ({ falcon }) => {
   return async (args) => {
@@ -59,6 +60,7 @@ export const loader: Loader = ({ falcon }) => {
 };
 
 function RunHistory() {
+  const { hasActiveFilters } = useFilterParams();
   const data = useParsedLoaderData<RunHistoryDataSchema>(runHistoryDataSchema);
 
   /**
@@ -68,7 +70,7 @@ function RunHistory() {
    */
   const [activeHostsOnDrawer, setActiveHostsForDrawer] = useState<string[]>([]);
 
-  if (data.body.meta.total === 0) {
+  if (data.body.meta.total === 0 && !hasActiveFilters) {
     return <NoRuns />;
   }
 
