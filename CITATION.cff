@@ -7,7 +7,7 @@ type: software
 authors:
   - given-names: 
     family-names: CrowdStrike
-    email: foundry@crowdstrike.com
+    email: oss-questions@crowdstrike.com
 repository-code: 'https://github.com/CrowdStrike/foundry-sample-rapid-response'
 url: 'https://www.crowdstrike.com'
 repository-artifact: 'https://pkg.go.dev/github.com/crowdstrike/foundry-sample-rapid-response'
