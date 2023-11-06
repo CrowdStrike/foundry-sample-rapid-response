@@ -25,6 +25,7 @@ interface ParsedZodData {
 
 export interface CreateJobArgs {
   data: ParsedZodData;
+  version?: number;
   id?: string;
 }
 
@@ -37,6 +38,7 @@ function createJob(falcon: FalconApi<LocalData>) {
       parsedScheduleData,
     },
     id,
+    version: jobVersion = 0,
   }: CreateJobArgs): Promise<CreateJobResponse> => {
     try {
       if (
@@ -99,6 +101,7 @@ function createJob(falcon: FalconApi<LocalData>) {
 
         const body = {
           id,
+          version: jobVersion,
           user_id: user.uuid,
           user_name: user.username,
           name: jobName,
