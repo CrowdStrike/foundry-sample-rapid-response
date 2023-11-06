@@ -70,16 +70,15 @@ export class CreateJobHandler extends MockFaasHandler {
         };
       }
       const [draft] = result.data.payload.params?.query?.draft ?? ["false"];
-      const { ...rest } = result.data.payload.body;
+      const { version, ...rest } = result.data.payload.body;
       // Get ID if jobName already exists and draft status is true
       const id =
         existingJobIndex > -1
           ? this.db.jobs[existingJobIndex].id
           : (Math.random() + 1).toString(36).substring(7);
-      const version = 0;
       const newJob: RRJobType = {
         id,
-        version,
+        version: version + 1,
         draft: draft === "true",
         total_recurrences: 0,
         run_count: 0,
