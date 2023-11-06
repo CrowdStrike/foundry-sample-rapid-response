@@ -33,12 +33,7 @@ MCVE formatted code examples provided within issues or questions should be:
 
 ### Support Escalation
 
-In generally, CrowdStrike will support `foundry-sample-rapid-response` at only the bare minimum level and only in unusual or niche cases.
-CrowdStrike will ultimately defer the support of this project to the open source community.
-
-#### Out of Scope Issues
-
-Depending on the root cause, there is a possibility that an identified issue exceeds the scope of this project, and may require additional investigation. A maintainer may ask you to [contact the CrowdStrike technical support team](https://supportportal.crowdstrike.com/) directly should this occur.
+`foundry-sample-rapid-response` is an open source project, not a CrowdStrike product. As such, it carries no formal support, expressed or implied.
 
 #### Confidentiality
 

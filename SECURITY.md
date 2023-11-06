@@ -13,11 +13,10 @@ Please report suspected security vulnerabilities by:
 
 + Submitting
   a [bug](https://github.com/CrowdStrike/foundry-sample-rapid-response/issues/new?assignees=&labels=bug+%3Abug%3A&template=bug_report.md&title=%5B+BUG+%5D+...).
-+ Starting a new [discussion](https://github.com/CrowdStrike/foundry-sample-rapid-response/discussions).
 + Submitting a [pull request](https://github.com/CrowdStrike/foundry-sample-rapid-response/pulls) to potentially resolve the issue. (New
   contributors: please review the content
   located [here](https://github.com/CrowdStrike/foundry-sample-rapid-response/blob/main/CONTRIBUTING.md).)
-+ Sending an email to __foundry@crowdstrike.com__.
++ Sending an email to __oss-security@crowdstrike.com__.
 
 ## Disclosure and mitigation process
 
