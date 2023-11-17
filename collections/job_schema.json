@@ -1,0 +1,295 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "x-cs-indexable-fields": [
+    { "field": "/id",  "type": "string", "fql_name": "id"  },
+    { "field": "/name",  "type": "string", "fql_name": "name"  },
+    { "field": "/updated_at",  "type": "string", "fql_name": "updated_at"  },
+    { "field": "/created_at",  "type": "string", "fql_name": "created_at"  }
+  ],
+  "properties": {
+    "action": {
+      "properties": {
+
+        "command_switch": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "null"}
+          ]
+        },
+        "file_name": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "null"}
+          ]
+        },
+        "install_file_path": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "null"}
+          ]
+        },
+        "query_file_paths": {
+          "items": {
+            "oneOf": [
+              {"type": "string"},
+              {"type": "null"}
+            ]
+          },
+          "oneOf": [
+            {"type": "array"},
+            {"type": "null"}
+          ]
+        },
+        "query_type": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "null"}
+          ]
+        },
+        "registry_keys": {
+          "items": {
+            "oneOf": [
+              {"type": "string"},
+              {"type": "null"}
+            ]
+          },
+          "oneOf": [
+            {"type": "array"},
+            {"type": "null"}
+          ]
+        },
+        "remove_file_name": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "null"}
+          ]
+        },
+        "remove_file_path": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "null"}
+          ]
+        },
+        "type": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "null"}
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "created_at": {
+      "type": "string"
+    },
+    "description": {
+      "oneOf": [
+        {"type": "string"},
+        {"type": "null"}
+      ]
+    },
+    "draft": {
+      "type": "boolean"
+    },
+    "host_count": {
+      "type": "integer"
+    },
+    "id": {
+      "type": "string"
+    },
+    "last_run": {
+      "oneOf": [
+        {"type": "string"},
+        {"type": "null"}
+      ]
+    },
+    "name": {
+      "type": "string"
+    },
+    "next_run": {
+      "oneOf": [
+        {"type": "string"},
+        {"type": "null"}
+      ]
+    },
+    "notifications": {
+      "items": {
+        "type": "string",
+        "format": "email"
+      },
+      "type": "array"
+    },
+    "output_format": {
+      "items": {
+        "oneOf": [
+          {"type": "string"},
+          {"type": "null"}
+        ]
+      },
+      "oneOf": [
+        {"type": "array"},
+        {"type": "null"}
+      ]
+    },
+    "run_count": {
+      "type": "integer"
+    },
+    "run_now": {
+      "type": "boolean"
+    },
+    "schedule": {
+      "properties": {
+        "end_date": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "null"}
+          ]
+        },
+        "skip_concurrent": {
+          "type": "boolean"
+        },
+        "start_date": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "null"}
+          ]
+        },
+        "time_cycle": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "null"}
+          ]
+        }
+      },
+      "oneOf": [
+        {"type": "object"},
+        {"type": "null"}
+      ]
+    },
+    "tags": {
+      "oneOf": [
+        {"type": "array"},
+        {"type": "null"}
+      ]
+    },
+    "target": {
+      "properties": {
+        "host_groups": {
+          "items": {
+            "oneOf": [
+              {"type": "string"},
+              {"type": "null"}
+            ]
+          },
+          "oneOf": [
+            {"type": "array"},
+            {"type": "null"}
+          ]
+        },
+        "hosts": {
+          "items": {
+            "oneOf": [
+              {"type": "string"},
+              {"type": "null"}
+            ]
+          },
+          "oneOf": [
+            {"type": "array"},
+            {"type": "null"}
+          ]
+        },
+        "offline_queueing": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "total_recurrences": {
+      "type": "integer"
+    },
+    "updated_at": {
+      "type": "string"
+    },
+    "user_id": {
+      "type": "string"
+    },
+    "user_name": {
+      "type": "string",
+      "format": "email"
+    },
+    "version": {
+      "type": "integer"
+    },
+    "workflows": {
+      "properties": {
+        "notifier_workflow": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "null"}
+          ]
+        },
+        "scheduled_workflow": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "null"}
+          ]
+        }
+      },
+      "required": [
+        "notifier_workflow",
+        "scheduled_workflow"
+      ],
+      "oneOf": [
+        {"type": "object"},
+        {"type": "null"}
+      ]
+    },
+    "wschedule": {
+      "properties": {
+        "end_date": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "null"}
+          ]
+        },
+        "skip_concurrent": {
+          "type": "boolean"
+        },
+        "start_date": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "null"}
+          ]
+        },
+        "time_cycle": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "null"}
+          ]
+        }
+      },
+      "required": [
+        "time_cycle",
+        "start_date"
+      ],
+      "oneOf": [
+        {"type": "object"},
+        {"type": "null"}
+      ]
+    }
+  },
+  "required": [
+    "user_id",
+    "user_name",
+    "id",
+    "name",
+    "version",
+    "notifications",
+    "host_count",
+    "action",
+    "target",
+    "created_at",
+    "updated_at"
+  ],
+  "type": "object"
+}

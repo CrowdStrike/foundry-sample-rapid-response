@@ -1,0 +1,48 @@
+name: Notify workflow
+description: Notify the workflow for black
+multi_instance: true
+customer_visible: true
+parameters:
+  actions:
+    configuration:
+      send_email_c6dbab17:
+        properties:
+          to:
+            required: true
+  conditions:
+    workflow_execution_id_is_equal_to_parameterized_6eb5201d:
+      fields:
+        Trigger.Category.WorkflowExecution.DefinitionID:
+          required: true
+          multiple: false
+          operator: EQ
+trigger:
+  next:
+    - workflow_execution_id_is_equal_to_parameterized_6eb5201d
+  event: WorkflowExecution
+actions:
+  send_email_c6dbab17:
+    id: 07413ef9ba7c47bf5a242799f59902cc
+    properties:
+      _fields:
+        - "${Workflow.Definition.Name}"
+        - "${Trigger.Category.WorkflowExecution.ExecutionTimestamp}"
+        - "${Trigger.Category.WorkflowExecution.Status}"
+      msg: Check status of the job.
+      subject: Job  ${Workflow.Definition.Name} completed.
+  update_job_history_63aa1ffe:
+    next:
+      - send_email_c6dbab17
+    id: functions.job_history.update_job_history
+    properties:
+      definition_name: "${Workflow.Definition.Name}"
+      execution_id: "${Trigger.Category.WorkflowExecution.ExecutionID}"
+      execution_timestamp: "${Workflow.Execution.Time}"
+      status: "${Trigger.Category.WorkflowExecution.Status}"
+conditions:
+  workflow_execution_id_is_equal_to_parameterized_6eb5201d:
+    next:
+      - update_job_history_63aa1ffe
+    expression: ''
+    display:
+      - Workflow definition ID is equal to [parameterized]

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "x-cs-indexable-fields": [
+    { "field": "/job_name",  "type": "string", "fql_name": "job_name"  },
+    { "field": "/job_id",  "type": "string", "fql_name": "job_id"  },
+    { "field": "/id",  "type": "string", "fql_name": "id"  },
+    { "field": "/modified_at",  "type": "string", "fql_name": "modified_at"  }
+  ],
+  "properties": {
+    "action": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
+    "job_id": {
+      "type": "string"
+    },
+    "job_name": {
+      "type": "string"
+    },
+    "modified_at": {
+      "type": "string"
+    },
+    "modified_by": {
+      "type": "string",
+      "format": "email"
+    },
+    "version": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "job_name",
+    "modified_at",
+    "version",
+    "modified_by",
+    "action",
+    "id",
+    "job_id"
+  ],
+  "type": "object"
+}

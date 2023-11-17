@@ -1,0 +1,130 @@
+name: Remove Workflow
+description: Remove File and Update for black.
+multi_instance: true
+customer_visible: true
+parameters:
+  actions:
+    configuration:
+      check_file_exist_rtr_2_e7dcae9e:
+        properties:
+          filePath:
+            required: true
+      remove_file_rtr_2_65337911:
+        properties:
+          filePath:
+            required: true
+  conditions:
+    platform_is_equal_to_windows_hostname_includes_to_parameterized_host_groups_includes_to_parameterize_831608b0:
+      fields:
+        get_device_details_e84112c6.Device.GetDetails.Groups:
+          required: false
+          multiple: true
+          operator: IN
+        device_query_d360b503.Device.query.devices.#:
+          required: false
+          multiple: true
+          operator: IN
+  trigger:
+    node_id: trigger
+    fields:
+      timer_event_definition:
+        required: true
+trigger:
+  next:
+    - update_job_history_df7b2f1b
+  event: Schedule
+actions:
+  device_query_d360b503:
+    next:
+      - activity_d360b503_c967_48c8_b7c9_818be7d3f0b4_device_query_devices_07ddddab
+    id: 68ffa99af40c84b36462daa076f535d0
+    properties:
+      device_status: all
+  update_job_history_df7b2f1b:
+    next:
+      - device_query_d360b503
+    id: functions.job_history.update_job_history
+    properties:
+      definition_name: "${Workflow.Definition.Name}"
+      execution_id: "${Workflow.Execution.ID}"
+      execution_timestamp: "${Workflow.Execution.Time}"
+      status: In progress
+loops:
+  activity_d360b503_c967_48c8_b7c9_818be7d3f0b4_device_query_devices_07ddddab:
+    for:
+      input: device_query_d360b503.Device.query.devices
+      continue_on_partial_execution: true
+    trigger:
+      next:
+        - get_device_details_e84112c6
+    actions:
+      check_file_exist_rtr_2_e7dcae9e:
+        next:
+          - file_exists_is_equal_to_yes_c421c686
+        id: rtr_scripts.check_file_exist
+        properties:
+          device_id: "${device_query_d360b503.Device.query.devices.#}"
+      get_device_details_e84112c6:
+        next:
+          - platform_is_equal_to_windows_hostname_includes_to_parameterized_host_groups_includes_to_parameterize_831608b0
+        id: 6265dc947cc2252f74a5f25261ac36a9
+        properties:
+          device_id: "${device_query_d360b503.Device.query.devices.#}"
+      remove_file_rtr_2_65337911:
+        next:
+          - write_to_logscale___rapid_response_final_79dab366
+        id: rtr_scripts.remove_file
+        properties:
+          device_id: "${device_query_d360b503.Device.query.devices.#}"
+      write_to_logscale___rapid_response_final_1a9ab26c:
+        id: 0ec68880256f6192b9abef766d31fb04
+        properties:
+          foundry_app_id: ${{FOUNDRY_APP_ID}}
+          _fields:
+            - "${check_file_exist_rtr_2_e7dcae9e.RTR.App_check_file_exist.deviceID}"
+            - "${check_file_exist_rtr_2_e7dcae9e.RTR.App_check_file_exist.file_exists}"
+            - "${check_file_exist_rtr_2_e7dcae9e.RTR.App_check_file_exist.filePath}"
+            - "${check_file_exist_rtr_2_e7dcae9e.RTR.App_check_file_exist.stdout}"
+            - "${get_device_details_e84112c6.Device.GetDetails.Groups}"
+            - "${get_device_details_e84112c6.Device.GetDetails.Hostname}"
+            - "${device_query_d360b503.Device.query.devices.#}"
+            - "${Trigger.Category.Schedule.}"
+            - "${Workflow.Execution.ID}"
+            - "${Workflow.Execution.Time}"
+            - "${Workflow.Definition.Name}"
+      write_to_logscale___rapid_response_final_79dab366:
+        id: 0ec68880256f6192b9abef766d31fb04
+        properties:
+          foundry_app_id: ${{FOUNDRY_APP_ID}}
+          _fields:
+            - "${remove_file_rtr_2_65337911.RTR.App_remove_file.response}"
+            - "${remove_file_rtr_2_65337911.RTR.App_remove_file.stdout}"
+            - "${check_file_exist_rtr_2_e7dcae9e.RTR.App_check_file_exist.deviceID}"
+            - "${check_file_exist_rtr_2_e7dcae9e.RTR.App_check_file_exist.file_exists}"
+            - "${check_file_exist_rtr_2_e7dcae9e.RTR.App_check_file_exist.filePath}"
+            - "${check_file_exist_rtr_2_e7dcae9e.RTR.App_check_file_exist.stdout}"
+            - "${get_device_details_e84112c6.Device.GetDetails.Groups}"
+            - "${get_device_details_e84112c6.Device.GetDetails.Hostname}"
+            - "${device_query_d360b503.Device.query.devices.#}"
+            - "${Workflow.Execution.ID}"
+            - "${Workflow.Execution.Time}"
+            - "${Workflow.Definition.Name}"
+            - "${Trigger.CID}"
+            - "${Trigger.Category.Schedule.}"
+    conditions:
+      file_exists_is_equal_to_yes_c421c686:
+        next:
+          - remove_file_rtr_2_65337911
+        expression: check_file_exist_rtr_2_e7dcae9e.RTR.App_check_file_exist.file_exists:true
+        display:
+          - File exists is equal to Yes
+        else:
+          - write_to_logscale___rapid_response_final_1a9ab26c
+      platform_is_equal_to_windows_hostname_includes_to_parameterized_host_groups_includes_to_parameterize_831608b0:
+        next:
+          - check_file_exist_rtr_2_e7dcae9e
+        expression: get_device_details_e84112c6.Device.GetDetails.Platform:'Windows'
+        display:
+          - Platform is equal to Windows
+          - Hostname includes to [parameterized]
+          - Host groups includes to [parameterized]

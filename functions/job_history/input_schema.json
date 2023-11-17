@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "type": "object",
+  "properties": {
+    "definition_name": {
+      "title": "Workflow Definition Name",
+      "type": "string",
+      "description": "Name of the workflow"
+    },
+    "execution_id": {
+      "title": "Workflow Execution ID",
+      "type": "string",
+      "description": "Execution ID of the workflow"
+    },
+    "execution_timestamp": {
+      "title": "Workflow Execution Timestamp",
+      "type": "string",
+      "description": "Execution Timestamp of the workflow"
+    },
+    "status": {
+      "title": "Workflow Status",
+      "type": "string",
+      "description": "Execution Status of the workflow"
+    }
+  },
+  "required": []
+}

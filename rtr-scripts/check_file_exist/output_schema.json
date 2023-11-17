@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "type": "object",
+  "properties": {
+    "filePath": {
+      "type": "string"
+    },
+    "deviceID": {
+      "type": "string"
+    },
+    "file_exists": {
+      "type": "boolean"
+    }
+  },
+  "required": []
+}

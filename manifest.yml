@@ -1,0 +1,208 @@
+name: Rapid Response Demo
+description: Rapid Response sample app to schedule RTR scripts
+logo: ""
+manifest_version: "2023-05-09"
+ignored:
+    - ui/(extensions|pages)/.*?/config
+    - ui/(extensions|pages)/.*?/node_modules
+    - ui/pages/scalable-rtr-react/stats.html
+    - ui/(extensions|pages)/.*?/src
+    - ui/(extensions|pages)/.*?/.*?\.(md|log|lock|cjs|log)
+    - ui/(extensions|pages)/.*?/\.eslintrc\.cjs
+    - ui/(extensions|pages)/.*?/\.gitignore
+    - ui/(extensions|pages)/.*?/\.stylelintrc\.js
+    - ui/(extensions|pages)/.*?/package\.json
+    - ui/(extensions|pages)/.*?/postcss\.config\.js
+    - ui/(extensions|pages)/.*?/tailwind\.config\.js
+    - ui/(extensions|pages)/.*?/tsconfig\.json
+    - ui/(extensions|pages)/.*?/tsconfig\.node\.json
+    - ui/(extensions|pages)/.*?/vite\.config\.ts
+    - ui/(extensions|pages)/*\.gz
+    - ui/(extensions|pages)/rapid-response-react/index\.html
+ui:
+    homepage: pages.rapid-response-react
+    extensions: []
+    pages:
+        rapid-response-react:
+            name: rapid-response-react
+            description: A sample app built for RTR
+            path: ui/pages/rapid-response-react/dist
+            entrypoint: ui/pages/rapid-response-react/dist/index.html
+            content_security_policy:
+                connect-src:
+                    - https://cdn.jsdelivr.net
+                    - 'data:'
+                style-src: []
+                style-src-elem: []
+                script-src: []
+                form-action: []
+                img-src: []
+                media-src: []
+                object-src: []
+            permissions: []
+    dashboards: {}
+    navigation:
+        links:
+            - path: /
+              name: All Jobs
+              permissions: []
+              ref: pages.rapid-response-react
+            - path: /run-history
+              name: Run History
+              permissions: []
+              ref: pages.rapid-response-react
+            - path: /audit-log
+              name: Audit Log
+              permissions: []
+              ref: pages.rapid-response-react
+api_integrations: []
+rtr_scripts:
+    - name: check_file_exist
+      platform: Windows
+      description: Checking if file exist RTR script
+      path: rtr-scripts/check_file_exist
+      script_name: script.ps1
+      permissions: []
+      workflow_integration:
+        disruptive: false
+        system_action: false
+        tags: []
+        input_schema: input_schema.json
+        output_schema: output_schema.json
+    - name: remove_file
+      platform: Windows
+      description: Removing file RTR script
+      path: rtr-scripts/remove_file
+      script_name: script.ps1
+      permissions: []
+      workflow_integration:
+        disruptive: false
+        system_action: false
+        tags: []
+        input_schema: input_schema.json
+        output_schema: output_schema.json
+collections:
+    - name: Jobs_Audit_logger
+      description: Audit logs for the job.
+      schema: collections/audit_logs_schema.json
+      permissions: []
+      workflow_integration:
+        system_action: false
+        tags: []
+    - name: Jobs_Info
+      description: job collection storage.
+      schema: collections/job_schema.json
+      permissions: []
+      workflow_integration: null
+    - name: Job_Executions
+      description: Job execution history.
+      schema: collections/job_executions_schema.json
+      permissions: []
+      workflow_integration:
+        system_action: false
+        tags: []
+auth:
+    scopes:
+        - real-time-response-admin:write
+        - devices:read
+        - devices:write
+        - workflow:write
+        - workflow:read
+        - usermgmt:read
+    permissions: {}
+    roles: []
+functions:
+    - name: Func_Jobs
+      config: null
+      description: Create an function to create, update, query and audit the jobs.
+      path: functions/Func_Jobs
+      environment_variables: {}
+      handlers:
+        - name: rapid_response_get_audits
+          description: Create an function to create, update, query and audit the jobs
+          method: GET
+          api_path: /audits
+          request_schema: null
+          response_schema: null
+          workflow_integration: null
+          permissions: []
+        - name: rapid_response_get_jobs
+          description: Returns a list of jobs.
+          method: GET
+          api_path: /jobs
+          request_schema: null
+          response_schema: null
+          workflow_integration: null
+          permissions: []
+        - name: rapid_response_get_job
+          description: Returns a job.
+          method: GET
+          api_path: /job
+          request_schema: null
+          response_schema: null
+          workflow_integration: null
+          permissions: []
+        - name: rapid_response_create_update_job
+          description: Create, Update, Query Jobs
+          method: PUT
+          api_path: /upsert-job
+          request_schema: null
+          response_schema: null
+          workflow_integration:
+            disruptive: false
+            system_action: false
+            tags:
+                - Rapid Response
+          permissions: []
+      language: go
+    - name: job_history
+      config: null
+      description: Job histories and executions.
+      path: functions/job_history
+      environment_variables: {}
+      handlers:
+        - name: run_history
+          description: Job histories and executions
+          method: GET
+          api_path: /run-history
+          request_schema: null
+          response_schema: null
+          workflow_integration: null
+          permissions: []
+        - name: update_job_history
+          description: Foundry RTR Job Upsert
+          method: PUT
+          api_path: /upsert
+          request_schema: input_schema.json
+          response_schema: null
+          workflow_integration:
+            disruptive: false
+            system_action: false
+            tags:
+                - Rapid Response
+                - job_history
+          permissions: []
+      language: go
+workflows:
+    - name: Remove file template
+      path: workflows/Remove_file_template.yml
+    - name: Notify job execution template
+      path: workflows/Notify_job_execution_template.yml
+    - name: Install software template
+      path: workflows/Install_software_Job_Template.yml
+logscale:
+    saved_searches:
+        - name: Query By WorkflowRootExecutionID
+          description: Queries entries by WorkflowRootExecutionID.
+          query_path: saved-searches/Query_By_WorkflowRootExecutionID/query.txt
+          query_params:
+            execution_id: ""
+          input_schema_path: saved-searches/Query_By_WorkflowRootExecutionID/input_schema.json
+          earliest: 7d
+          latest: now
+          workflow_integration:
+            tags:
+                - Rapid Response
+                - Logscale
+            system_action: false
+          include_test_data: false

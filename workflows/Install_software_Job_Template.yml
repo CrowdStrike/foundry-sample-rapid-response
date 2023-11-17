@@ -1,0 +1,94 @@
+name: Install software
+description: Install and Update for black.
+multi_instance: true
+customer_visible: true
+parameters:
+  actions:
+    configuration:
+      put_and_run_file_b3305a8e:
+        properties:
+          file_name:
+            required: true
+          params:
+            required: false
+  conditions:
+    FROM_platform_is_equal_to_windows_hostname_includes_to_parameterized_host_groups_includes_to_parameterize_831608b0_TO_activity_check_file_exist_rtr_2_e7dcae9e:
+      fields:
+        get_device_details_e84112c6.Device.GetDetails.Groups:
+          required: false
+          multiple: true
+          operator: IN
+        device_query_d360b503.Device.query.devices.#:
+          required: false
+          multiple: true
+          operator: IN
+  trigger:
+    node_id: trigger
+    fields:
+      timer_event_definition:
+        required: true
+trigger:
+  next:
+    - update_job_history_df7b2f1b
+  event: Schedule
+actions:
+  device_query_d360b503:
+    next:
+      - activity_d360b503_c967_48c8_b7c9_818be7d3f0b4_device_query_devices_07ddddab
+    id: 68ffa99af40c84b36462daa076f535d0
+    properties:
+      device_status: all
+  update_job_history_df7b2f1b:
+    next:
+      - device_query_d360b503
+    id: functions.job_history.update_job_history
+    properties:
+      definition_name: "${Workflow.Definition.Name}"
+      execution_id: "${Workflow.Execution.ID}"
+      execution_timestamp: "${Workflow.Execution.Time}"
+      status: In progress
+loops:
+  activity_d360b503_c967_48c8_b7c9_818be7d3f0b4_device_query_devices_07ddddab:
+    for:
+      input: device_query_d360b503.Device.query.devices
+      continue_on_partial_execution: true
+    trigger:
+      next:
+        - get_device_details_e84112c6
+    actions:
+      get_device_details_e84112c6:
+        next:
+          - FROM_platform_is_equal_to_windows_hostname_includes_to_parameterized_host_groups_includes_to_parameterize_831608b0_TO_activity_check_file_exist_rtr_2_e7dcae9e
+        id: 6265dc947cc2252f74a5f25261ac36a9
+        properties:
+          device_id: "${device_query_d360b503.Device.query.devices.#}"
+      put_and_run_file_b3305a8e:
+        next:
+          - write_data_into_logscale_9e2dc65c
+        id: a29b38809708ffc5fb18a03676520b1a
+        properties:
+          device_id: "${device_query_d360b503.Device.query.devices.#}"
+          queue_offline: true
+      write_data_into_logscale_9e2dc65c:
+        id: 0ec68880256f6192b9abef766d31fb04
+        properties:
+          foundry_app_id: ${{FOUNDRY_APP_ID}}
+          _fields:
+            - "${put_and_run_file_b3305a8e.RTR.PutAndRun.stderr}"
+            - "${put_and_run_file_b3305a8e.RTR.PutAndRun.stdout}"
+            - "${get_device_details_e84112c6.Device.GetDetails.Groups}"
+            - "${get_device_details_e84112c6.Device.GetDetails.Hostname}"
+            - "${device_query_d360b503.Device.query.devices.#}"
+            - "${Trigger.Category.Schedule.}"
+            - "${Workflow.Execution.ID}"
+            - "${Workflow.Execution.Time}"
+            - "${Workflow.Definition.Name}"
+    conditions:
+      FROM_platform_is_equal_to_windows_hostname_includes_to_parameterized_host_groups_includes_to_parameterize_831608b0_TO_activity_check_file_exist_rtr_2_e7dcae9e:
+        next:
+          - put_and_run_file_b3305a8e
+        expression: get_device_details_e84112c6.Device.GetDetails.Platform:'Windows'
+        display:
+          - Platform is equal to Windows
+          - Hostname includes to [parameterized]
+            - Host groups includes to [parameterized]
