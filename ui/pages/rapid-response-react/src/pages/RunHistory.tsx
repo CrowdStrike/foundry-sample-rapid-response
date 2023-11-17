@@ -51,7 +51,8 @@ export const loader: Loader = ({ falcon }) => {
     });
     const safeResult = runHistoryDataSchema.parse(result);
 
-    safeResult.body.meta.offset = safeResult.body.resources?.[0]?.id ?? "";
+    safeResult.body.meta.offset =
+      safeResult.body.resources?.[0]?.execution_id ?? "";
     // Add a computed page number to render the pagination information
     safeResult.body.meta.page = page;
 

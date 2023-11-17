@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "properties": {
+    "execution_id": {
+      "type": "string",
+      "title": "Execution id",
+      "default": ""
+    }
+  },
+  "required": [  "execution_id" ],
+  "type": "object",
+  "description": "Generated request schema"
+}

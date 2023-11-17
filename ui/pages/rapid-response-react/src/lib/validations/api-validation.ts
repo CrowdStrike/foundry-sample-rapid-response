@@ -225,6 +225,7 @@ export const allJobsDataSchema = z.object({
 export const RunHistorySchema = z.object({
   id: z.string(),
   job_id: z.string(),
+  execution_id: z.string(),
   name: z.string(),
   duration: z.string(),
   output_1: z.string().optional(),

@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "x-cs-indexable-fields": [
+    { "field": "/execution_id",  "type": "string", "fql_name": "execution_id"  },
+    { "field": "/run_date",  "type": "string", "fql_name": "run_date"  },
+    { "field": "/id",  "type": "string", "fql_name": "id"  },
+    { "field": "/name",  "type": "string", "fql_name": "name"  }
+  ],
+  "properties": {
+    "duration": {
+      "type": "string"
+    },
+    "execution_id": {
+      "type": "string"
+    },
+    "targeted_hosts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "device_id": {
+            "type": "string"
+          },
+          "host_name": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "id": {
+      "type": "string"
+    },
+    "job_id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "output_1": {
+      "type": "string"
+    },
+    "output_2": {
+      "type": "string"
+    },
+    "receivedFiles": {
+      "type": "integer"
+    },
+    "run_date": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    }
+  },
+  "required": [],
+  "type": "object"
+}
