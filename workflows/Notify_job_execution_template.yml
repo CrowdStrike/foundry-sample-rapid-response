@@ -1,5 +1,5 @@
 name: Notify workflow
-description: Notify the workflow for black
+description: Notify the workflow
 multi_instance: true
 customer_visible: true
 parameters:
@@ -22,14 +22,13 @@ trigger:
   event: WorkflowExecution
 actions:
   send_email_c6dbab17:
-    id: 07413ef9ba7c47bf5a242799f59902cc
     properties:
       _fields:
         - "${Workflow.Definition.Name}"
         - "${Trigger.Category.WorkflowExecution.ExecutionTimestamp}"
         - "${Trigger.Category.WorkflowExecution.Status}"
       msg: Check status of the job.
-      subject: Job  ${Workflow.Definition.Name} completed.
+      subject: Job ${Workflow.Definition.Name} completed.
   update_job_history_63aa1ffe:
     next:
       - send_email_c6dbab17
