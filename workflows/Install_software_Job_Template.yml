@@ -35,11 +35,13 @@ actions:
   device_query_d360b503:
     next:
       - device_query_devices_07ddddab
+    id: 68ffa99af40c84b36462daa076f535d0
     properties:
       device_status: all
   update_job_history_df7b2f1b:
     next:
       - device_query_d360b503
+    id: functions.job_history.update_job_history
     properties:
       definition_name: "${Workflow.Definition.Name}"
       execution_id: "${Workflow.Execution.ID}"
@@ -57,15 +59,18 @@ loops:
       get_device_details_e84112c6:
         next:
           - FROM_platform_is_equal_to_windows_hostname_includes_to_parameterized_host_groups_includes_to_parameterize_831608b0_TO_activity_check_file_exist_rtr_2_e7dcae9e
+        id: 6265dc947cc2252f74a5f25261ac36a9
         properties:
           device_id: "${device_query_d360b503.Device.query.devices.#}"
       put_and_run_file_b3305a8e:
         next:
           - write_data_into_logscale_9e2dc65c
+        id: a29b38809708ffc5fb18a03676520b1a
         properties:
           device_id: "${device_query_d360b503.Device.query.devices.#}"
           queue_offline: true
       write_data_into_logscale_9e2dc65c:
+        id: 0ec68880256f6192b9abef766d31fb04
         properties:
           foundry_app_id: ${{FOUNDRY_APP_ID}}
           _fields:
