@@ -22,6 +22,7 @@ trigger:
   event: WorkflowExecution
 actions:
   send_email_c6dbab17:
+    id: 07413ef9ba7c47bf5a242799f59902cc
     properties:
       _fields:
         - "${Workflow.Definition.Name}"
