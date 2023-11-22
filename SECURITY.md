@@ -18,10 +18,6 @@ Please report suspected security vulnerabilities by:
   located [here](https://github.com/CrowdStrike/foundry-sample-rapid-response/blob/main/CONTRIBUTING.md).)
 + Sending an email to __oss-security@crowdstrike.com__.
 
-## Disclosure and mitigation process
-
-TODO !!!
-
 ---
 
 <p align="center"><img src="https://raw.githubusercontent.com/CrowdStrike/falconpy/main/docs/asset/cs-logo-footer.png"><BR/><img width="300px" src="https://raw.githubusercontent.com/CrowdStrike/falconpy/main/docs/asset/adversary-goblin-panda.png"></P>
