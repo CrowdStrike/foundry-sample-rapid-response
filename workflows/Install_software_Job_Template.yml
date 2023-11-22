@@ -34,7 +34,7 @@ trigger:
 actions:
   device_query_d360b503:
     next:
-      - device_query_devices_07ddddab
+      - activity_d360b503_c967_48c8_b7c9_818be7d3f0b4_device_query_devices_07ddddab
     id: 68ffa99af40c84b36462daa076f535d0
     properties:
       device_status: all
@@ -48,7 +48,7 @@ actions:
       execution_timestamp: "${Workflow.Execution.Time}"
       status: In progress
 loops:
-  device_query_devices_07ddddab:
+  activity_d360b503_c967_48c8_b7c9_818be7d3f0b4_device_query_devices_07ddddab:
     for:
       input: device_query_d360b503.Device.query.devices
       continue_on_partial_execution: true
