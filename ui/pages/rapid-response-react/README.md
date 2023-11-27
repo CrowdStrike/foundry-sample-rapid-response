@@ -1,4 +1,6 @@
-# Rapid Response app
+![CrowdStrike Falcon](/docs/asset/cs-logo.png?raw=true)
+
+# Rapid Response user interface
 
 This app is built using:
 
@@ -66,32 +68,6 @@ VITE_MOCK_BRIDGE_ENABLED=true yarn dev
 
 This is useful for UI developers.
 
-### Deploying the app to foundry
-
-Deploying the app means that it can be run inside the Foundry App by anyone who has access. (No need for a development environment)
-
-**NOTE**: parts of this process have to change depending on which environment you want to deploy to. In particular, take note of the following:
-
-1. The environment variables: `FOUNDRY_API_GW_DOMAIN` and `FOUNDRY_UI_DOMAIN` (these influence the `foundry apps deploy` step)
-2. The contents of the `manifest.yml` file in the Foundry app directory
-3. Your active `foundry profile`
-
-In the following steps, examples are provided for deploying to the production environment.
-
-First, build the app. From the UI app directory run:
-
-```
-yarn build
-```
-
-Then deploy the app. From the Foundry app directory run:
-
-```
-FOUNDRY_API_GW_DOMAIN=https://api.crowdstrike.com FOUNDRY_UI_DOMAIN=https://falcon.crowdstrike.com foundry apps deploy
-```
-
-Note that this will deploy all parts of the Rapid Response app. That includes FaaS functions (from `foundry-sample-rapid-response/functions`), custom storage (from `foundry-sample-rapid-response/storage`), in addition to this React app.
-
 ### Analyzing Javascript Bundle
 
 When running
@@ -113,3 +89,9 @@ To run the tests, change to the UI app directory directory. Run `yarn install` t
 ```
 yarn test
 ```
+
+
+---
+
+<p align="center"><img src="https://raw.githubusercontent.com/CrowdStrike/falconpy/main/docs/asset/cs-logo-footer.png"><BR/><img width="300px" src="https://raw.githubusercontent.com/CrowdStrike/falconpy/main/docs/asset/adversary-goblin-panda.png"></P>
+<h3><P align="center">WE STOP BREACHES</P></h3>
