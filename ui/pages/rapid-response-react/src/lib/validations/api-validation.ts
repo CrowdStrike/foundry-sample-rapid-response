@@ -228,8 +228,6 @@ export const RunHistorySchema = z.object({
   execution_id: z.string(),
   name: z.string(),
   duration: z.string(),
-  output_1: z.string().optional(),
-  output_2: z.string().optional(),
   hosts: z.array(z.string()),
   numHosts: z.number(),
   receivedFiles: z.number(),

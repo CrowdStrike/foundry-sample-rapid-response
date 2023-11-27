@@ -15,8 +15,6 @@ export type HistoryFields =
   | "status"
   | "duration"
   | "hosts"
-  | "output_1"
-  | "output_2";
 
 function getPrevCursor(
   list: RunHistoryType[],
