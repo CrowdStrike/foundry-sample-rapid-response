@@ -18,7 +18,6 @@ export function mapJobHistoryDetailsToTableData(
     headColumns: ["Run status", "Run date", "Duration", "Targeted hosts"],
     bodyColumns: history.map<
       Array<
-        | TableDetails.BodyColumnLink
         | TableDetails.BodyColumnStatus
         | TableDetails.BodyColumnRaw
         | TableDetails.BodyColumnZonedDateTime
@@ -58,7 +57,6 @@ export function mapAuditLogDetailsToTableData(
     headColumns: ["Date modified", "Version", "Modified by", "Action taken"],
     bodyColumns: auditLog.map<
       Array<
-        | TableDetails.BodyColumnLink
         | TableDetails.BodyColumnStatus
         | TableDetails.BodyColumnRaw
         | TableDetails.BodyColumnZonedDateTime

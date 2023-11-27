@@ -3,10 +3,9 @@ import { z } from "zod";
 export const RunHistory = z.object({
   id: z.string(),
   job_id: z.string(),
+  execution_id: z.string(),
   name: z.string(),
   duration: z.string(),
-  output_1: z.string().optional(),
-  output_2: z.string().optional(),
   hosts: z.array(z.string()),
   numHosts: z.number(),
   receivedFiles: z.number(),
@@ -32,8 +31,6 @@ export const getRunHistoryFunctionBody = z.object({
                     z.literal("status"),
                     z.literal("duration"),
                     z.literal("hosts"),
-                    z.literal("output_1"),
-                    z.literal("output_2"),
                   ])
                   .optional(),
                 direction: z
