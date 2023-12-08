@@ -3,7 +3,7 @@
 # Rapid Response sample Foundry app
 
 The Rapid Response sample Foundry app is a community-driven, open source project which serves as an example of an app which can be built using CrowdStrike's Foundry ecosystem.
-`foundry-sample-rapid-response` is not a formal CrowdStrike project and is maintained by the open source developer community.
+`foundry-sample-rapid-response` is an open source project, not a CrowdStrike product. As such, it carries no formal support, expressed or implied.
 
 This app is one of several App Templates included in Foundry that you can use to jumpstart your development.
 It comes complete with a set of preconfigured capabilities aligned to its business purpose.
