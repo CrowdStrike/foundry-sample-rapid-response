@@ -3,7 +3,7 @@
 # Repository Support
 
 `foundry-sample-rapid-response` is a community-driven, open source project which serves as an example of an app which can be built using CrowdStrike's Foundry ecosystem.
-`foundry-sample-rapid-response` is not a formal CrowdStrike project and is maintained by the open source developer community.
+`foundry-sample-rapid-response` is an open source project, not a CrowdStrike product. As such, it carries no formal support, expressed or implied.
 
 ## Issue Reporting and Questions 🐛
 
