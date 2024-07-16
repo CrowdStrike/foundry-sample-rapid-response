@@ -3,7 +3,7 @@ module github.com/Crowdstrike/foundry-sample-rapid-response/functions/job_histor
 go 1.21
 
 require (
-	github.com/CrowdStrike/foundry-fn-go v0.15.0
+	github.com/CrowdStrike/foundry-fn-go v0.17.0
 	github.com/crowdstrike/gofalcon v0.5.0-rc1.0.20231018211136-aa9a14d480c8
 	github.com/eapache/go-resiliency v1.4.0
 	github.com/robfig/cron/v3 v3.0.1
@@ -32,7 +32,6 @@ require (
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/oklog/ulid v1.3.1 // indirect
 	github.com/opentracing/opentracing-go v1.2.0 // indirect
-	github.com/rogpeppe/go-internal v1.11.0 // indirect
 	go.mongodb.org/mongo-driver v1.12.1 // indirect
 	go.opentelemetry.io/otel v1.19.0 // indirect
 	go.opentelemetry.io/otel/metric v1.19.0 // indirect
