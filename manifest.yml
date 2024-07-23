@@ -1,5 +1,5 @@
-name: Rapid Response Demo
-description: Rapid Response sample app to schedule RTR scripts
+name: Rapid response
+description: Leverages RTR scripts, Fusion SOAR, and UI extensions to patch, upload, or remove files from hosts 
 logo: ""
 manifest_version: "2023-05-09"
 ignored:
