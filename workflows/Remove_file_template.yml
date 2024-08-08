@@ -15,15 +15,15 @@ parameters:
             required: true
   conditions:
     platform_is_equal_to_windows_hostname_includes_to_parameterized_host_groups_includes_to_parameterize_831608b0:
-      fields:
-        get_device_details_e84112c6.Device.GetDetails.Groups:
-          required: false
-          multiple: true
-          operator: IN
-        device_query_d360b503.Device.query.devices.#:
-          required: false
-          multiple: true
-          operator: IN
+      - fields:
+          get_device_details_e84112c6.Device.GetDetails.Groups:
+            required: false
+            multiple: true
+            operator: IN
+          device_query_d360b503.Device.query.devices.#:
+            required: false
+            multiple: true
+            operator: IN
   trigger:
     node_id: trigger
     fields:
