@@ -11,11 +11,11 @@ parameters:
             required: true
   conditions:
     workflow_execution_id_is_equal_to_parameterized_6eb5201d:
-      fields:
-        Trigger.Category.WorkflowExecution.DefinitionID:
-          required: true
-          multiple: false
-          operator: EQ
+      - fields:
+          Trigger.Category.WorkflowExecution.DefinitionID:
+            required: true
+            multiple: false
+            operator: EQ
 trigger:
   next:
     - workflow_execution_id_is_equal_to_parameterized_6eb5201d

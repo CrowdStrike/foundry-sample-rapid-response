@@ -13,15 +13,15 @@ parameters:
             required: false
   conditions:
     FROM_platform_is_equal_to_windows_hostname_includes_to_parameterized_host_groups_includes_to_parameterize_831608b0_TO_activity_check_file_exist_rtr_2_e7dcae9e:
-      fields:
-        get_device_details_e84112c6.Device.GetDetails.Groups:
-          required: false
-          multiple: true
-          operator: IN
-        device_query_d360b503.Device.query.devices.#:
-          required: false
-          multiple: true
-          operator: IN
+      - fields:
+          get_device_details_e84112c6.Device.GetDetails.Groups:
+            required: false
+            multiple: true
+            operator: IN
+          device_query_d360b503.Device.query.devices.#:
+            required: false
+            multiple: true
+            operator: IN
   trigger:
     node_id: trigger
     fields:
