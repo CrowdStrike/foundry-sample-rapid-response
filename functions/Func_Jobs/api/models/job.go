@@ -5,9 +5,10 @@ import (
 	"fmt"
 	"time"
 
-	fdk "github.com/CrowdStrike/foundry-fn-go"
 	"github.com/robfig/cron/v3"
 	"github.com/spaolacci/murmur3"
+
+	fdk "github.com/CrowdStrike/foundry-fn-go"
 )
 
 const (
