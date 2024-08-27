@@ -6,13 +6,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"strings"
 	"sync"
 
 	"github.com/crowdstrike/gofalcon/falcon/client/custom_storage"
 	"github.com/crowdstrike/gofalcon/falcon/models"
-	"github.com/sirupsen/logrus"
 )
 
 // NotFound is a dedicated error indicating that the requested object was not found.
@@ -40,13 +40,13 @@ type Client struct {
 	accessToken string
 	c           custom_storage.ClientService
 	hc          *http.Client
-	logger      logrus.FieldLogger
+	logger      *slog.Logger
 }
 
 var _ StorageC = (*Client)(nil)
 
 // NewClient returns a new and initialized instance of a Client.
-func NewClient(c custom_storage.ClientService, hc *http.Client, accessToken string, logger logrus.FieldLogger) *Client {
+func NewClient(c custom_storage.ClientService, hc *http.Client, accessToken string, logger *slog.Logger) *Client {
 	return &Client{
 		accessToken: accessToken,
 		c:           c,
@@ -110,9 +110,8 @@ func (f *Client) FetchObject(ctx context.Context, req FetchObjectRequest) (Fetch
 		ObjectKey:      req.ObjectKey,
 	}
 
-	f.logger.WithField("object_key", params.ObjectKey).
-		WithField("collection", params.CollectionName).
-		Printf("fetching")
+	f.logger.Debug("fetching", "object_key", params.ObjectKey, "collection", params.CollectionName)
+
 	buf := new(bytes.Buffer)
 	resp, err := f.c.GetObject(&params, buf)
 	if resp != nil && resp.IsCode(http.StatusNotFound) {

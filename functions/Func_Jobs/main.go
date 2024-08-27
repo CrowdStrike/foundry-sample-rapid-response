@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"os"
 
 	"github.com/Crowdstrike/foundry-sample-rapid-response/functions/Func_Jobs/api"
 	"github.com/Crowdstrike/foundry-sample-rapid-response/functions/Func_Jobs/api/models"
@@ -13,7 +12,7 @@ import (
 
 func main() {
 	cfg := models.Config{
-		Cloud:                           falcon.Cloud(os.Getenv("CS_CLOUD")),
+		Cloud:                           falcon.Cloud(fdk.FalconClientOpts().Cloud),
 		RemoveSystemWorkflowTemplateID:  "Remove file template",
 		ExecutionNotifierWorkflow:       "Notify job execution template",
 		InstallSystemWorkflowTemplateID: "Install software template",
