@@ -66,10 +66,14 @@ This app illustrates the following functionality amongst other components:
   * `Notify_job_execution_template.yml`: Workflow which notifies the `job_history` function to report results of the `Install_software_Job_Template` and `Remove_file_template.yml`.
   * `Remove_file_template.yml`: Workflow to remove files from targeted hosts.  Results are written to LogScale.
 
-## Deploying and installing the app
+## Running, deploying and installing the app
 
-For detailed info about deploying and installing this app in your CID, see the Falcon Foundry product documentation:
+For detailed info about running, deploying and installing this app in your CID, see the Falcon Foundry product documentation:
 
+* Overview and setup
+    * US-1: [Before you begin](https://falcon.crowdstrike.com/documentation/page/f5f7cd69/falcon-console-user-interface-capabilities)
+    * US-2: [Before you begin](https://falcon.us-2.crowdstrike.com/documentation/page/f5f7cd69/falcon-console-user-interface-capabilities)
+    * EU-1: [Before you begin](https://falcon.eu-1.crowdstrike.com/documentation/page/f5f7cd69/falcon-console-user-interface-capabilities)
 * Deploy an app
   * US-1: [Deploy an app](https://falcon.crowdstrike.com/documentation/page/ofd46a1c/deploy-an-app)
   * US-2: [Deploy an app](https://falcon.us-2.crowdstrike.com/documentation/page/ofd46a1c/deploy-an-app)
