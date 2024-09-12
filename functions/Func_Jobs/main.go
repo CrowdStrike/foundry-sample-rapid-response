@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"log/slog"
 	"os"
 
 	fdk "github.com/CrowdStrike/foundry-fn-go"
@@ -31,7 +32,7 @@ func doInit(cloud string) {
 	falconCloud = falcon.Cloud(cloud)
 }
 
-func handler(context.Context, fdk.SkipCfg) fdk.Handler {
+func handler(context.Context, *slog.Logger, fdk.SkipCfg) fdk.Handler {
 	conf := models.Config{
 		Cloud:                           falconCloud,
 		JobsCollection:                  "Jobs_Info",

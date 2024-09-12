@@ -84,7 +84,7 @@ type Job struct {
 	HostCount        int            `json:"host_count" description:"HostCount gives estimates number of host targeted for this job."`
 	Action           *RTRAction     `json:"action" description:"Handle contains information about the RTR put file or command."`
 	Schedule         *Schedule      `json:"schedule" description:"Schedule defines when this job should execute."`
-	WSchedule        *Schedule      `json:"wschedule" description:"Schedule defines when this job should execute in workflow format.""`
+	WSchedule        *Schedule      `json:"wschedule" description:"Schedule defines when this job should execute in workflow format."`
 	Target           *TargetHost    `json:"target" description:"Target defines the systems against which the action should be performed."`
 	Workflows        *WorkflowsInfo `json:"workflows" description:"Workflows created for this job"`
 	RunNow           bool           `json:"run_now" description:"Indicates if we need to run the workflow now."`

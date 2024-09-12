@@ -35,7 +35,8 @@ func (h *UpsertJobHandler) Handle(ctx context.Context, request fdk.Request) fdk.
 	var req models.UpsertJobRequest
 	var errs []fdk.APIError
 
-	err := json.Unmarshal(request.Body, &req)
+	// TODO: replace with fdk.HandlerFnOf
+	err := json.NewDecoder(request.Body).Decode(&req)
 	if err != nil {
 		response.Code = http.StatusBadRequest
 		response.Errors = append(response.Errors, models.NewAPIError(http.StatusBadRequest, fmt.Sprintf("Failed to unmarshal Request body err: %v.", err)))

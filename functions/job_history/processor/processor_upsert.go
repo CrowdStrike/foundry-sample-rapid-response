@@ -47,7 +47,6 @@ func NewUpsertProcessor(host string, srchc searchc.SearchC, strgc storagec.Stora
 
 // Process handles a request.
 func (p *UpsertProcessor) Process(ctx context.Context, req fdk.Request) Response {
-	p.logger.Infof("received upsert request: %s", string(req.Body))
 	wfMeta, err := wfMetaFromRequest(req)
 	if err != nil {
 		msg := fmt.Sprintf("failed to extract job information from request: %s", err)
@@ -466,10 +465,10 @@ func computeJobDuration(start, end, status string) (string, error) {
 func wfMetaFromRequest(req fdk.Request) (workflowMeta, error) {
 	var wfMeta workflowMeta
 
-	if len(req.Body) == 0 {
+	if req.Body == nil {
 		return wfMeta, errors.New("empty request body")
 	}
-	if err := json.Unmarshal(req.Body, &wfMeta); err != nil {
+	if err := json.NewDecoder(req.Body).Decode(&wfMeta); err != nil {
 		return wfMeta, err
 	}
 

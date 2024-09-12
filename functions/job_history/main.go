@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"log/slog"
 	"net/http"
 	"os"
 	"time"
@@ -57,7 +58,7 @@ func doInit(cloud, useDebug string) {
 	falconCloud = falcon.Cloud(cloud)
 }
 
-func handler(context.Context, fdk.SkipCfg) fdk.Handler {
+func handler(context.Context, *slog.Logger, fdk.SkipCfg) fdk.Handler {
 	mux := fdk.NewMux()
 	mux.Get("/run-history", fdk.HandlerFn(runHistoryHandler))
 	mux.Put("/upsert", fdk.HandlerFn(upsertHandler))
