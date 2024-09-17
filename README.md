@@ -21,13 +21,75 @@ This app illustrates the following functionality amongst other components:
 * use of file uploads
 * use of functions
 
-## Basic information
+## Prerequisites
 
-### Dependencies
+* Foundry CLI (instructions below)
+* Go v1.21+ (needed if modifying the app's functions). See https://go.dev/learn for installation instructions.
+* Yarn (needed if modifying the app's UI). See https://yarnpkg.com/getting-started for installation instructions.
 
-* Foundry CLI
-* Go v1.21+ (needed if modifying functions).  See https://go.dev/learn/ for instructions to install.
-* YARN (needed if modifying UI).  See https://yarnpkg.com/getting-started for instructions to install.
+### Install the Foundry CLI
+
+You can install the Foundry CLI with Scoop on Windows or Homebrew on Linux/macOS.
+
+**Windows**:
+
+Install [Scoop](https://scoop.sh/). Then, add the Foundry CLI bucket and install the Foundry CLI.
+
+```shell
+scoop bucket add foundry https://github.com/crowdstrike/scoop-foundry-cli.git
+scoop install foundry
+```
+
+Or, you can download the [latest Windows zip file](https://assets.foundry.crowdstrike.com/cli/latest/foundry_Windows_x86_64.zip), expand it, and add the install directory to your PATH environment variable.
+
+**Linux and macOS**:
+
+Install [Homebrew](https://docs.brew.sh/Installation). Then, add the Foundry CLI repository to the list of formulae that Homebrew uses and install the CLI:
+
+```shell
+brew tap crowdstrike/foundry-cli
+brew install foundry
+```
+
+Run `foundry version` to verify it's installed correctly.
+
+## Getting Started
+
+Clone this sample to your local system, or [download as a zip file](https://github.com/CrowdStrike/foundry-sample-rapid-response/archive/refs/heads/main.zip).
+
+```shell
+git clone https://github.com/CrowdStrike/foundry-sample-rapid-response
+cd foundry-sample-rapid-response
+```
+
+Log in to Foundry:
+
+```shell
+foundry login
+```
+
+Select the following permissions:
+
+- [x] Run RTR Scripts
+- [x] Run, execute, and test Workflows
+- [x] Run, execute, and test API integrations
+- [x] Run, execute, and test LogScale queries
+- [ ] (optional) Generate mock data to test your app
+
+Deploy the app:
+
+```shell
+foundry apps deploy
+```
+
+> [!TIP]
+> If you get an error that the name already exists, change the name to something unique to your CID in `manifest.yml`.
+
+Once the deployment has finished, release the app using the three-dot menu on the right. Next, go to **Foundry** > **App catalog**, find your app, and install it.
+
+Go to **Custom apps**. You should see your app listed and be able to enter a job. After the job executes, you'll receive an email with the execution information.
+
+## About this sample app
 
 ### Foundry capabilities used
 
@@ -48,7 +110,7 @@ This app illustrates the following functionality amongst other components:
   * Powershell
 * UI
   * HTML, CSS
-  * Typescript, React
+  * TypeScript, React
 
 ### Directory structure
 
@@ -66,37 +128,10 @@ This app illustrates the following functionality amongst other components:
   * `Notify_job_execution_template.yml`: Workflow which notifies the `job_history` function to report results of the `Install_software_Job_Template` and `Remove_file_template.yml`.
   * `Remove_file_template.yml`: Workflow to remove files from targeted hosts.  Results are written to LogScale.
 
-## Running, deploying and installing the app
-
-For detailed info about running, deploying and installing this app in your CID, see the Falcon Foundry product documentation:
-
-* Overview and setup
-    * US-1: [Before you begin](https://falcon.crowdstrike.com/documentation/page/f5f7cd69/falcon-console-user-interface-capabilities)
-    * US-2: [Before you begin](https://falcon.us-2.crowdstrike.com/documentation/page/f5f7cd69/falcon-console-user-interface-capabilities)
-    * EU-1: [Before you begin](https://falcon.eu-1.crowdstrike.com/documentation/page/f5f7cd69/falcon-console-user-interface-capabilities)
-* Deploy an app
-  * US-1: [Deploy an app](https://falcon.crowdstrike.com/documentation/page/ofd46a1c/deploy-an-app)
-  * US-2: [Deploy an app](https://falcon.us-2.crowdstrike.com/documentation/page/ofd46a1c/deploy-an-app)
-  * EU-1: [Deploy an app](https://falcon.eu-1.crowdstrike.com/documentation/page/ofd46a1c/deploy-an-app)
-* Create a new app using this app as template
-  * US-1: [Create an app from a template](https://falcon.crowdstrike.com/documentation/page/l159717b/create-an-app#c4378b86)
-  * US-2: [Create an app from a template](https://falcon.us-2.crowdstrike.com/documentation/page/l159717b/create-an-app#c4378b86)
-  * EU-1: [Create an app from a template](https://falcon.eu-1.crowdstrike.com/documentation/page/l159717b/create-an-app#c4378b86)
-* Run this app in development mode after deployment
-  * US-1: [Iterate in development mode](https://falcon.crowdstrike.com/documentation/page/fb88e442/view-and-manage-apps#d5175ae2)
-  * US-2: [Iterate in development mode](https://falcon.us-2.crowdstrike.com/documentation/page/fb88e442/view-and-manage-apps#d5175ae2)
-  * EU-1: [Iterate in development mode](https://falcon.eu-1.crowdstrike.com/documentation/page/fb88e442/view-and-manage-apps#d5175ae2)
-* Work with the Foundry capabilities of this app
-  * US-1: [App capabilities](https://falcon.crowdstrike.com/documentation/category/u0daabab/app-capabilities)
-  * US-2: [App capabilities](https://falcon.us-2.crowdstrike.com/documentation/category/u0daabab/app-capabilities)
-  * EU-1: [App capabilities](https://falcon.eu-1.crowdstrike.com/documentation/category/u0daabab/app-capabilities)
-
 ## Foundry resources
 
-See our product documentation:
-* US-1: [Falcon Foundry](https://falcon.crowdstrike.com/documentation/category/c3d64B8e/falcon-foundry)
-* US-2: [Falcon Foundry](https://falcon.us-2.crowdstrike.com/documentation/category/c3d64B8e/falcon-foundry)
-* EU-1: [Falcon Foundry](https://falcon.eu-1.crowdstrike.com/documentation/category/c3d64B8e/falcon-foundry)
+- Foundry documentation: [US-1](https://falcon.crowdstrike.com/documentation/category/c3d64B8e/falcon-foundry) | [US-2](https://falcon.us-2.crowdstrike.com/documentation/category/c3d64B8e/falcon-foundry) | [EU](https://falcon.eu-1.crowdstrike.com/documentation/category/c3d64B8e/falcon-foundry)
+- Foundry learning resources: [US-1](https://falcon.crowdstrike.com/foundry/learn) | [US-2](https://falcon.us-2.crowdstrike.com/foundry/learn) | [EU](https://falcon.eu-1.crowdstrike.com/foundry/learn)
 
 ---
 
