@@ -85,9 +85,18 @@ foundry apps deploy
 > [!TIP]
 > If you get an error that the name already exists, change the name to something unique to your CID in `manifest.yml`.
 
-Once the deployment has finished, release the app using the three-dot menu on the right. Next, go to **Foundry** > **App catalog**, find your app, and install it.
+Once the deployment has finished, you can release the app:
 
-Go to **Custom apps**. You should see your app listed and be able to enter a job. After the job executes, you'll receive an email with the execution information.
+```shell
+foundry apps release
+```
+
+Next, go to **Foundry** > **App catalog**, find your app, and install it. Select the **Open App** button in the success dialog.
+
+> [!TIP]
+> If the app doesn't load, reload the page.
+
+You should be able to create a job and save it.
 
 ## About this sample app
 
