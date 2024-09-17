@@ -23,7 +23,7 @@ This app illustrates the following functionality amongst other components:
 
 ## Prerequisites
 
-* Foundry CLI (instructions below)
+* The Foundry CLI (instructions below).
 * Go v1.21+ (needed if modifying the app's functions). See https://go.dev/learn for installation instructions.
 * Yarn (needed if modifying the app's UI). See https://yarnpkg.com/getting-started for installation instructions.
 
@@ -107,7 +107,7 @@ Go to **Custom apps**. You should see your app listed and be able to enter a job
   * Go
   * CrowdStrike Foundry Function Go SDK (https://github.com/CrowdStrike/foundry-fn-go)
 * RTR scripts
-  * Powershell
+  * PowerShell
 * UI
   * HTML, CSS
   * TypeScript, React
