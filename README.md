@@ -104,7 +104,7 @@ You should be able to create a job and save it.
 
 * **Collections.** Used by the app to store state information, such as metadata about created jobs, execution history, and an audit log.
 * **Functions.** Backend business logic for invoking workflows, normalizing and aggregating data to be returned to the UI, and modifying the state of the collections.
-* **LogScale queries.** Query results of RTR script execution to extract metadata about on which hosts the scripts successfully executed.
+* **Queries.** Query results of RTR script execution to extract metadata about on which hosts the scripts successfully executed.
 * **RTR scripts.** Executes executables on a target system. Removes files from a targeted system.
 * **UI navigation.** Adds the app to the Falcon navigation for easy access.
 * **UI pages.** Custom UI pages to display results and manage the app.
