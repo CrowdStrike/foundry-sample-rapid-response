@@ -12,10 +12,10 @@ create an app from this template using the CLI.
 ## Description
 
 The Rapid Response sample Foundry app provides a way to orchestrate execution of executables and removal of files
-across Windows-based systems, either by targeting specifying specific hosts or by targeting the host groups.
+across Windows-based systems, either by targeting specific hosts or by targeting the host groups.
 
 This app illustrates the following functionality amongst other components:
-* use of LogScale saved searches
+* use of saved searches
 * use of RTR script orchestration via workflows, including scheduling
 * use of UI components and extensions
 * use of file uploads
@@ -104,7 +104,7 @@ You should be able to create a job and save it.
 
 * **Collections.** Used by the app to store state information, such as metadata about created jobs, execution history, and an audit log.
 * **Functions.** Backend business logic for invoking workflows, normalizing and aggregating data to be returned to the UI, and modifying the state of the collections.
-* **LogScale queries.** Query results of RTR script execution from LogScale to extract metadata about on which hosts the scripts successfully executed.
+* **LogScale queries.** Query results of RTR script execution to extract metadata about on which hosts the scripts successfully executed.
 * **RTR scripts.** Executes executables on a target system. Removes files from a targeted system.
 * **UI navigation.** Adds the app to the Falcon navigation for easy access.
 * **UI pages.** Custom UI pages to display results and manage the app.
@@ -130,7 +130,7 @@ You should be able to create a job and save it.
 * `rtr-scripts`
   * `check_file_exist`: RTR script which checks if an executable or file is present on a Windows system.
   * `remove_file`: RTR script which removes a file or executable if the file is present on a Windows system.
-* `saved-searches/Query_By_WorkflowRootExecutionID`: LogScale saved search for retrieving events by a workflow execution ID.
+* `saved-searches/Query_By_WorkflowRootExecutionID`: Saved search for retrieving events by a workflow execution ID.
 * `ui/pages/rapid-response-react`: Single Page Application which serves as the frontend of the app.
 * `workflows`: Workflow template definitions. Fusion workflows are created from the templates in this directory.
   * `Install_software_Job_Template.yml`: Workflow to upload and invoke an executable via RTR on hosts. Results are written to LogScale.
