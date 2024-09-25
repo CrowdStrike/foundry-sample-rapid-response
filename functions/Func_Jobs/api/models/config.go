@@ -4,15 +4,12 @@ import (
 	"context"
 	"strings"
 
-	fdk "github.com/CrowdStrike/foundry-fn-go"
 	"github.com/crowdstrike/gofalcon/falcon"
 	"github.com/crowdstrike/gofalcon/falcon/client"
 )
 
 type Config struct {
 	Cloud                           falcon.CloudType
-	JobsCollection                  string
-	AuditLogsCollection             string
 	RemoveSystemWorkflowTemplateID  string
 	RemoveConditionNodeID           string
 	InstallSystemWorkflowTemplateID string
@@ -24,19 +21,19 @@ type Config struct {
 // FalconClient returns a new instance of the GoFalcon client.
 // If the client cannot be created or if there is no access token in the request,
 // an error is returned.
-func FalconClient(ctx context.Context, conf *Config, r fdk.Request) (*client.CrowdStrikeAPISpecification, error) {
-	token := strings.TrimSpace(r.AccessToken)
+func FalconClient(ctx context.Context, cloud falcon.CloudType, accessToken string) (*client.CrowdStrikeAPISpecification, error) {
+	token := strings.TrimSpace(accessToken)
 	if token == "" {
 		return falcon.NewClient(&falcon.ApiConfig{
 			AccessToken: token,
-			Cloud:       conf.Cloud,
+			Cloud:       cloud,
 			Context:     context.Background(),
 			Debug:       true,
 		})
 	}
 	return falcon.NewClient(&falcon.ApiConfig{
 		AccessToken: token,
-		Cloud:       conf.Cloud,
+		Cloud:       cloud,
 		Context:     ctx,
 	})
 }

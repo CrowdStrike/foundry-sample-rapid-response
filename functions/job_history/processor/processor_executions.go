@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log/slog"
 	"math"
 	"net/http"
 	"net/url"
@@ -11,21 +12,21 @@ import (
 	"strings"
 	"time"
 
-	fdk "github.com/CrowdStrike/foundry-fn-go"
 	"github.com/Crowdstrike/foundry-sample-rapid-response/functions/job_history/pkg"
 	"github.com/Crowdstrike/foundry-sample-rapid-response/functions/job_history/storagec"
-	"github.com/sirupsen/logrus"
+
+	fdk "github.com/CrowdStrike/foundry-fn-go"
 )
 
 // ExecutionsProcessor returns the job execution history.
 type ExecutionsProcessor struct {
-	logger      logrus.FieldLogger
+	logger      *slog.Logger
 	strgc       storagec.StorageC
 	nowProvider func() time.Time
 }
 
 // NewExecutionsProcessor returns a new ExecutionsProcessor instance.
-func NewExecutionsProcessor(strgc storagec.StorageC, logger logrus.FieldLogger, opts ...func(p *ExecutionsProcessor)) *ExecutionsProcessor {
+func NewExecutionsProcessor(strgc storagec.StorageC, logger *slog.Logger, opts ...func(p *ExecutionsProcessor)) *ExecutionsProcessor {
 	p := &ExecutionsProcessor{
 		logger:      logger,
 		strgc:       strgc,
@@ -63,7 +64,7 @@ func (p *ExecutionsProcessor) Process(ctx context.Context, req fdk.Request) Resp
 			}
 		}
 		msg := fmt.Sprintf("failed to fetch all objects: %s", err)
-		p.logger.Errorln(msg)
+		p.logger.Error(msg)
 		return Response{
 			Body: jobExecRespJSON(nil, nil, []fdk.APIError{{Code: http.StatusInternalServerError, Message: msg}}, p.logger),
 			Code: http.StatusInternalServerError,
@@ -73,7 +74,7 @@ func (p *ExecutionsProcessor) Process(ctx context.Context, req fdk.Request) Resp
 
 	jobExecs, err = p.computeDurations(jobExecs)
 	if err != nil {
-		p.logger.Errorf("failed to compute duration for job executions: %s", err)
+		p.logger.Error("failed to compute duration for job executions: " + err.Error())
 	}
 
 	nextPrevOffset, nextNextOffset := p.pagination(filterReq.Offset.Direction, filterReq.Offset.Page, filterReq.Offset.Offset, filterReq.Limit, offset, total)
@@ -91,7 +92,7 @@ func (p *ExecutionsProcessor) Process(ctx context.Context, req fdk.Request) Resp
 	)
 	if resp == nil {
 		msg := "failed to serialize job execution response"
-		p.logger.Errorln(msg)
+		p.logger.Error(msg)
 		return Response{
 			Body: jobExecRespJSON(nil, nil, []fdk.APIError{{Code: http.StatusInternalServerError, Message: msg}}, p.logger),
 			Code: http.StatusInternalServerError,

@@ -2,7 +2,6 @@ package api
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"math"
 	"net/http"
@@ -10,9 +9,10 @@ import (
 	"strings"
 	"sync"
 
-	fdk "github.com/CrowdStrike/foundry-fn-go"
 	"github.com/Crowdstrike/foundry-sample-rapid-response/functions/Func_Jobs/api/models"
 	"github.com/crowdstrike/gofalcon/falcon/client"
+
+	fdk "github.com/CrowdStrike/foundry-fn-go"
 )
 
 const (
@@ -25,79 +25,37 @@ const (
 	prevPage = -1
 )
 
-// JobsHandler executes a given request to the FaaS function.
-type JobsHandler struct {
-	conf *models.Config
-}
-
-// NewJobsHandler returns a new instance of JobsHandler.
-func NewJobsHandler(conf *models.Config) *JobsHandler {
-	return &JobsHandler{
-		conf: conf,
-	}
-}
-
-func (h *JobsHandler) Handle(ctx context.Context, request fdk.Request) fdk.Response {
-	response := fdk.Response{}
-	var err error
-
-	fc, err := models.FalconClient(ctx, h.conf, request)
-	if err != nil {
-		response.Code = http.StatusInternalServerError
-		response.Errors = append(response.Errors, fdk.APIError{Code: http.StatusBadRequest, Message: "fail to initialize client"})
-		return response
-	}
-
-	jobs, errs := h.jobDetails(ctx, &request, fc)
+func handleAppJobDetails(ctx context.Context, r fdk.Request) fdk.Response {
+	jobs, errs := jobDetails(ctx, &r, getFalconClient(ctx))
 	if len(errs) != 0 {
-		response.Code = http.StatusInternalServerError
-		response.Errors = errs
-		return response
+		return fdk.ErrResp(errs...)
 	}
-
-	body, err := json.Marshal(jobs)
-	if err != nil {
-		response.Code = http.StatusInternalServerError
-		response.Errors = []fdk.APIError{models.NewAPIError(http.StatusInternalServerError, fmt.Sprintf("failed to marshal the response body with err:%v", err))}
-		return response
-	}
-
-	response.Body = json.RawMessage(body)
-	response.Code = http.StatusOK
-	return response
+	return fdk.Response{Code: http.StatusOK, Body: fdk.JSON(jobs)}
 }
 
 // jobInfo gets all the jobs for the app.
-func (h *JobsHandler) jobDetails(ctx context.Context, request *fdk.Request, fc *client.CrowdStrikeAPISpecification) (*models.JobsResponse, []fdk.APIError) {
+func jobDetails(ctx context.Context, request *fdk.Request, fc *client.CrowdStrikeAPISpecification) (*models.JobsResponse, []fdk.APIError) {
 	// Default limit set to 10
 	limit := 10
-	var response models.JobsResponse
-
-	var errs []fdk.APIError
-	var err error
-
-	response.Resources = make([]models.Job, 0)
-	response.Meta = &models.Paging{
-		Limit: limit,
-	}
 
 	limitParam := request.Params.Query.Get(queryLimit)
 	if limitParam != "" {
+		var err error
 		limit, err = strconv.Atoi(limitParam)
 		if err != nil {
-			return &response, []fdk.APIError{{
+			return nil, []fdk.APIError{{
 				Code:    http.StatusBadRequest,
 				Message: fmt.Sprintf("limit is not an integer: %v", err),
 			}}
-
 		}
+
 	}
 
 	nOffset := request.Params.Query.Get(queryPrevOffset)
 	qOffset := request.Params.Query.Get(queryNextOffset)
 
 	if qOffset != "" && nOffset != "" {
-		return &response, []fdk.APIError{{
+		return nil, []fdk.APIError{{
 			Code:    http.StatusBadRequest,
 			Message: fmt.Sprintf("previous and next both offset cannot be provided."),
 		}}
@@ -120,7 +78,7 @@ func (h *JobsHandler) jobDetails(ctx context.Context, request *fdk.Request, fc *
 
 	fqlFilter, err := models.NewFQLQuery(filters)
 	if err != nil {
-		return &response, []fdk.APIError{{
+		return nil, []fdk.APIError{{
 			Code:    http.StatusInternalServerError,
 			Message: fmt.Errorf("error constructing FQL query: %s", err.Error()).Error(),
 		}}
@@ -133,7 +91,7 @@ func (h *JobsHandler) jobDetails(ctx context.Context, request *fdk.Request, fc *
 		}}
 	}
 	searchReq := models.SearchObjectsRequest{
-		Collection: h.conf.JobsCollection,
+		Collection: collectionJobs,
 		Limit:      limit,
 		Offset:     offset,
 		Sort:       fqlSort,
@@ -147,16 +105,19 @@ func (h *JobsHandler) jobDetails(ctx context.Context, request *fdk.Request, fc *
 
 	jobsList := searchResponse.ObjectKeys
 	totalRemain := len(jobsList)
-	response.Resources = make([]models.Job, 0)
-	response.Meta = &models.Paging{
-		Limit: limit,
-		Total: searchResponse.Total,
-		Count: totalRemain,
+
+	response := models.JobsResponse{
+		Resources: make([]models.Job, 0),
+		Meta: &models.Paging{
+			Limit: limit,
+			Total: searchResponse.Total,
+			Count: totalRemain,
+		},
 	}
 
 	// no jobs or end of jobs case when the offset == elem
 	if totalRemain == 0 {
-		return &response, errs
+		return &response, nil
 	}
 
 	errChan := make(chan error, limit)
@@ -170,20 +131,22 @@ func (h *JobsHandler) jobDetails(ctx context.Context, request *fdk.Request, fc *
 		go func(id string, count int) {
 			defer wg.Done()
 
-			job, errs := jobInfo(ctx, id, h.conf, fc)
+			job, errs := jobInfo(ctx, id, fc)
 			if len(errs) != 0 {
 				var jobGetErr error
 				jobGetErr = fmt.Errorf("failed to get job: %s id: err: %v", id, errs)
 				errChan <- jobGetErr
 				return
 			}
-			jobsDetail[count] = job
+			// TODO: race condition here, could have two go routines writing at once
+			jobsDetail[count] = &job
 		}(id, idx)
 	}
 
 	wg.Wait()
 	close(errChan)
 
+	var errs []fdk.APIError
 	//Test comments
 	for err := range errChan {
 		errs = append(errs, models.NewAPIError(http.StatusInternalServerError, err.Error()))

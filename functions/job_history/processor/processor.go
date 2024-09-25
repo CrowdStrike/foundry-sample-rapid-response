@@ -2,14 +2,15 @@ package processor
 
 import (
 	"encoding/json"
+	"log/slog"
 	"time"
 
-	fdk "github.com/CrowdStrike/foundry-fn-go"
 	"github.com/Crowdstrike/foundry-sample-rapid-response/functions/job_history/pkg"
-	"github.com/sirupsen/logrus"
+
+	fdk "github.com/CrowdStrike/foundry-fn-go"
 )
 
-func jobExecRespJSON(page *paging, j []pkg.JobExecution, e []fdk.APIError, logger logrus.FieldLogger) []byte {
+func jobExecRespJSON(page *paging, j []pkg.JobExecution, e []fdk.APIError, logger *slog.Logger) []byte {
 	if j == nil {
 		j = make([]pkg.JobExecution, 0)
 	}
@@ -19,7 +20,7 @@ func jobExecRespJSON(page *paging, j []pkg.JobExecution, e []fdk.APIError, logge
 	}
 	rJSON, err := json.Marshal(r)
 	if err != nil {
-		logger.Errorf("failed to serialize response: %s", err)
+		logger.Error("failed to serialize response: " + err.Error())
 		return nil
 	}
 	return rJSON

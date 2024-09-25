@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log/slog"
 	"strconv"
 	"strings"
 	"time"
@@ -11,7 +12,6 @@ import (
 	"github.com/crowdstrike/gofalcon/falcon/client/saved_searches"
 	"github.com/crowdstrike/gofalcon/falcon/models"
 	"github.com/eapache/go-resiliency/retrier"
-	"github.com/sirupsen/logrus"
 )
 
 // SearchC represents a search client.
@@ -23,13 +23,13 @@ type SearchC interface {
 // Client is the client.
 type Client struct {
 	c      saved_searches.ClientService
-	logger logrus.FieldLogger
+	logger *slog.Logger
 }
 
 var _ SearchC = (*Client)(nil)
 
 // NewClient returns a new search client.
-func NewClient(c saved_searches.ClientService, logger logrus.FieldLogger) *Client {
+func NewClient(c saved_searches.ClientService, logger *slog.Logger) *Client {
 	return &Client{
 		c:      c,
 		logger: logger,
@@ -45,13 +45,13 @@ func (f *Client) Search(ctx context.Context, req SearchRequest) (SearchResponse,
 		return SearchResponse{}, nil
 	}
 	if req.InitialFetchPause >= 0 {
-		f.logger.Print("pausing to allow job to run")
+		f.logger.Debug("pausing to allow job to run")
 		if req.InitialFetchPause > 0 {
 			time.Sleep(req.InitialFetchPause)
 		} else {
 			time.Sleep(5 * time.Second)
 		}
-		f.logger.Print("waking up to fetch results")
+		f.logger.Debug("waking up to fetch results")
 	}
 
 	resp, err := f.fetchSearchResults(ctx, req, jobID)
@@ -73,7 +73,7 @@ func (f *Client) startSearchJob(ctx context.Context, req SearchRequest) (string,
 	params.IncludeTestData = &boolFalse
 	params.Mode = &mode
 
-	f.logger.Println("starting search")
+	f.logger.Debug("starting search")
 	res, err := f.c.Execute(params)
 	if err != nil {
 		return "", fmt.Errorf("attempting to create search failed: %s", err)
@@ -181,10 +181,8 @@ func (f *Client) fetchSearchResultsCall(ctx context.Context, jobID string, offse
 	params.Limit = &limit
 	params.Offset = &os
 
-	f.logger.WithField("job_id", jobID).
-		WithField("offset", os).
-		WithField("limit", limit).
-		Info("fetching search results")
+	f.logger.Info("fetching search results", "job_id", jobID, "offset", os, "limit", limit)
+
 	resp, err := f.c.Result(params)
 	if err != nil {
 		return savedSearchFetchResource{}, fmt.Errorf("failed to issue HTTP request: %s", err)
