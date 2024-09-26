@@ -1,0 +1,44 @@
+name: Sample CI
+on: [ push, pull_request ]
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21.x'
+      - name: Install Go dependencies
+        run: |
+          cd functions/Func_Jobs
+          go get .
+          cd ../job_history
+          go get .
+      - name: Build Go functions
+        run: |
+          go build -C functions/Func_Jobs
+          go build -C functions/job_history
+      - name: Use Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'yarn'
+          cache-dependency-path: ui/pages/rapid-response-react
+      - name: Run yarn install
+        uses: borales/actions-yarn@v5
+        with:
+          cmd: install
+          dir: ui/pages/rapid-response-react
+      - name: Build React app
+        uses: borales/actions-yarn@v5
+        with:
+          cmd: build
+          dir: ui/pages/rapid-response-react
+      - name: Test the React app
+        uses: borales/actions-yarn@v5
+        with:
+          cmd: test
+          dir: ui/pages/rapid-response-react
