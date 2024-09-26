@@ -26,7 +26,7 @@ jobs:
         with:
           node-version: 20
           cache: 'yarn'
-          cache-dependency-path: ui/pages/rapid-response-react
+          cache-dependency-path: ui/pages/rapid-response-react/yarn.lock
       - name: Run yarn install
         uses: borales/actions-yarn@v5
         with:
