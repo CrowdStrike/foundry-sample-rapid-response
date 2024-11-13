@@ -28,13 +28,13 @@ func NewJobHandler(conf *models.Config) *JobHandler {
 
 func (h *JobHandler) Handle(ctx context.Context, request fdk.Request) fdk.Response {
 	response := fdk.Response{}
-	if request.Params.Query == nil {
+	if request.Queries == nil {
 		response.Code = http.StatusBadRequest
 		response.Errors = append(response.Errors, fdk.APIError{Code: http.StatusBadRequest, Message: "Request does not have query params"})
 		return response
 	}
 
-	queryParams := request.Params.Query[queryIDParam]
+	queryParams := request.Queries[queryIDParam]
 	if len(queryParams) != 1 {
 		response.Code = http.StatusBadRequest
 		response.Errors = append(response.Errors, fdk.APIError{Code: http.StatusBadRequest, Message: fmt.Sprintf("query params %s length: %d is incorrect", queryIDParam, len(queryIDParam))})
