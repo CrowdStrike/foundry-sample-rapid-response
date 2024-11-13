@@ -68,7 +68,7 @@ func (h *AuditsHandler) auditDetails(ctx context.Context, request *fdk.Request, 
 		Limit: limit,
 	}
 
-	limitParam := request.Params.Query.Get(queryLimit)
+	limitParam := request.Queries.Get(queryLimit)
 	if limitParam != "" {
 		limit, err = strconv.Atoi(limitParam)
 		if err != nil {
@@ -80,9 +80,9 @@ func (h *AuditsHandler) auditDetails(ctx context.Context, request *fdk.Request, 
 		}
 	}
 
-	nOffset := request.Params.Query.Get(queryPrevOffset)
-	qOffset := request.Params.Query.Get(queryNextOffset)
-	filter := request.Params.Query.Get(queryParamFilter)
+	nOffset := request.Queries.Get(queryPrevOffset)
+	qOffset := request.Queries.Get(queryNextOffset)
+	filter := request.Queries.Get(queryParamFilter)
 
 	if filter != "" {
 		pair := strings.Split(filter, ":")
