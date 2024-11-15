@@ -106,6 +106,7 @@ auth:
         - real-time-response-admin:write
         - devices:read
         - devices:write
+        - host-group:read
         - workflow:write
         - workflow:read
         - usermgmt:read
