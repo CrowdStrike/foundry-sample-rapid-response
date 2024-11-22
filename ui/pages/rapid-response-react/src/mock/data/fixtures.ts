@@ -225,7 +225,7 @@ export const jobRR05: RRJobType = {
   version: 0,
   id: "5",
   name: "Fifth Job Test RR",
-  description: "Fifth Job Test RR",
+  description: "",
   notification_emails: null,
   notifications: null,
   draft: false,
