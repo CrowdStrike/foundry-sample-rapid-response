@@ -3,7 +3,7 @@ module github.com/Crowdstrike/foundry-sample-rapid-response/functions/Func_Jobs
 go 1.21
 
 require (
-	github.com/CrowdStrike/foundry-fn-go v0.23.0
+	github.com/CrowdStrike/foundry-fn-go v0.23.1
 	github.com/crowdstrike/gofalcon v0.5.0-rc1.0.20231018211136-aa9a14d480c8
 	github.com/go-openapi/runtime v0.26.0
 	github.com/robfig/cron/v3 v3.0.1
