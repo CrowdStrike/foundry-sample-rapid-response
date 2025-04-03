@@ -1,5 +1,7 @@
 /* eslint-env node */
 
+import vitest from "@vitest/eslint-plugin";
+
 module.exports = {
   root: true,
   env: { browser: true, es2020: true },
@@ -22,7 +24,13 @@ module.exports = {
     project: true,
     tsconfigRootDir: __dirname,
   },
-  plugins: ["react-refresh", "prettier", "react", "no-relative-import-paths"],
+  plugins: [
+    "no-relative-import-paths",
+    "prettier",
+    "react-refresh",
+    "react",
+    vitest,
+  ],
   ignorePatterns: ["vite.config.js", "tests/setup.ts"],
   rules: {
     "prettier/prettier": "error",

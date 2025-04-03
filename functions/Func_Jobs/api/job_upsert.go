@@ -43,7 +43,7 @@ func (h *UpsertJobHandler) Handle(ctx context.Context, request fdk.Request) fdk.
 		return response
 	}
 
-	queryParams := request.Params.Query.Get(queryIsDraft)
+	queryParams := request.Queries.Get(queryIsDraft)
 	if queryParams == "true" {
 		isDraft = true
 	}

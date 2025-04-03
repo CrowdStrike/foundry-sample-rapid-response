@@ -40,9 +40,11 @@ function Header({ job }: Props) {
         ) : null}
       </div>
       <div className="flex flex-col gap-2">
-        <h2 className="text-2xl">Description</h2>
         {job.description ? (
-          <p className="text-base text-csbodyandlabels">{job.description}</p>
+          <>
+            <h2 className="text-2xl">Description</h2>
+            <p className="text-base text-csbodyandlabels">{job.description}</p>
+          </>
         ) : null}
         {hostGroups || hosts ? (
           <p className="text-base text-csbodyandlabels">

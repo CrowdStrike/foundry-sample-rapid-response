@@ -39,7 +39,7 @@ func NewExecutionsProcessor(strgc storagec.StorageC, logger logrus.FieldLogger, 
 
 // Process returns any job execution histories that match the provided request parameters.
 func (p *ExecutionsProcessor) Process(ctx context.Context, req fdk.Request) Response {
-	queryParams := req.Params.Query
+	queryParams := req.Queries
 	if len(queryParams) == 0 {
 		queryParams = make(url.Values)
 	}

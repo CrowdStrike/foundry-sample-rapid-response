@@ -48,7 +48,7 @@ Install [Homebrew](https://docs.brew.sh/Installation). Then, add the Foundry CLI
 
 ```shell
 brew tap crowdstrike/foundry-cli
-brew install foundry
+brew install crowdstrike/foundry-cli/foundry
 ```
 
 Run `foundry version` to verify it's installed correctly.
