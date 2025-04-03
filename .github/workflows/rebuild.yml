@@ -1,0 +1,45 @@
+name: Rebuild sample
+on:
+  schedule:
+    - cron: 0 0 * * 2
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    permissions:
+      contents: write # for peter-evans/create-pull-request to create branch
+      pull-requests: write # for peter-evans/create-pull-request to create a PR
+    name: Rebuild
+    if: github.repository == 'CrowdStrike/foundry-sample-rapid-response'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'yarn'
+      - name: Run yarn install
+        uses: borales/actions-yarn@v5
+        with:
+          cmd: install
+          dir: ui/pages/rapid-response-react
+      - name: Build React app
+        uses: borales/actions-yarn@v5
+        with:
+          cmd: build
+          dir: ui/pages/rapid-response-react
+      - name: Create commit
+        run: |
+          git add .
+          git commit -a -m "Rebuild with latest dependencies" || true
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'Rebuild with latest dependencies'
+          title: 'Rebuild with latest dependencies'
+          body: Weekly build with latest dependencies.
+          labels: 'dependencies'
