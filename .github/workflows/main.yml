@@ -21,10 +21,10 @@ jobs:
         run: |
           go build -C functions/Func_Jobs
           go build -C functions/job_history
-      - name: Use Node 20
+      - name: Use Node 22
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'yarn'
           cache-dependency-path: ui/pages/rapid-response-react/yarn.lock
       - name: Run yarn install
