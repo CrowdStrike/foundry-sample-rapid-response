@@ -5,7 +5,7 @@ go 1.21
 require (
 	github.com/CrowdStrike/foundry-fn-go v0.24.0
 	github.com/crowdstrike/gofalcon v0.5.0-rc1.0.20231018211136-aa9a14d480c8
-	github.com/eapache/go-resiliency v1.4.0
+	github.com/eapache/go-resiliency v1.7.0
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/sirupsen/logrus v1.9.3
 	github.com/spaolacci/murmur3 v1.1.0
