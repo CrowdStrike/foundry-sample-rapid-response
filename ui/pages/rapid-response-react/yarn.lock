@@ -230,14 +230,14 @@
     "@babel/helper-validator-identifier" "^7.22.20"
     to-fast-properties "^2.0.0"
 
-"@crowdstrike/foundry-js@0.9.0":
-  version "0.9.0"
-  resolved "https://registry.npmjs.org/@crowdstrike/foundry-js/-/foundry-js-0.9.0.tgz#739ffa08cb66aab14dc346989b57db8b51f22f6a"
-  integrity sha512-drzUa9zbhAX82FqpgxK69fzso8359ZKvNX1jOuHVVpPjrQqw1R01yKo7NZCPLc3revp6agLhJtbTP3VmT8HzrA==
+"@crowdstrike/foundry-js@0.17.1":
+  version "0.17.1"
+  resolved "https://registry.yarnpkg.com/@crowdstrike/foundry-js/-/foundry-js-0.17.1.tgz#00f513a97425bda24d40bb583ad0dd65af519ef0"
+  integrity sha512-HRsQ/ELijdIMWlnDkUBO/P2/Ju8Uf4EcpyCv9eLMAMCIHN5JzaILS/hWG/KkbgCFeOag961Y6+wktCuJ7MqMHA==
   dependencies:
-    emittery "^1.0.1"
+    emittery "^1.0.3"
     typescript-memoize "^1.1.1"
-    uuid "9.0.0"
+    uuid "^9.0.1"
 
 "@ctrl/tinycolor@^3.5.0":
   version "3.6.1"
@@ -1845,10 +1845,10 @@ electron-to-chromium@^1.4.535:
   resolved "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.553.tgz#56fd65afddbd713c52f0e95d0223b3368f520865"
   integrity sha512-HiRdtyKS2+VhiXvjhMvvxiMC33FJJqTA5EB2YHgFZW6v7HkK4Q9Ahv2V7O2ZPgAjw+MyCJVMQvigj13H8t+wvA==
 
-emittery@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.npmjs.org/emittery/-/emittery-1.0.1.tgz#e0cf36e2d7eef94dbd025969f642d57ae50a56cd"
-  integrity sha512-2ID6FdrMD9KDLldGesP6317G78K7km/kMcwItRtVFva7I/cSEOIaLpewaUb+YLXVwdAp3Ctfxh/V5zIl1sj7dQ==
+emittery@^1.0.3:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/emittery/-/emittery-1.1.0.tgz#7b5a00ec9a315fa9bfabeba0673920a1bb385f1b"
+  integrity sha512-rsX7ktqARv/6UQDgMaLfIqUWAEzzbCQiVh7V9rhDXp6c37yoJcks12NVD+XPkgl4AEavmNhVfrhGoqYwIsMYYA==
 
 emoji-regex@^8.0.0:
   version "8.0.0"
@@ -4702,10 +4702,10 @@ util-deprecate@^1.0.2:
   resolved "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==
 
-uuid@9.0.0:
-  version "9.0.0"
-  resolved "https://registry.npmjs.org/uuid/-/uuid-9.0.0.tgz#592f550650024a38ceb0c562f2f6aa435761efb5"
-  integrity sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==
+uuid@^9.0.1:
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-9.0.1.tgz#e188d4c8853cc722220392c424cd637f32293f30"
+  integrity sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==
 
 vite-node@2.1.9:
   version "2.1.9"
