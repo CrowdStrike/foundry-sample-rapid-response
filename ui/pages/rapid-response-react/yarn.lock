@@ -1138,10 +1138,10 @@
     "@types/babel__core" "^7.20.2"
     react-refresh "^0.14.0"
 
-"@vitest/eslint-plugin@^1.1.10":
-  version "1.1.10"
-  resolved "https://registry.yarnpkg.com/@vitest/eslint-plugin/-/eslint-plugin-1.1.10.tgz#db46986904493b9824057f4385cd75b49cad320f"
-  integrity sha512-uScH5Kz5v32vvtQYB2iodpoPg2mGASK+VKpjlc2IUgE0+16uZKqVKi2vQxjxJ6sMCQLBs4xhBFZlmZBszsmfKQ==
+"@vitest/eslint-plugin@^1.1.43":
+  version "1.1.43"
+  resolved "https://registry.yarnpkg.com/@vitest/eslint-plugin/-/eslint-plugin-1.1.43.tgz#00b43b5d173f3f9dc24a8f7c704c9beb5d791830"
+  integrity sha512-OLoUMO67Yg+kr7E6SjF5+Qvl2f6uNJ7ImQYnXT8WgnPiZE41ZQBsnzn70jehXrhFVadphHs2smk+yl0TFKLV5Q==
 
 "@vitest/expect@2.1.9":
   version "2.1.9"
