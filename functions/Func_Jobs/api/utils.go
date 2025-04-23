@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strconv"
 	"strings"
 	"time"
 
@@ -183,7 +184,13 @@ func search(ctx context.Context, req models.SearchObjectsRequest, fc *client.Cro
 	sor := models.SearchObjectsResponse{}
 	if pagination := payload.Meta.Pagination; pagination != nil {
 		sor.Total = int64PAsInt(pagination.Total)
-		sor.Offset = int32PAsInt(pagination.Offset)
+		sor.Offset, err = strconv.Atoi(pagination.Offset)
+		if err != nil {
+			return models.SearchObjectsResponse{}, []fdk.APIError{{
+				Code:    http.StatusInternalServerError,
+				Message: err.Error(),
+			}}
+		}
 	}
 	res := payload.Resources
 	if len(res) == 0 {
@@ -266,11 +273,11 @@ func provisionWorkflowForExec(ctx context.Context, req *models.Job, conf *models
 	reqBody.Parameters.Activities = &model.ParameterActivityProvisionParameters{}
 	reqBody.Parameters.Activities.Configuration = append(reqBody.Parameters.Activities.Configuration, &emailNotification)
 
-	provisionReq := workflows.NewProvisionSystemDefinitionParams()
+	provisionReq := workflows.NewProvisionParams()
 	provisionReq.SetBody(reqBody)
 	provisionReq.Context = ctx
 
-	resp, err := fc.Workflows.ProvisionSystemDefinition(provisionReq)
+	resp, err := fc.Workflows.Provision(provisionReq)
 	if err != nil {
 		return "", []fdk.APIError{{
 			Code:    http.StatusInternalServerError,
@@ -389,10 +396,10 @@ func provisionWorkflowWithAct(ctx context.Context, req *models.Job, conf *models
 	conditionForHostAndGroupsName.Fields = append(conditionForHostAndGroupsName.Fields, hostNameCondition, groupNameCondition)
 	reqBody.Parameters.Conditions = append(reqBody.Parameters.Conditions, &conditionForHostAndGroupsName)
 
-	provisionReq := workflows.NewProvisionSystemDefinitionParams()
+	provisionReq := workflows.NewProvisionParams()
 	provisionReq.SetBody(reqBody)
 	provisionReq.SetContext(ctx)
-	resp, err := fc.Workflows.ProvisionSystemDefinition(provisionReq)
+	resp, err := fc.Workflows.Provision(provisionReq)
 	if err != nil {
 		return "", []fdk.APIError{{
 			Code:    http.StatusInternalServerError,

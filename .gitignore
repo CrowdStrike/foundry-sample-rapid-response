@@ -1,2 +1,4 @@
 .idea
 go.sum
+/functions/Func_Jobs/Func_Jobs
+/functions/job_history/job_history
