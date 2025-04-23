@@ -1,6 +1,7 @@
 module github.com/Crowdstrike/foundry-sample-rapid-response/functions/Func_Jobs
 
 go 1.21
+
 toolchain go1.24.1
 
 require (
