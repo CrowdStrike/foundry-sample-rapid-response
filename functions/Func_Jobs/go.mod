@@ -6,7 +6,7 @@ toolchain go1.24.1
 
 require (
 	github.com/CrowdStrike/foundry-fn-go v0.24.0
-	github.com/crowdstrike/gofalcon v0.13.5
+	github.com/crowdstrike/gofalcon v0.14.0
 	github.com/go-openapi/runtime v0.28.0
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/sirupsen/logrus v1.9.3
