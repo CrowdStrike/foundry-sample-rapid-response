@@ -244,8 +244,8 @@ func (f *Client) Search(ctx context.Context, req SearchObjectsRequest) (SearchOb
 
 	sor := SearchObjectsResponse{}
 	if pagination := payload.Meta.Pagination; pagination != nil {
-		sor.Total = int64PAsInt(pagination.Total)
-		sor.Offset = int32PAsInt(pagination.Offset)
+		sor.Total = int(pagination.Total)
+		sor.Offset = int(pagination.Offset)
 	}
 	res := payload.Resources
 	if len(res) == 0 {
@@ -323,17 +323,4 @@ func asString(s *string) string {
 		return ""
 	}
 	return *s
-}
-
-func int64PAsInt(i *int64) int {
-	if i == nil {
-		return 0
-	}
-	return int(*i)
-}
-func int32PAsInt(i *int32) int {
-	if i == nil {
-		return 0
-	}
-	return int(*i)
 }
