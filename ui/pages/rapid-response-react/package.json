@@ -34,7 +34,7 @@
     "@vitejs/plugin-react": "^4.4.1",
     "@vitest/eslint-plugin": "^1.1.43",
     "autoprefixer": "^10.4.21",
-    "eslint": "^9.15.0",
+    "eslint": "^9.26.0",
     "eslint-plugin-no-relative-import-paths": "^1.5.2",
     "eslint-plugin-prettier": "^5.2.6",
     "eslint-plugin-react": "^7.37.5",
