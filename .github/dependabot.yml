@@ -6,8 +6,8 @@ updates:
       interval: "weekly"
   - package-ecosystem: "gomod"
     directories:
-      - "functions/Func_Jobs"
-      - "functions/job_history"
+      - "/functions/Func_Jobs/"
+      - "/functions/job_history/"
     schedule:
       interval: "weekly"
   - package-ecosystem: "github-actions"
