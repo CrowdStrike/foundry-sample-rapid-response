@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/crowdstrike/gofalcon/falcon/client/saved_searches"
+	"github.com/crowdstrike/gofalcon/falcon/client/foundry_logscale"
 	"github.com/crowdstrike/gofalcon/falcon/models"
 	"github.com/eapache/go-resiliency/retrier"
 	"github.com/sirupsen/logrus"
@@ -22,14 +22,14 @@ type SearchC interface {
 
 // Client is the client.
 type Client struct {
-	c      saved_searches.ClientService
+	c      foundry_logscale.ClientService
 	logger logrus.FieldLogger
 }
 
 var _ SearchC = (*Client)(nil)
 
 // NewClient returns a new search client.
-func NewClient(c saved_searches.ClientService, logger logrus.FieldLogger) *Client {
+func NewClient(c foundry_logscale.ClientService, logger logrus.FieldLogger) *Client {
 	return &Client{
 		c:      c,
 		logger: logger,
@@ -63,15 +63,14 @@ func (f *Client) Search(ctx context.Context, req SearchRequest) (SearchResponse,
 
 func (f *Client) startSearchJob(ctx context.Context, req SearchRequest) (string, error) {
 	boolFalse := false
-	mode := modeAsync
-	params := saved_searches.NewExecuteParams()
+	params := foundry_logscale.NewExecuteParams()
 	params.Body = &models.ApidomainSavedSearchExecuteRequestV1{
 		Name:       "Query By WorkflowRootExecutionID",
 		Parameters: req.SearchParams,
+		Mode:       modeAsync,
 	}
 	params.Context = ctx
 	params.IncludeTestData = &boolFalse
-	params.Mode = &mode
 
 	f.logger.Println("starting search")
 	res, err := f.c.Execute(params)
@@ -175,7 +174,7 @@ func (f *Client) fetchSearchResultsPage(ctx context.Context, jobID string, maxPo
 func (f *Client) fetchSearchResultsCall(ctx context.Context, jobID string, offset int) (savedSearchFetchResource, error) {
 	limit := "1000"
 	os := strconv.Itoa(offset)
-	params := saved_searches.NewResultParams()
+	params := foundry_logscale.NewGetSearchResultsParams()
 	params.Context = ctx
 	params.JobID = jobID
 	params.Limit = &limit
@@ -185,7 +184,7 @@ func (f *Client) fetchSearchResultsCall(ctx context.Context, jobID string, offse
 		WithField("offset", os).
 		WithField("limit", limit).
 		Info("fetching search results")
-	resp, err := f.c.Result(params)
+	resp, err := f.c.GetSearchResults(params)
 	if err != nil {
 		return savedSearchFetchResource{}, fmt.Errorf("failed to issue HTTP request: %s", err)
 	}
