@@ -9,6 +9,9 @@ This app is one of several App Templates included in Foundry that you can use to
 preconfigured capabilities aligned to its business purpose. Deploy this app from the Templates page with a single click in the Foundry UI, or 
 create an app from this template using the CLI.
 
+> [!IMPORTANT]  
+> To deploy this sample app, you need access to the Falcon console.
+
 ## Description
 
 The Rapid Response sample Foundry app provides a way to orchestrate execution of executables and removal of files
@@ -70,11 +73,10 @@ foundry login
 
 Select the following permissions:
 
-- [x] Run RTR Scripts
-- [x] Run, execute, and test Workflows
-- [x] Run, execute, and test API integrations
-- [x] Run, execute, and test LogScale queries
-- [ ] (optional) Generate mock data to test your app
+- [x] Create and run RTR scripts
+- [x] Create, execute and test workflow templates
+- [x] Create, run and view API integrations
+- [x] Create, edit, delete, and list queries
 
 Deploy the app:
 
