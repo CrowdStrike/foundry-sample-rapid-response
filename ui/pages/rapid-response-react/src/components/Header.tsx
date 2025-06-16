@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { AnimatePresence, m as motion } from "framer-motion";
+import { AnimatePresence, m as motion, easeInOut } from "framer-motion";
 import { NavLink, useMatch } from "react-router-dom";
 
 const navigation = [
@@ -36,7 +36,7 @@ function Header() {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{
-          type: "easeInOut",
+          ease: easeInOut,
           duration: 0.3,
         }}
         className={`w-full inset-x-0 top-0 z-40 flex h-16 items-center border-t border-cstablecolorborder bg-mezzanine shadow-csbutton`}
