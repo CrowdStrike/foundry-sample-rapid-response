@@ -36,7 +36,7 @@ function Header() {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{
-          type: "easeinout",
+          type: "easeInOut",
           duration: 0.3,
         }}
         className={`w-full inset-x-0 top-0 z-40 flex h-16 items-center border-t border-cstablecolorborder bg-mezzanine shadow-csbutton`}
