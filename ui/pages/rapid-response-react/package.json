@@ -19,7 +19,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.58.1",
     "react-hot-toast": "^2.5.2",
-    "react-router-dom": "7.6.2",
+    "react-router-dom": "7.6.3",
     "react-select": "^5.10.1",
     "temporal-polyfill": "^0.1.1",
     "zod": "^3.25.67"
