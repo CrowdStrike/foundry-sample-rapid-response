@@ -22,3 +22,7 @@ stats.html
 *.njsproj
 *.sln
 *.sw?
+
+# Yarn
+.yarnrc.yml
+.yarn/install-state.gz
