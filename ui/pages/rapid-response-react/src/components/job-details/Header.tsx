@@ -4,6 +4,8 @@ import SlIcon from "@shoelace-style/shoelace/dist/react/icon/index.js";
 
 import { Job } from "@/lib/validations/api-validation";
 import { useHostData } from "@/lib/hooks/use-host-data";
+import { useMemo } from "react";
+import { mapHostsIdToName } from "@/lib/mappers/mapHostNames";
 
 interface Props {
   job: Job;
@@ -11,6 +13,14 @@ interface Props {
 
 function Header({ job }: Props) {
   const { hosts, hostGroups } = useHostData();
+
+  const jobHosts = useMemo(
+    () => mapHostsIdToName(job, hosts, hostGroups),
+    [job, hosts, hostGroups],
+  );
+  const hostsLabel = job.target.hosts?.length
+    ? "Targeted host(s):"
+    : "Targeted host group(s):";
 
   return (
     <>
@@ -46,17 +56,9 @@ function Header({ job }: Props) {
             <p className="text-base text-csbodyandlabels">{job.description}</p>
           </>
         ) : null}
-        {hostGroups || hosts ? (
+        {jobHosts.length ? (
           <p className="text-base text-csbodyandlabels">
-            {Array.isArray(hostGroups) && hostGroups.length > 0
-              ? `Targeted host group(s): ${hostGroups
-                  .map((group) => group.name)
-                  .join(", ")}`
-              : Array.isArray(hosts) && hosts.length > 0
-              ? `Targeted host(s): ${hosts
-                  .map((host) => host.hostname)
-                  .join(", ")}`
-              : null}
+            {hostsLabel} {jobHosts.join(", ")}
           </p>
         ) : null}
       </div>
