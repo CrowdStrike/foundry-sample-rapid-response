@@ -161,6 +161,7 @@ function EditJob() {
             },
             id: data.job.body.resource.id,
             version: data.job.body.resource.version,
+            createdAt: data.job.body.resource.created_at,
           });
           navigate("/all-jobs", {
             state: { jobName: formData.jobName, action: "edit" },
