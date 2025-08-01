@@ -26,6 +26,7 @@ export interface CreateJobArgs {
   data: ParsedZodData;
   version?: number;
   id?: string;
+  createdAt?: string;
 }
 
 function createJob(falcon: FalconApi<LocalData>) {
@@ -38,6 +39,7 @@ function createJob(falcon: FalconApi<LocalData>) {
     },
     id,
     version: jobVersion = 0,
+    createdAt,
   }: CreateJobArgs): Promise<CreateJobResponse> => {
     try {
       if (
@@ -116,6 +118,10 @@ function createJob(falcon: FalconApi<LocalData>) {
             offline_queueing: rest.isOfflineQueueing,
           },
         };
+
+        if (id && createdAt) {
+          (body as any).created_at = createdAt;
+        }
 
         const result = await createJob.put({
           path,
