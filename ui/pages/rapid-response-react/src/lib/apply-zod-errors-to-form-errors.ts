@@ -1,5 +1,5 @@
 import { UseFormSetError } from "react-hook-form";
-import { ZodSafeParseError } from "zod";
+import { SafeParseError } from "zod";
 
 import { AllSteps } from "@/lib/validations/form-validation";
 
@@ -8,10 +8,10 @@ import { AllSteps } from "@/lib/validations/form-validation";
  * to display them inside the UI
  */
 function applyZodErrorsToFormErrors(
-  parsedData: ZodSafeParseError<any>,
+  parsedData: SafeParseError<any>,
   setError: UseFormSetError<AllSteps>,
 ): void {
-  const erroredFields = parsedData.error.issues.map((issue) => {
+  const erroredFields = parsedData.error.issues.map((issue: any) => {
     return issue.path.join("-");
   }) as Array<keyof AllSteps>;
 

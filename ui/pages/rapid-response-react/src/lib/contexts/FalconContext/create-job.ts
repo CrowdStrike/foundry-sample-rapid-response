@@ -1,5 +1,5 @@
 import FalconApi, { LocalData } from "@crowdstrike/foundry-js";
-import { ZodSafeParseResult } from "zod";
+import { SafeParseReturnType } from "zod";
 
 import { FAAS } from "@/lib/constants";
 import { getUserData } from "@/lib/hooks/use-user-data";
@@ -16,10 +16,10 @@ import {
 import { asRFC3339, fromParts } from "@/lib/utils/datetime";
 
 interface ParsedZodData {
-  parsedJobDetailsData: ZodSafeParseResult<JobDetailsSchema>;
-  parsedBuildQueryData: ZodSafeParseResult<BuildQuerySchema>;
-  parsedHostSchemaData: ZodSafeParseResult<ChooseHostSchema>;
-  parsedScheduleData: ZodSafeParseResult<ScheduleSchema>;
+  parsedJobDetailsData: SafeParseReturnType<any, JobDetailsSchema>;
+  parsedBuildQueryData: SafeParseReturnType<any, BuildQuerySchema>;
+  parsedHostSchemaData: SafeParseReturnType<any, ChooseHostSchema>;
+  parsedScheduleData: SafeParseReturnType<any, ScheduleSchema>;
 }
 
 export interface CreateJobArgs {
@@ -107,7 +107,7 @@ function createJob(falcon: FalconApi<LocalData>) {
           user_name: user.username,
           name: jobName,
           description: jobDescription ?? "",
-          notifications: rest.peopleToNotify.map((option) => option.value),
+          notifications: rest.peopleToNotify.map((option: any) => option.value),
           tags: null,
           action,
           run_now: false,
