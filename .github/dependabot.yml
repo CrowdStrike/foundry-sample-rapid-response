@@ -2,6 +2,7 @@ version: 2
 updates:
   - package-ecosystem: "npm"
     directory: "/ui/pages/rapid-response-react/"
+    open-pull-requests-limit: 15
     schedule:
       interval: "weekly"
   - package-ecosystem: "gomod"
