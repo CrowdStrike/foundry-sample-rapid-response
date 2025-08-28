@@ -51,9 +51,12 @@ export const loader: Loader = ({ falcon }) => {
     });
     const safeResult = allJobsDataSchema.parse(result);
 
-    safeResult.body.meta.offset = safeResult.body.resources?.[0]?.id ?? "";
-    // Add a computed page number to render the pagination data
-    safeResult.body.meta.page = page;
+    if (safeResult.body) {
+      safeResult.body.meta.offset = safeResult.body.resources?.[0]?.id ?? "";
+      // Add a computed page number to render the pagination data
+      safeResult.body.meta.page = page;
+    }
+
 
     return safeResult;
   };
@@ -99,7 +102,7 @@ function AllJobs() {
     }
   }, [location.state]);
 
-  if (data.body.meta.total === 0) {
+  if (data.body?.meta.total === 0) {
     return <NoJobs />;
   }
 
@@ -109,22 +112,22 @@ function AllJobs() {
 
   return (
     <div className="h-alljobs-viewport relative">
-      <Header totalJobs={data.body.meta.total} />
+      <Header totalJobs={data.body?.meta.total || 0} />
       <div className="top-30 left-0 w-full flex min-h-alljobs-hosts max-h-alljobs-hosts">
         <div className="w-full overflow-y-auto">
           <Table
-            jobs={data.body.resources}
+            jobs={data.body?.resources || []}
             handleHostsForDrawer={handleHostsForDrawer}
           />
         </div>
-        {data.body.resources.length > 0 ? (
+        {data.body && data.body.resources.length > 0 ? (
           <Drawer
             activeHosts={activeHostsOnDrawer}
             handleHostsForDrawer={handleHostsForDrawer}
           />
         ) : null}
       </div>
-      {data.body.resources.length > 0 ? (
+      {data.body && data.body.resources.length > 0 ? (
         <PaginationWrapper meta={data.body.meta} route="/all-jobs" />
       ) : null}
     </div>
