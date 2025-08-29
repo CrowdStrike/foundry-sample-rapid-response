@@ -219,7 +219,7 @@ export const allJobsDataSchema = z.object({
       .nullable()
       .transform((val) => val ?? []),
     meta: MetaSchema,
-  }),
+  }).nullable(),
 });
 
 export const RunHistorySchema = z.object({
