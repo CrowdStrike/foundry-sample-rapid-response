@@ -1096,6 +1096,14 @@
     "@typescript-eslint/types" "8.34.1"
     "@typescript-eslint/visitor-keys" "8.34.1"
 
+"@typescript-eslint/scope-manager@^8.41.0":
+  version "8.41.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/scope-manager/-/scope-manager-8.41.0.tgz#c8aba12129cb9cead1f1727f58e6a0fcebeecdb5"
+  integrity sha512-n6m05bXn/Cd6DZDGyrpXrELCPVaTnLdPToyhBoFkLIMznRUQUEQdSp96s/pcWSQdqOhrgR1mzJ+yItK7T+WPMQ==
+  dependencies:
+    "@typescript-eslint/types" "8.41.0"
+    "@typescript-eslint/visitor-keys" "8.41.0"
+
 "@typescript-eslint/tsconfig-utils@8.34.1", "@typescript-eslint/tsconfig-utils@^8.34.1":
   version "8.34.1"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/tsconfig-utils/-/tsconfig-utils-8.34.1.tgz#d6abb1b1e9f1f1c83ac92051c8fbf2dbc4dc9f5e"
@@ -1120,6 +1128,11 @@
   version "8.34.1"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/types/-/types-8.34.1.tgz#565a46a251580dae674dac5aafa8eb14b8322a35"
   integrity sha512-rjLVbmE7HR18kDsjNIZQHxmv9RZwlgzavryL5Lnj2ujIRTeXlKtILHgRNmQ3j4daw7zd+mQgy+uyt6Zo6I0IGA==
+
+"@typescript-eslint/types@8.41.0":
+  version "8.41.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/types/-/types-8.41.0.tgz#9935afeaae65e535abcbcee95383fa649c64d16d"
+  integrity sha512-9EwxsWdVqh42afLbHP90n2VdHaWU/oWgbH2P0CfcNfdKL7CuKpwMQGjwev56vWu9cSKU7FWSu6r9zck6CVfnag==
 
 "@typescript-eslint/typescript-estree@5.62.0":
   version "5.62.0"
@@ -1190,6 +1203,14 @@
     "@typescript-eslint/types" "8.34.1"
     eslint-visitor-keys "^4.2.1"
 
+"@typescript-eslint/visitor-keys@8.41.0":
+  version "8.41.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/visitor-keys/-/visitor-keys-8.41.0.tgz#16eb99b55d207f6688002a2cf425e039579aa9a9"
+  integrity sha512-+GeGMebMCy0elMNg67LRNoVnUFPIm37iu5CmHESVx56/9Jsfdpsvbv605DQ81Pi/x11IdKUsS5nzgTYbCQU9fg==
+  dependencies:
+    "@typescript-eslint/types" "8.41.0"
+    eslint-visitor-keys "^4.2.1"
+
 "@vitejs/plugin-react@^5.0.2":
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/@vitejs/plugin-react/-/plugin-react-5.0.2.tgz#3b5d73fc0e4370a0fafe27154d2c208e2bca8f71"
@@ -1202,11 +1223,12 @@
     "@types/babel__core" "^7.20.5"
     react-refresh "^0.17.0"
 
-"@vitest/eslint-plugin@^1.3.4":
-  version "1.3.4"
-  resolved "https://registry.yarnpkg.com/@vitest/eslint-plugin/-/eslint-plugin-1.3.4.tgz#010f99ecfdcf349eb6d9c1f29c31ebcc8f5e18f8"
-  integrity sha512-EOg8d0jn3BAiKnR55WkFxmxfWA3nmzrbIIuOXyTe6A72duryNgyU+bdBEauA97Aab3ho9kLmAwgPX63Ckj4QEg==
+"@vitest/eslint-plugin@^1.3.5":
+  version "1.3.5"
+  resolved "https://registry.yarnpkg.com/@vitest/eslint-plugin/-/eslint-plugin-1.3.5.tgz#51a46d1b9a5654399a7f3e6b0b67713dea6f07f6"
+  integrity sha512-vdQL1s+Yb9i7xXFur0qRpECwkafrp+L84EXppg3Xs+Iu+5M8smkh5I2rD5opD7cEaSBE3UEebB3xbDANqALpKA==
   dependencies:
+    "@typescript-eslint/scope-manager" "^8.41.0"
     "@typescript-eslint/utils" "^8.24.1"
 
 "@vitest/expect@3.2.4":
