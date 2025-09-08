@@ -22,7 +22,7 @@ jobs:
           go build -C functions/Func_Jobs
           go build -C functions/job_history
       - name: Use Node 22
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: 'yarn'
