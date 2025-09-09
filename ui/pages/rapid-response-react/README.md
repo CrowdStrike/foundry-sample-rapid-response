@@ -1,4 +1,4 @@
-![CrowdStrike Falcon](/docs/asset/cs-logo.png?raw=true)
+![CrowdStrike Falcon](/images/cs-logo.png?raw=true)
 
 # Rapid Response user interface
 
