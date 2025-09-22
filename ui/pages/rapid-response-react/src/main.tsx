@@ -46,7 +46,7 @@ import { CreateJobError } from "@/lib/validations/api-validation.ts";
 setBasePath("https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.5.2/cdn/");
 
 interface Props {
-  children: string | JSX.Element | JSX.Element[];
+  children: React.ReactNode;
 }
 
 const homeLoader: Loader = ({ falcon }) => {
