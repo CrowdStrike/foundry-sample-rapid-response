@@ -2,7 +2,7 @@ name: Rapid Response E2E Tests
 
 on:
   push:
-    branches: [ main, add-e2e-tests ]
+    branches: [ main ]
   pull_request:
     branches: [ main ]
   workflow_dispatch:
