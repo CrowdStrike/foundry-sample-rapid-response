@@ -19,6 +19,10 @@ ignored:
     - ui/(extensions|pages)/.*?/vite\.config\.ts
     - ui/(extensions|pages)/*\.gz
     - ui/(extensions|pages)/rapid-response-react/index\.html
+    - e2e
+    - e2e/.+
+    - functions/.*/venv
+    - functions/.*/venv/.+
 ui:
     homepage: pages.rapid-response-react
     extensions: []
