@@ -21,8 +21,6 @@ ignored:
     - ui/(extensions|pages)/rapid-response-react/index\.html
     - e2e
     - e2e/.+
-    - functions/.*/venv
-    - functions/.*/venv/.+
 ui:
     homepage: pages.rapid-response-react
     extensions: []
