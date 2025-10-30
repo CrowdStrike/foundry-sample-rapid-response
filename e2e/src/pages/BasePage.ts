@@ -105,6 +105,18 @@ export abstract class BasePage {
   }
 
   /**
+   * Sanitize URL for logging by masking sensitive IDs
+   */
+  protected sanitizeUrl(url: string): string {
+    return url
+      .replace(/\/foundry\/page\/[a-f0-9]+/g, '/foundry/page/[PAGE_ID]')
+      .replace(/\/foundry\/app-catalog\/[a-f0-9]+/g, '/foundry/app-catalog/[APP_ID]')
+      .replace(/\/foundry\/settings\/[a-f0-9]+/g, '/foundry/settings/[SETTING_ID]')
+      .replace(/\?.*appId=[a-f0-9]+/g, '?appId=[APP_ID]')
+      .replace(/pageId=[a-f0-9]+/g, 'pageId=[PAGE_ID]');
+  }
+
+  /**
    * Wait for URL pattern
    */
   protected async waitForUrlPattern(pattern: RegExp, timeout?: number): Promise<void> {

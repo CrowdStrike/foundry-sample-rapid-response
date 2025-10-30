@@ -4,10 +4,10 @@ const isCI = !!process.env.CI;
 
 export default defineConfig({
   testDir: './tests',
-  fullyParallel: false,
+  fullyParallel: true,
   forbidOnly: isCI,
   retries: isCI ? 2 : 0,
-  workers: 1,
+  workers: isCI ? 2 : 4,
   reporter: 'list',
 
   timeout: 60000,

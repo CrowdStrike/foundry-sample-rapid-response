@@ -20,15 +20,15 @@ export class RapidResponseHomePage extends BasePage {
 
   protected async verifyPageLoaded(): Promise<void> {
     const currentUrl = this.page.url();
-    this.logger.info(`Current URL after navigation: ${currentUrl}`);
+    this.logger.info(`Current URL after navigation: ${this.sanitizeUrl(currentUrl)}`);
 
     // Primary verification: Check for app page URL pattern
     const isFoundryPage = /\/foundry\/page\/[a-f0-9]+/.test(currentUrl);
     if (!isFoundryPage) {
-      throw new Error(`Expected Foundry app page URL pattern, but got: ${currentUrl}`);
+      throw new Error(`Expected Foundry app page URL pattern, but got: ${this.sanitizeUrl(currentUrl)}`);
     }
 
-    this.logger.success(`Successfully navigated to Foundry app page: ${currentUrl}`);
+    this.logger.success(`Successfully navigated to Foundry app page: ${this.sanitizeUrl(currentUrl)}`);
 
     // Wait for app to load - check for navigation tabs or main content
     try {

@@ -7,8 +7,8 @@
 import { test, expect } from '../src/fixtures';
 import { config } from '../src/config/TestConfig';
 
-// Configure tests to run sequentially
-test.describe.configure({ mode: 'serial' });
+// Configure tests to run in parallel for better performance
+test.describe.configure({ mode: 'parallel' });
 
 test.describe('Rapid Response App E2E Tests', () => {
   // Print configuration before tests
