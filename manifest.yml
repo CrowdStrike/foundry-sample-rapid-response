@@ -5,7 +5,7 @@ manifest_version: "2023-05-09"
 ignored:
     - ui/(extensions|pages)/.*?/config
     - ui/(extensions|pages)/.*?/node_modules
-    - ui/pages/scalable-rtr-react/stats.html
+    - ui/pages/rapid-response-react/stats.html
     - ui/(extensions|pages)/.*?/src
     - ui/(extensions|pages)/.*?/.*?\.(md|log|lock|cjs|log)
     - ui/(extensions|pages)/.*?/\.eslintrc\.cjs
@@ -19,6 +19,8 @@ ignored:
     - ui/(extensions|pages)/.*?/vite\.config\.ts
     - ui/(extensions|pages)/*\.gz
     - ui/(extensions|pages)/rapid-response-react/index\.html
+    - e2e
+    - e2e/.+
 ui:
     homepage: pages.rapid-response-react
     extensions: []
