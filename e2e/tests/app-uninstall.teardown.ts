@@ -1,9 +1,6 @@
-import { test as teardown } from '@playwright/test';
-import { RapidResponseHomePage } from '../src/pages/RapidResponseHomePage';
+import { test as teardown } from '../src/fixtures';
 
-teardown('uninstall Rapid Response app', async ({ page }) => {
-  const rapidResponseHomePage = new RapidResponseHomePage(page);
-
+teardown('uninstall Rapid Response app', async ({ appCatalogPage, appName }) => {
   // Clean up by uninstalling the app after all tests complete
-  await rapidResponseHomePage.uninstallApp();
+  await appCatalogPage.uninstallApp(appName);
 });
