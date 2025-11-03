@@ -1,6 +1,6 @@
 name: Rapid response
 description: Leverages RTR scripts, Fusion SOAR, and UI extensions to patch, upload, or remove files from hosts 
-logo: ""
+logo: images/logo.png
 manifest_version: "2023-05-09"
 ignored:
     - ui/(extensions|pages)/.*?/config
