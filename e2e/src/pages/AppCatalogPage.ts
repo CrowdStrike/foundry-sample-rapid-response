@@ -177,9 +177,10 @@ export class AppCatalogPage extends BasePage {
    * Click the final "Save and install" button
    */
   private async clickInstallAppButton(): Promise<void> {
-    const installButton = this.page.getByRole('button', { name: 'Save and install' });
+    const installButton = this.page.getByRole('button', { name: 'Save and install' })
+      .or(this.page.getByRole('button', { name: 'Install app' }));
 
-    await this.waiter.waitForVisible(installButton, { description: 'Save and install button' });
+    await this.waiter.waitForVisible(installButton, { description: 'Install button' });
 
     // Wait for button to be enabled
     await installButton.waitFor({ state: 'visible', timeout: 10000 });
@@ -188,7 +189,7 @@ export class AppCatalogPage extends BasePage {
     // Simple delay for form to enable button
     await this.waiter.delay(1000);
 
-    await this.smartClick(installButton, 'Save and install button');
+    await this.smartClick(installButton, 'Install button');
     this.logger.info('Clicked Save and install button');
   }
 
