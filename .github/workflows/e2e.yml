@@ -31,7 +31,7 @@ jobs:
         with:
           egress-policy: audit
 
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v5
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8  # v5.0.0
 
       - name: Set up Homebrew
         uses: Homebrew/actions/setup-homebrew@1ccc07ccd8b9519f44d3e5eaa1b41dd90310adf0  # master
