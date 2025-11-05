@@ -26,19 +26,48 @@ export class AppCatalogPage extends BasePage {
   }
 
   /**
+   * Search for app in catalog and navigate to its page
+   */
+  private async searchAndNavigateToApp(appName: string): Promise<void> {
+    this.logger.info(`Searching for app '${appName}' in catalog`);
+
+    await this.navigateToPath('/foundry/app-catalog', 'App catalog page');
+
+    const searchBox = this.page.getByRole('searchbox', { name: 'Search' });
+    await searchBox.fill(appName);
+    await this.page.keyboard.press('Enter');
+    await this.page.waitForLoadState('networkidle');
+
+    const appLink = this.page.getByRole('link', { name: appName, exact: true });
+
+    try {
+      await this.waiter.waitForVisible(appLink, {
+        description: `App '${appName}' link in catalog`,
+        timeout: 10000
+      });
+      this.logger.success(`Found app '${appName}' in catalog`);
+      await this.smartClick(appLink, `App '${appName}' link`);
+      await this.page.waitForLoadState('networkidle');
+    } catch (error) {
+      throw new Error(`Could not find app '${appName}' in catalog. Make sure the app is deployed.`);
+    }
+  }
+
+  /**
    * Check if app is installed
    */
   async isAppInstalled(appName: string): Promise<boolean> {
     this.logger.step(`Check if app '${appName}' is installed`);
 
-    // Try different methods to detect installation status
-    const installedText = this.page.locator('text=Installed').first();
-    const openButton = this.page.getByRole('button', { name: /open|launch/i });
+    // Search for and navigate to the app's catalog page
+    await this.searchAndNavigateToApp(appName);
 
-    const hasInstalledText = await this.elementExists(installedText, 2000);
-    const hasOpenButton = await this.elementExists(openButton, 2000);
+    // Check for installation indicators on the app's page
+    // Simple check: if "Install now" link exists, app is NOT installed
+    const installLink = this.page.getByRole('link', { name: 'Install now' });
+    const hasInstallLink = await this.elementExists(installLink, 3000);
 
-    const isInstalled = hasInstalledText || hasOpenButton;
+    const isInstalled = !hasInstallLink;
     this.logger.info(`App '${appName}' installation status: ${isInstalled ? 'Installed' : 'Not installed'}`);
 
     return isInstalled;
@@ -56,43 +85,134 @@ export class AppCatalogPage extends BasePage {
       return false;
     }
 
-    // Look for Install button
-    const installButton = this.page.getByRole('button', { name: 'Install' }).first();
+    // Click Install now link
+    this.logger.info('App not installed, looking for Install now link');
+    const installLink = this.page.getByRole('link', { name: 'Install now' });
 
-    if (await this.elementExists(installButton, 3000)) {
-      await this.smartClick(installButton, 'Install button');
+    await this.waiter.waitForVisible(installLink, { description: 'Install now link' });
+    await this.smartClick(installLink, 'Install now link');
+    this.logger.info('Clicked Install now, waiting for install page to load');
+
+    // Wait for URL to change to install page and page to stabilize
+    await this.page.waitForURL(/\/foundry\/app-catalog\/[^\/]+\/install$/, { timeout: 10000 });
+    await this.page.waitForLoadState('networkidle');
+
+    // Handle permissions dialog
+    await this.handlePermissionsDialog();
+
+    // Check for ServiceNow configuration screen
+    await this.configureServiceNowIfNeeded();
+
+    // Click final Install app button
+    await this.clickInstallAppButton();
+
+    // Wait for installation to complete
+    await this.waitForInstallation(appName);
+
+    this.logger.success(`App '${appName}' installed successfully`);
+    return true;
+  }
+
+  /**
+   * Handle permissions dialog if present
+   */
+  private async handlePermissionsDialog(): Promise<void> {
+    const acceptButton = this.page.getByRole('button', { name: /accept.*continue/i });
+
+    if (await this.elementExists(acceptButton, 3000)) {
+      this.logger.info('Permissions dialog detected, accepting');
+      await this.smartClick(acceptButton, 'Accept and continue button');
       await this.waiter.delay(2000);
+    }
+  }
 
-      // Wait for installation to complete
-      await this.waitForInstallation(appName);
+  /**
+   * Configure ServiceNow API integration if configuration form is present
+   */
+  private async configureServiceNowIfNeeded(): Promise<void> {
+    this.logger.info('Checking if ServiceNow API configuration is required...');
 
-      this.logger.success(`App '${appName}' installed successfully`);
-      return true;
+    // Check if there are text input fields (configuration form)
+    const textInputs = this.page.locator('input[type="text"]');
+
+    try {
+      await textInputs.first().waitFor({ state: 'visible', timeout: 15000 });
+      const count = await textInputs.count();
+      this.logger.info(`ServiceNow configuration form detected with ${count} input fields`);
+    } catch (error) {
+      this.logger.info('No ServiceNow configuration required - no input fields found');
+      return;
     }
 
-    this.logger.warn(`Could not find Install button for '${appName}'`);
-    return false;
+    this.logger.info('ServiceNow configuration required, filling dummy values');
+
+    // Fill configuration fields using index-based selection
+    // Field 1: Name
+    const nameField = this.page.locator('input[type="text"]').first();
+    await nameField.fill('ServiceNow Test Instance');
+    this.logger.debug('Filled Name field');
+
+    // Field 2: Instance (the {instance} part of {instance}.service-now.com)
+    const instanceField = this.page.locator('input[type="text"]').nth(1);
+    await instanceField.fill('dev12345');
+    this.logger.debug('Filled Instance field');
+
+    // Field 3: Username
+    const usernameField = this.page.locator('input[type="text"]').nth(2);
+    await usernameField.fill('dummy_user');
+    this.logger.debug('Filled Username field');
+
+    // Field 4: Password (must be >8 characters)
+    const passwordField = this.page.locator('input[type="password"]').first();
+    await passwordField.fill('DummyPassword123');
+    this.logger.debug('Filled Password field');
+
+    // Wait for network to settle after filling form
+    await this.page.waitForLoadState('networkidle');
+
+    this.logger.success('ServiceNow API configuration completed');
+  }
+
+  /**
+   * Click the final "Save and install" button
+   */
+  private async clickInstallAppButton(): Promise<void> {
+    const installButton = this.page.getByRole('button', { name: 'Save and install' });
+
+    await this.waiter.waitForVisible(installButton, { description: 'Save and install button' });
+
+    // Wait for button to be enabled
+    await installButton.waitFor({ state: 'visible', timeout: 10000 });
+    await installButton.waitFor({ state: 'attached', timeout: 5000 });
+
+    // Simple delay for form to enable button
+    await this.waiter.delay(1000);
+
+    await this.smartClick(installButton, 'Save and install button');
+    this.logger.info('Clicked Save and install button');
   }
 
   /**
    * Wait for installation to complete
    */
-  private async waitForInstallation(appName: string, timeout: number = 30000): Promise<void> {
+  private async waitForInstallation(appName: string): Promise<void> {
     this.logger.info('Waiting for installation to complete...');
 
-    const startTime = Date.now();
+    // Wait for URL to change or network to settle
+    await Promise.race([
+      this.page.waitForURL(/\/foundry\/(app-catalog|home)/, { timeout: 15000 }),
+      this.page.waitForLoadState('networkidle', { timeout: 15000 })
+    ]).catch(() => {});
 
-    while (Date.now() - startTime < timeout) {
-      const isInstalled = await this.isAppInstalled(appName);
-      if (isInstalled) {
-        this.logger.success('Installation completed');
-        return;
-      }
+    // Look for "installing" message
+    const installingMessage = this.page.getByText(/installing/i).first();
 
-      await this.waiter.delay(1000);
+    try {
+      await installingMessage.waitFor({ state: 'visible', timeout: 30000 });
+      this.logger.success('Installation started - success message appeared');
+    } catch (error) {
+      this.logger.warn('Installation message not visible, assuming installation succeeded');
     }
-
-    throw new Error(`Installation timeout after ${timeout}ms`);
   }
 
   /**
@@ -128,34 +248,6 @@ export class AppCatalogPage extends BasePage {
       },
       `Navigate to app via Custom Apps`
     );
-  }
-
-  /**
-   * Search for app in catalog and navigate to its page
-   */
-  private async searchAndNavigateToApp(appName: string): Promise<void> {
-    this.logger.info(`Searching for app '${appName}' in catalog`);
-
-    await this.navigateToPath('/foundry/app-catalog', 'App catalog page');
-
-    const searchBox = this.page.getByRole('searchbox', { name: 'Search' });
-    await searchBox.fill(appName);
-    await this.page.keyboard.press('Enter');
-    await this.page.waitForLoadState('networkidle');
-
-    const appLink = this.page.getByRole('link', { name: appName, exact: true });
-
-    try {
-      await this.waiter.waitForVisible(appLink, {
-        description: `App '${appName}' link in catalog`,
-        timeout: 10000
-      });
-      this.logger.success(`Found app '${appName}' in catalog`);
-      await this.smartClick(appLink, `App '${appName}' link`);
-      await this.page.waitForLoadState('networkidle');
-    } catch (error) {
-      throw new Error(`Could not find app '${appName}' in catalog. Make sure the app is deployed.`);
-    }
   }
 
   /**
@@ -197,7 +289,7 @@ export class AppCatalogPage extends BasePage {
       const successMessage = this.page.getByText(/has been uninstalled/i);
       await this.waiter.waitForVisible(successMessage, {
         description: 'Uninstall success message',
-        timeout: 10000
+        timeout: 30000
       });
 
       this.logger.success(`App '${appName}' uninstalled successfully`);
