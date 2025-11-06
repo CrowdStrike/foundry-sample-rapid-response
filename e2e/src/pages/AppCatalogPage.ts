@@ -100,7 +100,7 @@ export class AppCatalogPage extends BasePage {
     // Handle permissions dialog
     await this.handlePermissionsDialog();
 
-    // Check for ServiceNow configuration screen
+    // Check for API integration configuration (none for Rapid Response)
     await this.configureApiIntegrationIfNeeded();
 
     // Click final Install app button
@@ -127,59 +127,11 @@ export class AppCatalogPage extends BasePage {
   }
 
   /**
-   * Configure API integration if configuration form is present during installation.
-   * 
-   * NOTE: This method currently handles ServiceNow-specific fields but is designed as
-   * a no-op for apps without API integrations. This common pattern across all sample apps
-   * will be extracted to the future @crowdstrike/foundry-e2e-testing framework.
-   * 
-   * Apps with ServiceNow configuration: servicenow-itsm, servicenow-idp
-   * Other apps: Returns early when no configuration fields detected
-   * 
-   * @future-framework-extraction Candidate for BasePage or AppCatalogPage in shared framework
+   * Configure API integration if needed
+   * Rapid Response app has no API integrations, so this is a no-op
    */
   private async configureApiIntegrationIfNeeded(): Promise<void> {
-    this.logger.info('Checking for API integration configuration form...');
-
-    // Check if there are text input fields (configuration form)
-    const textInputs = this.page.locator('input[type="text"]');
-
-    try {
-      await textInputs.first().waitFor({ state: 'visible', timeout: 15000 });
-      const count = await textInputs.count();
-      this.logger.info(`ServiceNow configuration form detected with ${count} input fields`);
-    } catch (error) {
-      this.logger.info('No ServiceNow configuration required - no input fields found');
-      return;
-    }
-
-    this.logger.info('ServiceNow configuration required, filling dummy values');
-
-    // Fill configuration fields using index-based selection
-    // Field 1: Name
-    const nameField = this.page.locator('input[type="text"]').first();
-    await nameField.fill('ServiceNow Test Instance');
-    this.logger.debug('Filled Name field');
-
-    // Field 2: Instance (the {instance} part of {instance}.service-now.com)
-    const instanceField = this.page.locator('input[type="text"]').nth(1);
-    await instanceField.fill('dev12345');
-    this.logger.debug('Filled Instance field');
-
-    // Field 3: Username
-    const usernameField = this.page.locator('input[type="text"]').nth(2);
-    await usernameField.fill('dummy_user');
-    this.logger.debug('Filled Username field');
-
-    // Field 4: Password (must be >8 characters)
-    const passwordField = this.page.locator('input[type="password"]').first();
-    await passwordField.fill('DummyPassword123');
-    this.logger.debug('Filled Password field');
-
-    // Wait for network to settle after filling form
-    await this.page.waitForLoadState('networkidle');
-
-    this.logger.success('ServiceNow API configuration completed');
+    // No API configuration needed for Rapid Response app
   }
 
   /**
