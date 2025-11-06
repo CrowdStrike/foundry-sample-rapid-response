@@ -205,14 +205,36 @@ export class AppCatalogPage extends BasePage {
       this.page.waitForLoadState('networkidle', { timeout: 15000 })
     ]).catch(() => {});
 
-    // Look for "installing" message
+    // Look for first "installing" message
     const installingMessage = this.page.getByText(/installing/i).first();
 
     try {
       await installingMessage.waitFor({ state: 'visible', timeout: 30000 });
-      this.logger.success('Installation started - success message appeared');
+      this.logger.success('Installation started - "installing" message appeared');
     } catch (error) {
-      this.logger.warn('Installation message not visible, assuming installation succeeded');
+      throw new Error(`Installation failed to start for app '${appName}' - "installing" message never appeared. Installation may have failed immediately.`);
+    }
+
+    // Wait for second toast with final status (installed or error)
+    // Try to find success message first
+    const installedMessage = this.page.getByText(/installed/i).first();
+    const errorMessage = this.page.getByText(/error.*install/i).first();
+
+    try {
+      await Promise.race([
+        installedMessage.waitFor({ state: 'visible', timeout: 60000 }).then(() => 'success'),
+        errorMessage.waitFor({ state: 'visible', timeout: 60000 }).then(() => 'error')
+      ]).then(result => {
+        if (result === 'error') {
+          throw new Error(`Installation failed for app '${appName}' - error message appeared`);
+        }
+        this.logger.success('Installation completed successfully - "installed" message appeared');
+      });
+    } catch (error) {
+      if (error.message.includes('Installation failed')) {
+        throw error;
+      }
+      throw new Error(`Installation status unclear for app '${appName}' - timed out waiting for "installed" or "error" message after 60 seconds`);
     }
   }
 
