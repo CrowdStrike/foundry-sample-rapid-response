@@ -12,7 +12,7 @@ import { config } from '../config/TestConfig';
 export abstract class BasePage {
   protected page: Page;
   protected logger: ReturnType<Logger['forPage']>;
-  protected waiter: SmartWaiter;
+  public waiter: SmartWaiter;
 
   constructor(page: Page, context: string) {
     this.page = page;
@@ -100,7 +100,7 @@ export abstract class BasePage {
   /**
    * Get current URL
    */
-  protected getCurrentUrl(): string {
+  public getCurrentUrl(): string {
     return this.page.url();
   }
 

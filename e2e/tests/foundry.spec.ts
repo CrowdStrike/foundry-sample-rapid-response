@@ -42,7 +42,7 @@ test.describe('Rapid Response App E2E Tests', () => {
     await rapidResponseHomePage.navigateToInstalledApp();
 
     // Verify app loaded by checking for navigation links
-    const currentUrl = rapidResponseHomePage['getCurrentUrl']();
+    const currentUrl = rapidResponseHomePage.getCurrentUrl();
     expect(currentUrl).toContain('foundry');
 
     console.log(`✅ Successfully navigated to ${appName}`);
@@ -147,10 +147,10 @@ test.describe('Rapid Response App E2E Tests', () => {
       await allJobsPage.clickCreateJob();
 
       // Wait a moment for any navigation/modal to appear
-      await allJobsPage['waiter'].delay(1000);
+      await allJobsPage.waiter.delay(1000);
 
       // Check URL changed or modal appeared
-      const url = allJobsPage['getCurrentUrl']();
+      const url = allJobsPage.getCurrentUrl();
       const hasCreateJobUrl = url.includes('create-job');
 
       console.log(`Create Job form accessible: ${hasCreateJobUrl}`);
