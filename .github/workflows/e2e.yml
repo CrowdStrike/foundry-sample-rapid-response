@@ -27,14 +27,14 @@ jobs:
       FOUNDRY_CLOUD_REGION: ${{ secrets.FOUNDRY_CLOUD_REGION }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
+        uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.13.2
         with:
           egress-policy: audit
 
-      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8  # v5.0.0
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
       - name: Set up Homebrew
-        uses: Homebrew/actions/setup-homebrew@1ccc07ccd8b9519f44d3e5eaa1b41dd90310adf0  # master
+        uses: Homebrew/actions/setup-homebrew@1ccc07ccd8b9519f44d3e5eaa1b41dd90310adf0 # 2024-10-25
 
       - name: Install required tools
         run: |
@@ -115,7 +115,7 @@ jobs:
 
       # Parallelize Node setup while deployment happens
       - name: Install Node LTS
-        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af  # v6
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
         with:
           node-version: 22
           cache: 'npm'
@@ -130,7 +130,7 @@ jobs:
         working-directory: e2e
 
       - name: Make envfile
-        uses: SpicyPizza/create-envfile@6da099c0b655bd3abd8273c4e2fe7c59e63fa88a  # v2
+        uses: SpicyPizza/create-envfile@6da099c0b655bd3abd8273c4e2fe7c59e63fa88a # v2.0.3
         with:
           envkey_FALCON_USERNAME: ${{ secrets.FALCON_USERNAME }}
           envkey_FALCON_PASSWORD: ${{ secrets.FALCON_PASSWORD }}
@@ -145,7 +145,7 @@ jobs:
           CI: true
 
       - name: Upload Playwright report
-        uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b  # v4
+        uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4.5.0
         if: ${{ !cancelled() }}
         with:
           name: playwright-report-${{ env.APP_NAME }}
@@ -153,7 +153,7 @@ jobs:
           retention-days: 7
 
       - name: Upload test results and screenshots
-        uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b  # v4
+        uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4.5.0
         if: ${{ !cancelled() }}
         with:
           name: playwright-test-results-${{ env.APP_NAME }}
