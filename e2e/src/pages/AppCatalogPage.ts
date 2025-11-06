@@ -245,6 +245,35 @@ export class AppCatalogPage extends BasePage {
       }
       throw new Error(`Installation status unclear for app '${appName}' - timed out waiting for "installed" or "error" message after 60 seconds`);
     }
+    // Additional wait: toast appears before app is fully installed in backend
+    // Verify installation status by checking app catalog
+    this.logger.info('Verifying installation status in app catalog...');
+
+    // Navigate directly to app catalog with search query
+    const baseUrl = new URL(this.page.url()).origin;
+    await this.page.goto(`${baseUrl}/foundry/app-catalog?q=${appName}`);
+    await this.page.waitForLoadState('networkidle');
+
+    // Poll for status every 5 seconds (up to 60 seconds)
+    const statusText = this.page.locator('[data-test-selector="status-text"]').filter({ hasText: /installed/i });
+    const maxAttempts = 12; // 12 attempts = up to 60 seconds
+
+    for (let attempt = 0; attempt < maxAttempts; attempt++) {
+      const isVisible = await statusText.isVisible().catch(() => false);
+
+      if (isVisible) {
+        this.logger.success('Installation verified - app status shows Installed in catalog');
+        return;
+      }
+
+      if (attempt < maxAttempts - 1) {
+        this.logger.info(`Status not yet updated, waiting 5s before refresh (attempt ${attempt + 1}/${maxAttempts})...`);
+        await this.waiter.delay(5000);
+        await this.page.reload({ waitUntil: 'domcontentloaded' });
+      }
+    }
+
+    throw new Error(`Installation verification failed - status did not show 'Installed' after ${maxAttempts * 5} seconds`);
   }
 
   /**
