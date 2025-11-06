@@ -101,7 +101,7 @@ export class AppCatalogPage extends BasePage {
     await this.handlePermissionsDialog();
 
     // Check for ServiceNow configuration screen
-    await this.configureServiceNowIfNeeded();
+    await this.configureApiIntegrationIfNeeded();
 
     // Click final Install app button
     await this.clickInstallAppButton();
@@ -127,10 +127,19 @@ export class AppCatalogPage extends BasePage {
   }
 
   /**
-   * Configure ServiceNow API integration if configuration form is present
+   * Configure API integration if configuration form is present during installation.
+   * 
+   * NOTE: This method currently handles ServiceNow-specific fields but is designed as
+   * a no-op for apps without API integrations. This common pattern across all sample apps
+   * will be extracted to the future @crowdstrike/foundry-e2e-testing framework.
+   * 
+   * Apps with ServiceNow configuration: servicenow-itsm, servicenow-idp
+   * Other apps: Returns early when no configuration fields detected
+   * 
+   * @future-framework-extraction Candidate for BasePage or AppCatalogPage in shared framework
    */
-  private async configureServiceNowIfNeeded(): Promise<void> {
-    this.logger.info('Checking if ServiceNow API configuration is required...');
+  private async configureApiIntegrationIfNeeded(): Promise<void> {
+    this.logger.info('Checking for API integration configuration form...');
 
     // Check if there are text input fields (configuration form)
     const textInputs = this.page.locator('input[type="text"]');
