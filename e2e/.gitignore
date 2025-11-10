@@ -17,3 +17,4 @@ node_modules/
 *.jpg
 *.mp4
 *.webm
+*.log
