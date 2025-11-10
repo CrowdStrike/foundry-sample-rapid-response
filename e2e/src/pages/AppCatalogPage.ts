@@ -241,7 +241,7 @@ export class AppCatalogPage extends BasePage {
         await this.navigateToPath('/foundry/home', 'Foundry home page');
 
         // Open hamburger menu
-        const menuButton = this.page.getByRole('button', { name: 'Menu' });
+        const menuButton = this.page.getByTestId('nav-trigger');
         await this.smartClick(menuButton, 'Menu button');
 
         // Click Custom apps

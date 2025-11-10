@@ -367,7 +367,7 @@ export class RapidResponseHomePage extends BasePage {
 
     await this.navigateToPath('/foundry/home', 'Foundry home page');
 
-    const menuButton = this.page.getByRole('button', { name: 'Menu' });
+    const menuButton = this.page.getByTestId('nav-trigger');
     await expect(menuButton).toBeVisible({ timeout: 10000 });
     await menuButton.click();
 

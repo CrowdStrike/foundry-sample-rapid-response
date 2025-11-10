@@ -30,7 +30,7 @@ export class FoundryHomePage extends BasePage {
   async openMenu(): Promise<void> {
     this.logger.step('Open hamburger menu');
 
-    const menuButton = this.page.getByRole('button', { name: 'Menu' });
+    const menuButton = this.page.getByTestId('nav-trigger');
     await this.smartClick(menuButton, 'Menu button');
     await this.waiter.delay(500);
 
