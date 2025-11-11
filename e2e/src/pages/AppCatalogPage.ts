@@ -178,8 +178,8 @@ export class AppCatalogPage extends BasePage {
 
     // Wait for second toast with final status (installed or error)
     // Use more specific patterns to avoid matching "Installation failed" as success
-    const installedMessage = this.page.getByText(/successfully installed|app.*installed/i).first();
-    const errorMessage = this.page.getByText(/failed|error/i).first();
+    const installedMessage = this.page.getByText(`${appName} installed`).first();
+    const errorMessage = this.page.getByText(`Error installing ${appName}`).first();
 
     try {
       await Promise.race([
