@@ -1,0 +1,25 @@
+{
+  "name": "playwright-foundry",
+  "version": "1.0.0",
+  "description": "Playwright e2e tests to ensure app installs and renders properly",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:ui": "npx playwright test --ui",
+    "test:debug": "npx playwright test --debug",
+    "test:verbose": "DEBUG=true npx playwright test --reporter=list"
+  },
+  "keywords": [],
+  "license": "MIT",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "dependencies": {
+    "@dotenvx/dotenvx": "1.49.0",
+    "otpauth": "9.4.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.1",
+    "@types/node": "24.4.0"
+  }
+}
