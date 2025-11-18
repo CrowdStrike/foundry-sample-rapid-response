@@ -27,7 +27,7 @@ This app illustrates the following functionality amongst other components:
 ## Prerequisites
 
 * The Foundry CLI (instructions below).
-* Go v1.24.4+ (needed if modifying the app's functions). See https://go.dev/learn for installation instructions.
+* Go v1.25+ (needed if modifying the app's functions). See https://go.dev/learn for installation instructions.
 * Yarn (needed if modifying the app's UI). See https://yarnpkg.com/getting-started for installation instructions.
 
 ### Install the Foundry CLI
