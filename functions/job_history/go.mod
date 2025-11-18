@@ -1,6 +1,6 @@
 module github.com/Crowdstrike/foundry-sample-rapid-response/functions/job_history
 
-go 1.24
+go 1.25
 
 require (
 	github.com/CrowdStrike/foundry-fn-go v0.24.1
