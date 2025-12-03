@@ -202,7 +202,7 @@ export class AppCatalogPage extends BasePage {
 
     // Navigate directly to app catalog with search query
     const baseUrl = new URL(this.page.url()).origin;
-    await this.page.goto(`${baseUrl}/foundry/app-catalog?q=${appName}`);
+    await this.page.goto(`${baseUrl}/foundry/app-catalog?filter=name%3A~%27${appName}%27`);
     await this.page.waitForLoadState('networkidle');
 
     // Check status a couple times (up to 10 seconds)
