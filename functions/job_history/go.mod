@@ -4,7 +4,7 @@ go 1.25
 
 require (
 	github.com/CrowdStrike/foundry-fn-go v0.24.1
-	github.com/crowdstrike/gofalcon v0.18.0
+	github.com/crowdstrike/gofalcon v0.19.0
 	github.com/eapache/go-resiliency v1.7.0
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/sirupsen/logrus v1.9.3
