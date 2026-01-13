@@ -9,11 +9,6 @@ jobs:
     name: Build and Test
     runs-on: ubuntu-latest
     steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@20cf305ff2072d973412fa9b1e3a4f227bda3c76 # v2.14.0
-        with:
-          egress-policy: audit
-
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8  # v6.0.1
       - name: Setup Go
         uses: actions/setup-go@4dc6199c7b1a012772edbd06daecab0f50c9053c  # v6.1.0
@@ -35,18 +30,12 @@ jobs:
           node-version: 22
           cache: 'yarn'
           cache-dependency-path: ui/pages/rapid-response-react/yarn.lock
-      - name: Run yarn install
-        uses: borales/actions-yarn@2a18ac083c150a32c8ae27a3d68fc8f77b2ad4be  # v5
-        with:
-          cmd: install
-          dir: ui/pages/rapid-response-react
+      - name: Install dependencies
+        run: yarn install
+        working-directory: ui/pages/rapid-response-react
       - name: Build React app
-        uses: borales/actions-yarn@2a18ac083c150a32c8ae27a3d68fc8f77b2ad4be  # v5
-        with:
-          cmd: build
-          dir: ui/pages/rapid-response-react
+        run: yarn build
+        working-directory: ui/pages/rapid-response-react
       - name: Test the React app
-        uses: borales/actions-yarn@2a18ac083c150a32c8ae27a3d68fc8f77b2ad4be  # v5
-        with:
-          cmd: test
-          dir: ui/pages/rapid-response-react
+        run: yarn test
+        working-directory: ui/pages/rapid-response-react
