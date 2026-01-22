@@ -16,3 +16,8 @@ updates:
       day: "monday"
       time: "14:00"
       timezone: "UTC"
+    ignore:
+      - dependency-name: "actions/setup-node"
+        versions: [">=6.2.0"]
+      - dependency-name: "actions/setup-go"
+        versions: [">=6.2.0"]
