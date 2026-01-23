@@ -31,14 +31,12 @@ export class AppCatalogPage extends BasePage {
   private async searchAndNavigateToApp(appName: string): Promise<void> {
     this.logger.info(`Searching for app '${appName}' in catalog`);
 
-    await this.navigateToPath('/foundry/app-catalog', 'App catalog page');
-
-    const filterBox = this.page.getByPlaceholder('Type to filter');
-    if (await filterBox.isVisible().catch(() => false)) {
-      await filterBox.fill(appName);
-      await this.page.waitForLoadState('networkidle');
-    }
-
+    // Navigate to app catalog with filter query parameter
+    // Format: filter=name:~'searchterm'
+    const baseUrl = config.falconBaseUrl || 'https://falcon.us-2.crowdstrike.com';
+    const filterParam = encodeURIComponent(`name:~'${appName}'`);
+    await this.page.goto(`${baseUrl}/foundry/app-catalog?filter=${filterParam}`);
+    await this.page.waitForLoadState('networkidle');
 
     const appLink = this.page.getByRole('link', { name: appName, exact: true });
 
