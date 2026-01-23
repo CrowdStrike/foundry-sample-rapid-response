@@ -24,7 +24,7 @@ export async function getHostGroups(
         size: 5000,
         type: "terms",
       },
-    ]);
+    ] as any);
     const safeAggregates =
       postAggregatesDevicesGetV1Schema.safeParse(rawAggregates);
 
