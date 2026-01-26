@@ -17,7 +17,11 @@ updates:
       time: "14:00"
       timezone: "UTC"
     ignore:
-      - dependency-name: "actions/setup-node"
-        versions: [">=6.2.0"]
+      - dependency-name: "actions/checkout"
+        versions: [">=6.0.2"]
       - dependency-name: "actions/setup-go"
         versions: [">=6.2.0"]
+      - dependency-name: "actions/setup-node"
+        versions: [">=6.2.0"]
+      - dependency-name: "peter-evans/create-pull-request"
+        versions: [">=8.0.0"]
