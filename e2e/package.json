@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@dotenvx/dotenvx": "1.52.0",
-    "otpauth": "9.4.0"
+    "otpauth": "9.4.1"
   },
   "devDependencies": {
     "@playwright/test": "1.57.0",
