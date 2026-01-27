@@ -22,23 +22,36 @@ jobs:
       - uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
         with:
           node-version: 22
-          cache: 'yarn'
-          cache-dependency-path: ui/pages/rapid-response-react/yarn.lock
+      - name: Install pnpm
+        uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
+        with:
+          version: 10
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+      - name: Setup pnpm cache
+        uses: actions/cache@3624ceb22c1c5a301c8db4169662070a689d9ea8 # v4.1.1
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
       - name: Install dependencies
-        run: yarn install
+        run: pnpm install --frozen-lockfile
         working-directory: ui/pages/rapid-response-react
       - name: Build React app
-        run: yarn build
+        run: pnpm build
         working-directory: ui/pages/rapid-response-react
       - name: Create commit
         run: |
           git add .
           git commit -a -m "Rebuild with latest dependencies" || true
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@22a9089034f40e5a961c8808d113e2c98fb63676  # v7.0.11
+        uses: peter-evans/create-pull-request@22a9089034f40e5a961c8808d113e2c98fb63676 # v7.0.11
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: 'Rebuild with latest dependencies'
-          title: 'Rebuild with latest dependencies'
+          commit-message: "Rebuild with latest dependencies"
+          title: "Rebuild with latest dependencies"
           body: Weekly build with latest dependencies.
-          labels: 'dependencies'
+          labels: "dependencies"
