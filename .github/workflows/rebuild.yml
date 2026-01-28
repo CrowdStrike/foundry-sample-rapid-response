@@ -16,22 +16,20 @@ jobs:
     if: github.repository == 'CrowdStrike/foundry-sample-rapid-response'
     runs-on: ubuntu-latest
     steps:
+      - name: Enable Corepack
+        run: corepack enable
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
       - uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
         with:
           node-version: 22
           cache: 'yarn'
           cache-dependency-path: ui/pages/rapid-response-react/yarn.lock
-      - name: Run yarn install
-        uses: borales/actions-yarn@2a18ac083c150a32c8ae27a3d68fc8f77b2ad4be # v5.0.0
-        with:
-          cmd: install
-          dir: ui/pages/rapid-response-react
+      - name: Install dependencies
+        run: yarn install
+        working-directory: ui/pages/rapid-response-react
       - name: Build React app
-        uses: borales/actions-yarn@2a18ac083c150a32c8ae27a3d68fc8f77b2ad4be # v5.0.0
-        with:
-          cmd: build
-          dir: ui/pages/rapid-response-react
+        run: yarn build
+        working-directory: ui/pages/rapid-response-react
       - name: Create commit
         run: |
           git add .
