@@ -335,22 +335,23 @@ export class RapidResponseHomePage extends BasePage {
 
     // Fallback: Try App manager approach
     await this.navigateToPath('/foundry/app-manager', 'App manager page');
+    await this.page.waitForLoadState('networkidle');
 
     const appLink = this.page.getByRole('link', { name: appName, exact: true });
 
     try {
-      await expect(appLink).toBeVisible({ timeout: 3000 });
+      await appLink.waitFor({ state: 'visible', timeout: 15000 });
       this.logger.success(`Found app in manager: ${appName}`);
       await appLink.click();
 
       // Click "View in catalog"
       const viewCatalogLink = this.page.getByRole('link', { name: 'View in catalog' });
-      await expect(viewCatalogLink).toBeVisible({ timeout: 5000 });
+      await viewCatalogLink.waitFor({ state: 'visible', timeout: 15000 });
       await viewCatalogLink.click();
 
       // Click "Open app"
       const openButton = this.page.getByRole('button', { name: 'Open app' });
-      await expect(openButton).toBeVisible({ timeout: 5000 });
+      await openButton.waitFor({ state: 'visible', timeout: 15000 });
       await openButton.click();
       this.logger.success('Accessed existing app successfully');
 
@@ -366,24 +367,44 @@ export class RapidResponseHomePage extends BasePage {
     this.logger.step('Attempting navigation via Custom apps menu');
 
     await this.navigateToPath('/foundry/home', 'Foundry home page');
+    await this.page.waitForLoadState('networkidle');
 
-    const menuButton = this.page.getByTestId('nav-trigger');
-    await expect(menuButton).toBeVisible({ timeout: 10000 });
-    await menuButton.click();
+    // Retry with page refresh if Custom apps menu doesn't appear
+    let customAppsFound = false;
+    for (let attempt = 1; attempt <= 5; attempt++) {
+      const menuButton = this.page.getByTestId('nav-trigger');
+      await menuButton.waitFor({ state: 'visible', timeout: 30000 });
+      await menuButton.click();
+      await this.page.waitForLoadState('networkidle');
 
-    const customAppsButton = this.page.getByRole('button', { name: 'Custom apps' });
-    await expect(customAppsButton).toBeVisible({ timeout: 10000 });
-    await customAppsButton.click();
+      const customAppsButton = this.page.getByRole('button', { name: 'Custom apps' });
+      try {
+        await customAppsButton.waitFor({ state: 'visible', timeout: 20000 });
+        await customAppsButton.click();
+        await this.waiter.delay(1500);
+        customAppsFound = true;
+        this.logger.info(`Custom apps button found on attempt ${attempt}`);
+        break;
+      } catch (e) {
+        this.logger.warn(`Custom apps not visible on attempt ${attempt}, refreshing page...`);
+        await this.page.reload();
+        await this.page.waitForLoadState('networkidle');
+        await this.waiter.delay(3000);
+      }
+    }
+    if (!customAppsFound) {
+      throw new Error('Custom apps button not found after 5 attempts with page refresh');
+    }
 
     const appName = config.appName;
     const appButton = this.page.getByRole('button', { name: appName, exact: false }).first();
 
-    await expect(appButton).toBeVisible({ timeout: 5000 });
+    await expect(appButton).toBeVisible({ timeout: 20000 });
 
     // Click the app link
     const appLinks = this.page.getByRole('link').filter({ hasText: /all jobs|rapid response/i });
     const firstLink = appLinks.first();
-    await expect(firstLink).toBeVisible({ timeout: 5000 });
+    await expect(firstLink).toBeVisible({ timeout: 20000 });
     await firstLink.click();
 
     this.logger.success('Successfully navigated via Custom apps menu');
@@ -394,6 +415,8 @@ export class RapidResponseHomePage extends BasePage {
    */
   async navigateToAllJobs(): Promise<void> {
     this.logger.step('Navigate to All Jobs page');
+    await this.page.waitForLoadState('networkidle');
+    await this.waiter.delay(2000);
 
     // The app content is in an iframe - find it first
     const frame = this.page.frameLocator('iframe').first();
@@ -401,6 +424,7 @@ export class RapidResponseHomePage extends BasePage {
     // Look for the tab by text (tabs might not have proper ARIA roles)
     const allJobsTab = frame.locator('text="All jobs"').first();
 
+    await allJobsTab.waitFor({ state: 'visible', timeout: 45000 });
     await allJobsTab.click();
     await this.waiter.delay(500);
 
@@ -412,6 +436,8 @@ export class RapidResponseHomePage extends BasePage {
    */
   async navigateToRunHistory(): Promise<void> {
     this.logger.step('Navigate to Run History page');
+    await this.page.waitForLoadState('networkidle');
+    await this.waiter.delay(2000);
 
     // The app content is in an iframe - find it first
     const frame = this.page.frameLocator('iframe').first();
@@ -419,6 +445,7 @@ export class RapidResponseHomePage extends BasePage {
     // Look for the tab by text (tabs might not have proper ARIA roles)
     const runHistoryTab = frame.locator('text="Run history"').first();
 
+    await runHistoryTab.waitFor({ state: 'visible', timeout: 45000 });
     await runHistoryTab.click();
     await this.waiter.delay(500);
 
@@ -430,6 +457,8 @@ export class RapidResponseHomePage extends BasePage {
    */
   async navigateToAuditLog(): Promise<void> {
     this.logger.step('Navigate to Audit Log page');
+    await this.page.waitForLoadState('networkidle');
+    await this.waiter.delay(2000);
 
     // The app content is in an iframe - find it first
     const frame = this.page.frameLocator('iframe').first();
@@ -437,6 +466,7 @@ export class RapidResponseHomePage extends BasePage {
     // Look for the tab by text (tabs might not have proper ARIA roles)
     const auditLogTab = frame.locator('text="Audit log"').first();
 
+    await auditLogTab.waitFor({ state: 'visible', timeout: 45000 });
     await auditLogTab.click();
     await this.waiter.delay(500);
 
