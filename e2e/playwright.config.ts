@@ -7,10 +7,10 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: isCI,
   retries: isCI ? 2 : 0,
-  workers: isCI ? 2 : 4,
+  workers: isCI ? 1 : 4,
   reporter: 'list',
 
-  timeout: 60000,
+  timeout: isCI ? 120000 : 60000,
   expect: {
     timeout: 10000,
   },
@@ -21,7 +21,7 @@ export default defineConfig({
     baseURL: process.env.FALCON_BASE_URL || 'https://falcon.us-2.crowdstrike.com',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
-    video: 'retain-on-failure',
+    video: process.env.CI ? 'off' : 'retain-on-failure',
     testIdAttribute: 'data-test-selector',
   },
 
