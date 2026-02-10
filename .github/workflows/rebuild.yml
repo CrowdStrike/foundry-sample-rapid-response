@@ -37,17 +37,39 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
+      - name: Check if rebuild needed
+        id: check
+        run: |
+          LAST_BUILD=$(git log -1 --format=%H -- ui/pages/rapid-response-react/dist/)
+          if [ -z "$LAST_BUILD" ]; then
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+            echo "No previous build found, rebuilding"
+            exit 0
+          fi
+          CHANGES=$(git diff --name-only "$LAST_BUILD" HEAD -- ui/pages/rapid-response-react/package.json ui/pages/rapid-response-react/pnpm-lock.yaml)
+          if [ -z "$CHANGES" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "No dependency changes since last build, skipping"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+            echo "Dependency changes detected:"
+            echo "$CHANGES"
+          fi
       - name: Install dependencies
+        if: steps.check.outputs.skip != 'true'
         run: pnpm install --frozen-lockfile
         working-directory: ui/pages/rapid-response-react
       - name: Build React app
+        if: steps.check.outputs.skip != 'true'
         run: pnpm build
         working-directory: ui/pages/rapid-response-react
       - name: Create commit
+        if: steps.check.outputs.skip != 'true'
         run: |
           git add .
           git commit -a -m "Rebuild with latest dependencies" || true
       - name: Create Pull Request
+        if: steps.check.outputs.skip != 'true'
         uses: peter-evans/create-pull-request@22a9089034f40e5a961c8808d113e2c98fb63676 # v7.0.11
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
