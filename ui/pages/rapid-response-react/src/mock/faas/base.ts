@@ -96,12 +96,12 @@ export class MockFaasHandler {
     } else if (this.isGet(message)) {
       const { id } = message.payload.params;
       if (!id || typeof id !== "string") {
-        throw "No id supplied";
+        throw new Error("No id supplied");
       }
 
       const result = this.bus[id];
       if (!result) {
-        throw `No response for id: ${id}`;
+        throw new Error(`No response for id: ${id}`);
       }
 
       return Promise.resolve(this.bus[id]);

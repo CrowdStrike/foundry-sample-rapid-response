@@ -8,7 +8,7 @@ import { AllSteps } from "@/lib/validations/form-validation";
  * to display them inside the UI
  */
 function applyZodErrorsToFormErrors(
-  parsedData: ZodSafeParseError<any>,
+  parsedData: ZodSafeParseError<unknown>,
   setError: UseFormSetError<AllSteps>,
 ): void {
   const erroredFields = parsedData.error.issues.map((issue) => {

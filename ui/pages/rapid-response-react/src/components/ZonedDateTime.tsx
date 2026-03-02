@@ -68,7 +68,7 @@ export function ZonedDateTime({ timestamp, options }: ZonedDateTimeProps) {
         {localDate} {localTime} [{effectiveTimezone}]
       </time>
     );
-  } catch (_) {
+  } catch {
     return "- -";
   }
 }

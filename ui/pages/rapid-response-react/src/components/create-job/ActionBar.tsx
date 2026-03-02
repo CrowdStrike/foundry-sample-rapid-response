@@ -34,7 +34,7 @@ function ActionBar() {
 
   const confirm = () => {
     resetErrors();
-    navigate("/all-jobs");
+    void navigate("/all-jobs");
   };
 
   const close = () => {

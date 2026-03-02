@@ -12,10 +12,12 @@ import {
  * loaded when loading the page.
  */
 export function usePutFilesData(): FilesSchema {
-  const data = useLoaderData();
+  const data: unknown = useLoaderData();
 
   if (data !== null && typeof data === "object" && "files" in data) {
-    const safeFiles = putFilesGetSchema.safeParse(data.files);
+    const safeFiles = putFilesGetSchema.safeParse(
+      (data as Record<string, unknown>).files,
+    );
     if (safeFiles.success) {
       return { files: safeFiles.data.resources };
     }

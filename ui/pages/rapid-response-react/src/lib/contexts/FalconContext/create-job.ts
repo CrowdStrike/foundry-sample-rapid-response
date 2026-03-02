@@ -120,7 +120,7 @@ function createJob(falcon: FalconApi<LocalData>) {
         };
 
         if (id && createdAt) {
-          (body as any).created_at = createdAt;
+          (body as Record<string, unknown>).created_at = createdAt;
         }
 
         const result = await createJob.put({

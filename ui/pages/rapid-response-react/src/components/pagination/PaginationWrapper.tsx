@@ -22,7 +22,7 @@ export function Wrapper({ meta, route }: Props) {
 
   const handleItemsPerPage = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const tmpItemsPerPage = parseInt(e.target.value);
-    navigate(
+    void navigate(
       set({ limit: String(tmpItemsPerPage), offset: "", next: "", prev: "" }),
     );
   };
@@ -34,7 +34,7 @@ export function Wrapper({ meta, route }: Props) {
       ...(direction === "prev" && prev !== "" && { prev: prev, next: "" }),
       offset,
     };
-    navigate(set(options));
+    void navigate(set(options));
   };
 
   return (
