@@ -19,7 +19,7 @@
     "react-dom": "19.2.1",
     "react-hook-form": "7.62.0",
     "react-hot-toast": "2.6.0",
-    "react-router-dom": "7.9.1",
+    "react-router-dom": "7.13.1",
     "react-select": "5.10.2",
     "temporal-polyfill": "0.1.1",
     "zod": "4.1.8"
@@ -49,11 +49,16 @@
     "rollup-plugin-visualizer": "6.0.3",
     "tailwindcss": "3.3.3",
     "typescript": "5.8.3",
-    "vite": "7.1.12",
+    "vite": "7.3.1",
     "vitest": "3.2.4"
   },
   "resolutions": {
     "@types/react": "19.1.13",
     "@types/react-dom": "19.1.9"
+  },
+  "pnpm": {
+    "overrides": {
+      "thenify": ">=3.3.1"
+    }
   }
 }
