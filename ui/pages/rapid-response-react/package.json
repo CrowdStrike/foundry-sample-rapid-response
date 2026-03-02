@@ -58,7 +58,7 @@
   },
   "pnpm": {
     "overrides": {
-      "thenify": ">=3.3.1"
+      "thenify": "3.3.1"
     }
   }
 }
