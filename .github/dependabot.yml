@@ -18,16 +18,16 @@ updates:
       timezone: "UTC"
     ignore:
       - dependency-name: "actions/checkout"
-        versions: [">=6.0.2"]
+        versions: [">=6.0.3"]
       - dependency-name: "actions/setup-go"
         versions: [">=6.2.0"]
       - dependency-name: "actions/setup-node"
-        versions: [">=6.2.0"]
+        versions: [">=6.3.0"]
       - dependency-name: "peter-evans/create-pull-request"
         versions: [">=8.0.0"]
       - dependency-name: "actions/upload-artifact"
         versions: [">=6.0.0"]
       - dependency-name: "pnpm/action-setup"
-        versions: [">=4.1.0"]
+        versions: [">=4.3.0"]
       - dependency-name: "actions/cache"
         versions: [">=5.0.0"]
