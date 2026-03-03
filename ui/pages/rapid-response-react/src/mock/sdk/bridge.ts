@@ -67,9 +67,9 @@ export class MockBridge extends Bridge {
 
   async postMessage<
     REQ extends RequestMessage | RemoteResponseApiRequestMessage,
-    ResolvedValue = void
+    ResolvedValue = void,
   >(message: REQ): Promise<ResolvedValue> {
-    let value: any;
+    let value: unknown;
 
     if (isStandalone && isConnectMessage(message)) {
       const { origin } = window.location;

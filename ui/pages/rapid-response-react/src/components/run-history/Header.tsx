@@ -70,7 +70,7 @@ function reducer(state: State, action: Action): State {
         status: action.payload,
       };
     default:
-      throw `Unhandled action type`;
+      throw new Error(`Unhandled action type`);
   }
 }
 
@@ -148,7 +148,7 @@ function Header({ jobsTotal }: Props) {
   const onApply = (key: keyof State) => () => {
     if (key === "jobName") {
       dispatch({ type: key, payload: jobNameFiltering });
-      navigate(
+      void navigate(
         set({ jobName: jobNameFiltering, shouldMatchExactJobName: "false" }),
       );
     } else if (key === "runDate") {
@@ -166,7 +166,7 @@ function Header({ jobsTotal }: Props) {
       if (key === "jobName") {
         setJobNameFiltering("");
         dispatch({ type: key, payload: null });
-        navigate(remove(["jobName", "shouldMatchExactJobName"]));
+        void navigate(remove(["jobName", "shouldMatchExactJobName"]));
       } else if (key === "runDate") {
         setSelectRunDateFilter(null);
         dispatch({ type: key, payload: null });

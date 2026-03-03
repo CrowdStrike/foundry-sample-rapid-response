@@ -163,13 +163,13 @@ function EditJob() {
             version: data.job.body.resource.version,
             createdAt: data.job.body.resource.created_at,
           });
-          navigate("/all-jobs", {
+          void navigate("/all-jobs", {
             state: { jobName: formData.jobName, action: "edit" },
           });
           setLoadingState(false);
-        } catch (err) {
+        } catch {
           setLoadingState(false);
-          throw "Cannot submit form with invalid data.";
+          throw new Error("Cannot submit form with invalid data.");
         }
       } else {
         applyZodErrorsToFormErrors(parsedScheduleData, methods.setError);

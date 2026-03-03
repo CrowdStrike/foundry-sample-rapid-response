@@ -2,11 +2,11 @@ import { z } from "zod";
 
 import { RRCreateJobPayload, RRJob } from "@/mock/schemas/rr-schemas";
 
-const jobPayloadCreation = RRCreateJobPayload;
-const job = RRJob;
+const _jobPayloadCreation = RRCreateJobPayload;
+const _job = RRJob;
 
-export type JobPayload = z.infer<typeof jobPayloadCreation>;
-export type Job = z.infer<typeof job>;
+export type JobPayload = z.infer<typeof _jobPayloadCreation>;
+export type Job = z.infer<typeof _job>;
 
 export const generalPostMessage = z.object({
   method: z.string(),

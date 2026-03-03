@@ -24,7 +24,9 @@ export async function getHostGroups(
         size: 5000,
         type: "terms",
       },
-    ] as any);
+    ] as unknown as Parameters<
+      typeof falcon.api.devices.postAggregatesDevicesGetV1
+    >[0]);
     const safeAggregates =
       postAggregatesDevicesGetV1Schema.safeParse(rawAggregates);
 
