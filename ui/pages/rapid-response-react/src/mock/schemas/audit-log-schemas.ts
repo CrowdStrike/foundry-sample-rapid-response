@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const AuditLog = z.object({
+const _AuditLog = z.object({
   job_name: z.string(),
   modified_at: z.string(),
   version: z.number(),
@@ -10,7 +10,7 @@ const AuditLog = z.object({
   job_id: z.string(),
 });
 
-export type AuditLogType = z.infer<typeof AuditLog>;
+export type AuditLogType = z.infer<typeof _AuditLog>;
 
 export const getAuditLogFunctionBody = z.object({
   payload: z.object({

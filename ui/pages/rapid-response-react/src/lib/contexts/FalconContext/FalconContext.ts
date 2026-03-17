@@ -10,7 +10,7 @@ import createJob, {
 } from "@/lib/contexts/FalconContext/create-job";
 import { DateFormatString, defaultFormat } from "@/lib/utils/datetime";
 
-interface FalconContext {
+interface FalconContextType {
   falcon: FalconApi<LocalData>;
   isLoading: boolean;
   setLoadingState: (loadingState: boolean) => void;
@@ -23,7 +23,7 @@ interface FalconContext {
   dateFormat: DateFormatString;
 }
 
-export const FalconContext = createContext<FalconContext>({
+export const FalconContext = createContext<FalconContextType>({
   falcon: null!,
   createJob: createJob(null!),
   isLoading: false,

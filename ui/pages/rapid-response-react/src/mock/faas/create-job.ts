@@ -16,7 +16,9 @@ export class CreateJobHandler extends MockFaasHandler {
 
   prepareResponse(message: FaasGatewayApiRequestMessage) {
     if (!("body" in message.payload)) {
-      throw `CreateJobHandler received bad message: ${message.toString()}`;
+      throw new Error(
+        `CreateJobHandler received bad message: ${JSON.stringify(message)}`,
+      );
     }
 
     const schema = createRRJobFunctionBody;

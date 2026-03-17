@@ -24,7 +24,9 @@ export async function getUsers(
 
     const rawEntities = await falcon.api.userManagement.postEntitiesUsersGetV1({
       ids: safeQueryResult.data.resources,
-    } as any);
+    } as unknown as Parameters<
+      typeof falcon.api.userManagement.postEntitiesUsersGetV1
+    >[0]);
     const entities = postEntitiesUsersGetV1Schema.parse(rawEntities);
     return entities.resources.map((user) => user.uid);
   } catch (err) {

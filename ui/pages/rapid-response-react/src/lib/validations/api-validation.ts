@@ -213,13 +213,15 @@ export const MetaSchema = z.object({
 });
 
 export const allJobsDataSchema = z.object({
-  body: z.object({
-    resources: z
-      .array(JobSchema)
-      .nullable()
-      .transform((val) => val ?? []),
-    meta: MetaSchema,
-  }).nullable(),
+  body: z
+    .object({
+      resources: z
+        .array(JobSchema)
+        .nullable()
+        .transform((val) => val ?? []),
+      meta: MetaSchema,
+    })
+    .nullable(),
 });
 
 export const RunHistorySchema = z.object({

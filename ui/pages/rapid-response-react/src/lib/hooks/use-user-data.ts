@@ -30,7 +30,7 @@ export function getUserData({ falcon }: Args) {
  * /!\ Only to use when dealing with React Components
  */
 export function useUserData(): UserData {
-  const userData = useRouteLoaderData("root");
+  const userData: unknown = useRouteLoaderData("root");
   const safeUserData = userSchema.safeParse(userData);
 
   if (!safeUserData.success) {

@@ -33,7 +33,7 @@ function extractHostGroupInfo(data: HostsDataSchema): HostGroup[] {
 }
 
 export function useHostData(): HostsData {
-  const hostsData = useRouteLoaderData("root");
+  const hostsData: unknown = useRouteLoaderData("root");
   const safeHostsData = hostsDataSchema.safeParse(hostsData);
 
   if (!safeHostsData.success) {

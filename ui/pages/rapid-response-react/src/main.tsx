@@ -64,10 +64,10 @@ const homeLoader: Loader = ({ falcon }) => {
       hostsEntities: hosts.entities.resources,
       /** Handle Users */
       user: !ENABLE_MOCK_BRIDGE
-        ? falcon.data?.user ?? {
+        ? (falcon.data?.user ?? {
             uuid: "0",
             username: "current.user@crowdstrike.com",
-          }
+          })
         : { uuid: "0", username: "current.user@crowdstrike.com" },
       users,
     };

@@ -111,7 +111,7 @@ function CreateJob() {
           setErrors(response.errors);
           setLoadingState(false);
         } else {
-          navigate("/all-jobs", {
+          void navigate("/all-jobs", {
             state: { jobName: data.jobName, action: "create" },
           });
           setLoadingState(false);

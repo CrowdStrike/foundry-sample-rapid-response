@@ -27,7 +27,9 @@ export async function getHosts(falcon: FalconApi<LocalData>): Promise<Result> {
 
     const rawEntities = await falcon.api.devices.postEntitiesDevicesV2({
       ids: safeQueryResult.data.resources,
-    } as any);
+    } as unknown as Parameters<
+      typeof falcon.api.devices.postEntitiesDevicesV2
+    >[0]);
     const safeEntities = postEntitiesDevicesV2Schema.safeParse(rawEntities);
 
     if (!safeEntities.success) {

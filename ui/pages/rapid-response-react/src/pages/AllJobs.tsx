@@ -57,7 +57,6 @@ export const loader: Loader = ({ falcon }) => {
       safeResult.body.meta.page = page;
     }
 
-
     return safeResult;
   };
 };
