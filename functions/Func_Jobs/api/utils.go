@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strconv"
 	"strings"
 	"time"
 
@@ -182,8 +183,10 @@ func search(ctx context.Context, req models.SearchObjectsRequest, fc *client.Cro
 
 	sor := models.SearchObjectsResponse{}
 	if pagination := payload.Meta.Pagination; pagination != nil {
-		sor.Total = int(pagination.Total)
-		sor.Offset = int(pagination.Offset)
+		if pagination.Total != nil {
+			sor.Total = int(*pagination.Total)
+		}
+		sor.Offset, _ = strconv.Atoi(pagination.Offset)
 	}
 	res := payload.Resources
 	if len(res) == 0 {
