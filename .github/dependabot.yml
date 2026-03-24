@@ -30,4 +30,4 @@ updates:
       - dependency-name: "pnpm/action-setup"
         versions: [">=4.3.0"]
       - dependency-name: "actions/cache"
-        versions: [">=5.1.0"]
+        versions: [">=5.0.4"]
