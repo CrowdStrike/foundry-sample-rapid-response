@@ -12,15 +12,15 @@ overrides:
   minimatch@>=9.0.0 <9.0.6: 9.0.9
   rollup@>=4.0.0 <4.59.0: 4.59.0
   ajv@>=6.0.0 <6.14.0: 6.14.0
-  flatted: 3.4.1
+  flatted: 3.4.2
 
 importers:
 
   .:
     dependencies:
       '@crowdstrike/foundry-js':
-        specifier: 0.20.0
-        version: 0.20.0
+        specifier: 0.21.0
+        version: 0.21.0
       '@shoelace-style/shoelace':
         specifier: 2.20.1
         version: 2.20.1(@floating-ui/utils@0.2.10)(@types/react@19.1.13)
@@ -236,8 +236,8 @@ packages:
     resolution: {integrity: sha512-0ZrskXVEHSWIqZM/sQZ4EV3jZJXRkio/WCxaqKZP1g//CEWEPSfeZFcms4XeKBCHU0ZKnIkdJeU/kF+eRp5lBg==}
     engines: {node: '>=6.9.0'}
 
-  '@crowdstrike/foundry-js@0.20.0':
-    resolution: {integrity: sha512-GINw0WJqw1lbuOZIizOUpQBYuQ5DXMoaQQSmm2PwoDOfyR3k2//Sw5jlw7LEjQk1y6/L1JoXgf9/GoJaiyi2Pw==}
+  '@crowdstrike/foundry-js@0.21.0':
+    resolution: {integrity: sha512-anhEJJQXSGnpwOMhyYquXyLRQx1OdsqZ205xewLt3LUccz6hZpAJRFs6M+u/y4xzV8xXQ0+Y0Swz/JbHXXYLdQ==}
     engines: {node: '>=22'}
 
   '@csstools/color-helpers@5.1.0':
@@ -1458,8 +1458,8 @@ packages:
     resolution: {integrity: sha512-f7ccFPK3SXFHpx15UIGyRJ/FJQctuKZ0zVuN3frBo4HnK3cay9VEW0R6yPYFHC0AgqhukPzKjq22t5DmAyqGyw==}
     engines: {node: '>=16'}
 
-  flatted@3.4.1:
-    resolution: {integrity: sha512-IxfVbRFVlV8V/yRaGzk0UVIcsKKHMSfYw66T/u4nTwlWteQePsxe//LjudR1AMX4tZW3WFCh3Zqa/sjlqpbURQ==}
+  flatted@3.4.2:
+    resolution: {integrity: sha512-PjDse7RzhcPkIJwy5t7KPWQSZ9cAbzQXcafsetQoD7sOJRQlGikNbx7yZp2OotDnJyrDcbyRq3Ttb18iYOqkxA==}
 
   for-each@0.3.5:
     resolution: {integrity: sha512-dKx12eRCVIzqCxFGplyFKJMPvLEWgmNtUrpTiJIR5u97zEhRG8ySrtboPHZXx7daLxQVrl643cTzbab2tkQjxg==}
@@ -2827,7 +2827,7 @@ snapshots:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.28.5
 
-  '@crowdstrike/foundry-js@0.20.0':
+  '@crowdstrike/foundry-js@0.21.0':
     dependencies:
       emittery: 1.2.0
       typescript-memoize: 1.1.1
@@ -4138,10 +4138,10 @@ snapshots:
 
   flat-cache@4.0.1:
     dependencies:
-      flatted: 3.4.1
+      flatted: 3.4.2
       keyv: 4.5.4
 
-  flatted@3.4.1: {}
+  flatted@3.4.2: {}
 
   for-each@0.3.5:
     dependencies:
