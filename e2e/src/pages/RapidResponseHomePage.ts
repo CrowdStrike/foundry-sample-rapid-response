@@ -137,8 +137,21 @@ export class RapidResponseHomePage extends BasePage {
 
       const openAppButton = this.page.getByRole('button', { name: 'Open app' });
       await openAppButton.waitFor({ state: 'visible', timeout: 10000 });
+
+      // Set up response listener BEFORE clicking to capture the page entity response
+      const pageEntityResponse = this.page.waitForResponse(
+        (resp) => resp.url().includes('/api2/ui-extensions/entities/pages/v1'),
+        { timeout: 15000 }
+      );
       await openAppButton.click();
       this.logger.success('Clicked "Open app" button from App Catalog');
+
+      // Wait for the page entity response and check for 404
+      const response = await pageEntityResponse;
+      if (response.status() === 404) {
+        this.logger.warn('Page entity returned 404, retrying with reload...');
+        await this.retryPageLoadAfter404();
+      }
 
       const iframe = this.page.locator('iframe');
       await iframe.waitFor({ state: 'visible', timeout: 30000 });
@@ -147,6 +160,28 @@ export class RapidResponseHomePage extends BasePage {
     } catch (e) {
       this.logger.warn(`"Open app" button not available: ${(e as Error).message}`);
       return false;
+    }
+  }
+
+  /**
+   * Retry page load after a 404 on the page entity endpoint.
+   * The service sometimes needs a moment to register newly deployed pages.
+   */
+  private async retryPageLoadAfter404(maxRetries = 3): Promise<void> {
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      const retryResponse = this.page.waitForResponse(
+        (resp) => resp.url().includes('/api2/ui-extensions/entities/pages/v1'),
+        { timeout: 15000 }
+      );
+      await this.page.reload();
+      await this.page.waitForLoadState('domcontentloaded');
+
+      const response = await retryResponse;
+      if (response.status() !== 404) {
+        this.logger.success(`Page entity returned ${response.status()} on retry ${attempt}`);
+        return;
+      }
+      this.logger.warn(`Page entity still 404 on retry ${attempt}/${maxRetries}`);
     }
   }
 
