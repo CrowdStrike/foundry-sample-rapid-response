@@ -17,7 +17,7 @@ export class RunHistoryPage extends BasePage {
 
   protected async verifyPageLoaded(): Promise<void> {
     // The app content is in an iframe
-    const frame = this.page.frameLocator('iframe').first();
+    const frame = this.page.frameLocator('iframe[name="portal"]').first();
 
     // Look for history table or history-related elements
     const historyTable = frame.locator('table').or(frame.locator('[class*="history"]'));
@@ -40,7 +40,7 @@ export class RunHistoryPage extends BasePage {
     this.logger.step('Check for history table');
 
     // The app content is in an iframe
-    const frame = this.page.frameLocator('iframe').first();
+    const frame = this.page.frameLocator('iframe[name="portal"]').first();
     const table = frame.locator('table');
     const exists = await this.elementExists(table, 3000);
 
@@ -55,7 +55,7 @@ export class RunHistoryPage extends BasePage {
     this.logger.step('Check for history entries');
 
     // The app content is in an iframe
-    const frame = this.page.frameLocator('iframe').first();
+    const frame = this.page.frameLocator('iframe[name="portal"]').first();
     const entries = frame.locator('tbody tr').or(frame.locator('[class*="history-entry"]'));
     const count = await entries.count();
 
@@ -70,7 +70,7 @@ export class RunHistoryPage extends BasePage {
     this.logger.step('Verify Run History page renders');
 
     // Check for presence of "Run history" tab being active or visible content
-    const frame = this.page.frameLocator('iframe').first();
+    const frame = this.page.frameLocator('iframe[name="portal"]').first();
     const runHistoryText = frame.locator('text="Run history"');
     const hasContent = await this.elementExists(runHistoryText, 3000);
 

@@ -153,7 +153,7 @@ export class RapidResponseHomePage extends BasePage {
         await this.retryPageLoadAfter404();
       }
 
-      const iframe = this.page.locator('iframe');
+      const iframe = this.page.locator('iframe[name="portal"]');
       await iframe.waitFor({ state: 'visible', timeout: 30000 });
       await this.verifyPageLoaded();
       return true;
@@ -505,7 +505,7 @@ export class RapidResponseHomePage extends BasePage {
     await this.waiter.delay(2000);
 
     // The app content is in an iframe - find it first
-    const frame = this.page.frameLocator('iframe').first();
+    const frame = this.page.frameLocator('iframe[name="portal"]').first();
 
     // Look for the tab by text (tabs might not have proper ARIA roles)
     const allJobsTab = frame.locator('text="All jobs"').first();
@@ -526,7 +526,7 @@ export class RapidResponseHomePage extends BasePage {
     await this.waiter.delay(2000);
 
     // The app content is in an iframe - find it first
-    const frame = this.page.frameLocator('iframe').first();
+    const frame = this.page.frameLocator('iframe[name="portal"]').first();
 
     // Look for the tab by text (tabs might not have proper ARIA roles)
     const runHistoryTab = frame.locator('text="Run history"').first();
@@ -547,7 +547,7 @@ export class RapidResponseHomePage extends BasePage {
     await this.waiter.delay(2000);
 
     // The app content is in an iframe - find it first
-    const frame = this.page.frameLocator('iframe').first();
+    const frame = this.page.frameLocator('iframe[name="portal"]').first();
 
     // Look for the tab by text (tabs might not have proper ARIA roles)
     const auditLogTab = frame.locator('text="Audit log"').first();
