@@ -175,7 +175,7 @@ test.describe('Rapid Response App E2E Tests', () => {
     await rapidResponseHomePage.navigateToInstalledApp();
 
     // Get iframe for content verification
-    const frame = page.frameLocator('iframe').first();
+    const frame = page.frameLocator('iframe[name="portal"]').first();
 
     // Navigate through all pages in sequence and verify by checking visible content in iframe
     await rapidResponseHomePage.navigateToAllJobs();

@@ -17,7 +17,7 @@ export class AuditLogPage extends BasePage {
 
   protected async verifyPageLoaded(): Promise<void> {
     // The app content is in an iframe
-    const frame = this.page.frameLocator('iframe').first();
+    const frame = this.page.frameLocator('iframe[name="portal"]').first();
 
     // Look for audit log table or audit-related elements
     const auditTable = frame.locator('table').or(frame.locator('[class*="audit"]'));
@@ -40,7 +40,7 @@ export class AuditLogPage extends BasePage {
     this.logger.step('Check for audit log table');
 
     // The app content is in an iframe
-    const frame = this.page.frameLocator('iframe').first();
+    const frame = this.page.frameLocator('iframe[name="portal"]').first();
     const table = frame.locator('table');
     const exists = await this.elementExists(table, 3000);
 
@@ -55,7 +55,7 @@ export class AuditLogPage extends BasePage {
     this.logger.step('Check for audit entries');
 
     // The app content is in an iframe
-    const frame = this.page.frameLocator('iframe').first();
+    const frame = this.page.frameLocator('iframe[name="portal"]').first();
     const entries = frame.locator('tbody tr').or(frame.locator('[class*="audit-entry"]'));
     const count = await entries.count();
 
@@ -70,7 +70,7 @@ export class AuditLogPage extends BasePage {
     this.logger.step('Verify Audit Log page renders');
 
     // Check for presence of "Audit log" tab being active or visible content
-    const frame = this.page.frameLocator('iframe').first();
+    const frame = this.page.frameLocator('iframe[name="portal"]').first();
     const auditLogText = frame.locator('text="Audit log"');
     const hasContent = await this.elementExists(auditLogText, 3000);
 

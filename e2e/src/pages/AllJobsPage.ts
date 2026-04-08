@@ -17,7 +17,7 @@ export class AllJobsPage extends BasePage {
 
   protected async verifyPageLoaded(): Promise<void> {
     // The app content is in an iframe
-    const frame = this.page.frameLocator('iframe').first();
+    const frame = this.page.frameLocator('iframe[name="portal"]').first();
 
     // Look for Create Job button or job list container
     const createJobButton = frame.locator('button', { hasText: /create job/i });
@@ -40,7 +40,7 @@ export class AllJobsPage extends BasePage {
     this.logger.step('Check for Create Job button');
 
     // The app content is in an iframe
-    const frame = this.page.frameLocator('iframe').first();
+    const frame = this.page.frameLocator('iframe[name="portal"]').first();
     const createJobButton = frame.locator('button', { hasText: /create job/i });
     const exists = await this.elementExists(createJobButton, 3000);
 
@@ -55,7 +55,7 @@ export class AllJobsPage extends BasePage {
     this.logger.step('Click Create Job button');
 
     // The app content is in an iframe
-    const frame = this.page.frameLocator('iframe').first();
+    const frame = this.page.frameLocator('iframe[name="portal"]').first();
     const createJobButton = frame.locator('button', { hasText: /create job/i });
     await createJobButton.click();
     await this.waiter.delay(1000);
@@ -70,7 +70,7 @@ export class AllJobsPage extends BasePage {
     this.logger.step('Check for displayed jobs');
 
     // The app content is in an iframe
-    const frame = this.page.frameLocator('iframe').first();
+    const frame = this.page.frameLocator('iframe[name="portal"]').first();
     const jobElements = frame.locator('[class*="job-"]').or(frame.locator('tbody tr'));
     const count = await jobElements.count();
 
