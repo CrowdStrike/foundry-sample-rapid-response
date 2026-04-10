@@ -77,21 +77,21 @@ function JobDetails() {
   );
   const historyTableData = useMemo(
     () =>
-      mapJobHistoryDetailsToTableData(data.history.body.resources, {
+      mapJobHistoryDetailsToTableData(data.history.body?.resources ?? [], {
         timezone,
         locale,
         dateFormat,
       }),
-    [data.history.body.resources, timezone, locale, dateFormat],
+    [data.history.body?.resources, timezone, locale, dateFormat],
   );
   const auditLogTableData = useMemo(
     () =>
-      mapAuditLogDetailsToTableData(data.auditLogs.body.resources, {
+      mapAuditLogDetailsToTableData(data.auditLogs.body?.resources ?? [], {
         timezone,
         locale,
         dateFormat,
       }),
-    [data.auditLogs.body.resources, timezone, locale, dateFormat],
+    [data.auditLogs.body?.resources, timezone, locale, dateFormat],
   );
 
   return (

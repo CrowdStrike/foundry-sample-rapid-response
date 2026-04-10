@@ -67,9 +67,9 @@ test.describe('Rapid Response App E2E Tests', () => {
     const renders = await allJobsPage.verifyPageRenders();
     expect(renders).toBeTruthy();
 
-    // Check for Create Job button
+    // Verify Create Job button is present
     const hasButton = await allJobsPage.hasCreateJobButton();
-    console.log(`Create Job button present: ${hasButton}`);
+    expect(hasButton).toBeTruthy();
 
     console.log('✅ All Jobs page verified');
   });
@@ -93,7 +93,6 @@ test.describe('Rapid Response App E2E Tests', () => {
     const renders = await runHistoryPage.verifyPageRenders();
     expect(renders).toBeTruthy();
 
-    // Check for history table
     const hasTable = await runHistoryPage.hasHistoryTable();
     console.log(`History table present: ${hasTable}`);
 
@@ -119,7 +118,6 @@ test.describe('Rapid Response App E2E Tests', () => {
     const renders = await auditLogPage.verifyPageRenders();
     expect(renders).toBeTruthy();
 
-    // Check for audit table
     const hasTable = await auditLogPage.hasAuditTable();
     console.log(`Audit log table present: ${hasTable}`);
 
@@ -139,25 +137,16 @@ test.describe('Rapid Response App E2E Tests', () => {
     await rapidResponseHomePage.navigateToInstalledApp();
     await rapidResponseHomePage.navigateToAllJobs();
 
-    // Check if Create Job button exists
+    // Verify Create Job button exists
     const hasButton = await allJobsPage.hasCreateJobButton();
+    expect(hasButton).toBeTruthy();
 
-    if (hasButton) {
-      // Try clicking it to see if wizard opens
-      await allJobsPage.clickCreateJob();
+    // Click it and verify the form opens
+    await allJobsPage.clickCreateJob();
+    await allJobsPage.waiter.delay(1000);
 
-      // Wait a moment for any navigation/modal to appear
-      await allJobsPage.waiter.delay(1000);
-
-      // Check URL changed or modal appeared
-      const url = allJobsPage.getCurrentUrl();
-      const hasCreateJobUrl = url.includes('create-job');
-
-      console.log(`Create Job form accessible: ${hasCreateJobUrl}`);
-      expect(hasButton).toBeTruthy();
-    } else {
-      console.log('ℹ️  Create Job button not found (may be permission-based)');
-    }
+    const url = allJobsPage.getCurrentUrl();
+    console.log(`Create Job form accessible: ${url.includes('create-job')}`);
 
     console.log('✅ Create Job button accessibility verified');
   });

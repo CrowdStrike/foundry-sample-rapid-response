@@ -64,17 +64,20 @@ export class RunHistoryPage extends BasePage {
   }
 
   /**
-   * Verify page renders correctly
+   * Verify page renders correctly by checking for the "Run history" heading
+   * or a table inside the page content area (not just the nav tab).
    */
   async verifyPageRenders(): Promise<boolean> {
     this.logger.step('Verify Run History page renders');
 
-    // Check for presence of "Run history" tab being active or visible content
     const frame = this.page.frameLocator('iframe[name="portal"]').first();
-    const runHistoryText = frame.locator('text="Run history"');
-    const hasContent = await this.elementExists(runHistoryText, 3000);
+    const heading = frame.locator('h1', { hasText: /run history/i });
+    const table = frame.locator('table');
+    const hasHeading = await this.elementExists(heading, 10000);
+    const hasTable = await this.elementExists(table, 3000);
 
-    this.logger.info(`Run History page renders: ${hasContent}`);
-    return hasContent;
+    const renders = hasHeading || hasTable;
+    this.logger.info(`Run History page renders: ${renders} (heading: ${hasHeading}, table: ${hasTable})`);
+    return renders;
   }
 }

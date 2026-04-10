@@ -19,8 +19,7 @@ export class AllJobsPage extends BasePage {
     // The app content is in an iframe
     const frame = this.page.frameLocator('iframe[name="portal"]').first();
 
-    // Look for Create Job button or job list container
-    const createJobButton = frame.locator('button', { hasText: /create job/i });
+    const createJobButton = frame.locator('a', { hasText: /create job/i });
     const jobsContainer = frame.locator('[class*="job"]').or(frame.locator('table'));
 
     if (
@@ -39,10 +38,9 @@ export class AllJobsPage extends BasePage {
   async hasCreateJobButton(): Promise<boolean> {
     this.logger.step('Check for Create Job button');
 
-    // The app content is in an iframe
     const frame = this.page.frameLocator('iframe[name="portal"]').first();
-    const createJobButton = frame.locator('button', { hasText: /create job/i });
-    const exists = await this.elementExists(createJobButton, 3000);
+    const createJobButton = frame.locator('a', { hasText: /create job/i });
+    const exists = await this.elementExists(createJobButton, 10000);
 
     this.logger.info(`Create Job button ${exists ? 'found' : 'not found'}`);
     return exists;
@@ -54,9 +52,8 @@ export class AllJobsPage extends BasePage {
   async clickCreateJob(): Promise<void> {
     this.logger.step('Click Create Job button');
 
-    // The app content is in an iframe
     const frame = this.page.frameLocator('iframe[name="portal"]').first();
-    const createJobButton = frame.locator('button', { hasText: /create job/i });
+    const createJobButton = frame.locator('a', { hasText: /create job/i });
     await createJobButton.click();
     await this.waiter.delay(1000);
 
@@ -78,19 +75,16 @@ export class AllJobsPage extends BasePage {
     return count > 0;
   }
 
-  /**
-   * Verify page renders correctly
-   */
   async verifyPageRenders(): Promise<boolean> {
     this.logger.step('Verify All Jobs page renders');
 
-    // Check for main page elements
+    const frame = this.page.frameLocator('iframe[name="portal"]').first();
+    const heading = frame.locator('h1', { hasText: /all jobs/i });
+    const hasHeading = await this.elementExists(heading, 10000);
     const hasButton = await this.hasCreateJobButton();
-    const url = this.getCurrentUrl();
-    const hasCorrectUrl = url.includes('all-jobs') || url.includes('path=%2F');
 
-    const renders = hasButton || hasCorrectUrl;
-    this.logger.info(`All Jobs page renders: ${renders}`);
+    const renders = hasHeading && hasButton;
+    this.logger.info(`All Jobs page renders: ${renders} (heading: ${hasHeading}, button: ${hasButton})`);
 
     return renders;
   }
