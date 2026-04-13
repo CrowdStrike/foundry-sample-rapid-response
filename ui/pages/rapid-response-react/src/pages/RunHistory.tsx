@@ -51,10 +51,12 @@ export const loader: Loader = ({ falcon }) => {
     });
     const safeResult = runHistoryDataSchema.parse(result);
 
-    safeResult.body.meta.offset =
-      safeResult.body.resources?.[0]?.execution_id ?? "";
-    // Add a computed page number to render the pagination information
-    safeResult.body.meta.page = page;
+    if (safeResult.body) {
+      safeResult.body.meta.offset =
+        safeResult.body.resources?.[0]?.execution_id ?? "";
+      // Add a computed page number to render the pagination information
+      safeResult.body.meta.page = page;
+    }
 
     return safeResult;
   };
@@ -71,7 +73,11 @@ function RunHistory() {
    */
   const [activeHostsOnDrawer, setActiveHostsForDrawer] = useState<string[]>([]);
 
-  if (data.body.meta.total === 0 && !hasActiveFilters) {
+  if (data.body?.meta.total === 0 && !hasActiveFilters) {
+    return <NoRuns />;
+  }
+
+  if (!data.body) {
     return <NoRuns />;
   }
 
