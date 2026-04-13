@@ -61,7 +61,6 @@ export class GetAuditLogHandler extends MockFaasHandler {
   constructor(args: ConstructorArgs) {
     super(args);
 
-    this.functionId = rapidResponseFunctions.getAuditLog.id;
     this.functionName = rapidResponseFunctions.getAuditLog.name;
     this.requestPath = rapidResponseFunctions.getAuditLog.path;
   }

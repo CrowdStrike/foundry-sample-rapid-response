@@ -73,11 +73,13 @@ export class RunHistoryPage extends BasePage {
     const frame = this.page.frameLocator('iframe[name="portal"]').first();
     const heading = frame.locator('h1', { hasText: /run history/i });
     const table = frame.locator('table');
+    const emptyState = frame.locator('h2', { hasText: /no runs yet/i });
     const hasHeading = await this.elementExists(heading, 10000);
     const hasTable = await this.elementExists(table, 3000);
+    const hasEmptyState = await this.elementExists(emptyState, 3000);
 
-    const renders = hasHeading || hasTable;
-    this.logger.info(`Run History page renders: ${renders} (heading: ${hasHeading}, table: ${hasTable})`);
+    const renders = hasHeading || hasTable || hasEmptyState;
+    this.logger.info(`Run History page renders: ${renders} (heading: ${hasHeading}, table: ${hasTable}, emptyState: ${hasEmptyState})`);
     return renders;
   }
 }

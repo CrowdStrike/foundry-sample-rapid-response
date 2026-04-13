@@ -8,7 +8,6 @@ export class GetJobDetailsHandler extends MockFaasHandler {
   constructor(args: ConstructorArgs) {
     super(args);
 
-    this.functionId = rapidResponseFunctions.getJobDetails.id;
     this.functionName = rapidResponseFunctions.getJobDetails.name;
     this.requestPath = rapidResponseFunctions.getJobDetails.path;
   }

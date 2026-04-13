@@ -32,8 +32,8 @@ export const loader: Loader = ({ falcon }) => {
     if (prev !== "") page = parseInt(prev.split(":")[1]);
     else if (next !== "") page = parseInt(next.split(":")[1]) + 1;
 
-    const { name, version, path } = FAAS.getRunHistory;
-    const getRunHistory = falcon.cloudFunction({ name, version });
+    const { name, path } = FAAS.getRunHistory;
+    const getRunHistory = falcon.cloudFunction({ name });
     const result = await getRunHistory.get({
       path,
       params: {

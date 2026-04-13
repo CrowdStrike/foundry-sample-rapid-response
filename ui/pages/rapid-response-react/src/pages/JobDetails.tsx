@@ -25,31 +25,16 @@ export const loader: Loader = ({ falcon }) => {
     }
 
     /** Get Job details thansk to ID in the URL Query Params*/
-    const { name, version, path } = FAAS.getJobDetails;
-    const getJobDetails = falcon.cloudFunction({ name, version });
+    const { name, path } = FAAS.getJobDetails;
+    const getJobDetails = falcon.cloudFunction({ name });
 
     /** Get Audit Logs Details */
-    const {
-      name: nameAuditLog,
-      version: versionAuditLog,
-      path: auditLogPath,
-    } = FAAS.getAuditLog;
-
-    const getAuditLog = falcon.cloudFunction({
-      name: nameAuditLog,
-      version: versionAuditLog,
-    });
+    const { name: nameAuditLog, path: auditLogPath } = FAAS.getAuditLog;
+    const getAuditLog = falcon.cloudFunction({ name: nameAuditLog });
 
     /** Get RunHistory Details */
-    const {
-      name: nameRunHistory,
-      version: versionRunHistory,
-      path: runHistoryPath,
-    } = FAAS.getRunHistory;
-    const getRunHistory = falcon.cloudFunction({
-      name: nameRunHistory,
-      version: versionRunHistory,
-    });
+    const { name: nameRunHistory, path: runHistoryPath } = FAAS.getRunHistory;
+    const getRunHistory = falcon.cloudFunction({ name: nameRunHistory });
 
     const [job, auditLogs, history] = await Promise.all([
       getJobDetails.get({
