@@ -221,7 +221,9 @@ export const allJobsDataSchema = z.object({
         .transform((val) => val ?? []),
       meta: MetaSchema,
     })
-    .nullable(),
+    .nullable()
+    .optional()
+    .default(null),
 });
 
 export const RunHistorySchema = z.object({
@@ -249,7 +251,9 @@ export const runHistoryDataSchema = z.object({
         .transform((val) => val ?? []),
       meta: MetaSchema,
     })
-    .nullable(),
+    .nullable()
+    .optional()
+    .default(null),
 });
 
 export const AuditLogSchema = z.object({
@@ -273,7 +277,9 @@ export const auditLogDataSchema = z.object({
         .transform((val) => val ?? []),
       meta: MetaSchema,
     })
-    .nullable(),
+    .nullable()
+    .optional()
+    .default(null),
 });
 
 export const jobDataSchema = z.object({

@@ -33,11 +33,8 @@ export const loader: Loader = ({ falcon }) => {
     /**
      * Getting AllJobs
      */
-    const { name, version, path } = FAAS.getJobs;
-    const getJobs = falcon.cloudFunction({
-      name,
-      version,
-    });
+    const { name, path } = FAAS.getJobs;
+    const getJobs = falcon.cloudFunction({ name });
     const result = await getJobs.get({
       path,
       params: {

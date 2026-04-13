@@ -9,7 +9,6 @@ export class CreateJobHandler extends MockFaasHandler {
   constructor(args: ConstructorArgs) {
     super(args);
 
-    this.functionId = rapidResponseFunctions.createJob.id;
     this.functionName = rapidResponseFunctions.createJob.name;
     this.requestPath = rapidResponseFunctions.createJob.path;
   }
