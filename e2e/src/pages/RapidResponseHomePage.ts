@@ -3,9 +3,9 @@
  */
 
 import { Page, expect } from '@playwright/test';
-import { BasePage } from './BasePage';
-import { config } from '../config/TestConfig';
-import { RetryHandler } from '../utils/SmartWaiter';
+import { BasePage } from '@crowdstrike/foundry-playwright';
+import { config } from '@crowdstrike/foundry-playwright';
+import { RetryHandler } from '@crowdstrike/foundry-playwright';
 
 export class RapidResponseHomePage extends BasePage {
   constructor(page: Page) {

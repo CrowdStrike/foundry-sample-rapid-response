@@ -1,21 +1,13 @@
-/**
- * Playwright fixtures for E2E tests
- *
- * Provides dependency injection for page objects and configuration
- */
-
-import { test as base } from '@playwright/test';
-import { FoundryHomePage } from './pages/FoundryHomePage';
-import { AppManagerPage } from './pages/AppManagerPage';
-import { AppCatalogPage } from './pages/AppCatalogPage';
+import { test as baseTest } from '@playwright/test';
+import {
+  FoundryHomePage, AppManagerPage, AppCatalogPage, config,
+} from '@crowdstrike/foundry-playwright';
 import { RapidResponseHomePage } from './pages/RapidResponseHomePage';
 import { AllJobsPage } from './pages/AllJobsPage';
 import { RunHistoryPage } from './pages/RunHistoryPage';
 import { AuditLogPage } from './pages/AuditLogPage';
-import { config } from './config/TestConfig';
 
-// Define fixture types
-type Fixtures = {
+type FoundryFixtures = {
   foundryHomePage: FoundryHomePage;
   appManagerPage: AppManagerPage;
   appCatalogPage: AppCatalogPage;
@@ -26,50 +18,15 @@ type Fixtures = {
   appName: string;
 };
 
-// Extend base test with fixtures
-export const test = base.extend<Fixtures>({
-  // Configuration fixture
-  appName: async ({}, use) => {
-    await use(config.appName);
-  },
-
-  // Foundry core page objects
-  foundryHomePage: async ({ page }, use) => {
-    const foundryHomePage = new FoundryHomePage(page);
-    await use(foundryHomePage);
-  },
-
-  appManagerPage: async ({ page }, use) => {
-    const appManagerPage = new AppManagerPage(page);
-    await use(appManagerPage);
-  },
-
-  appCatalogPage: async ({ page }, use) => {
-    const appCatalogPage = new AppCatalogPage(page);
-    await use(appCatalogPage);
-  },
-
-  // Rapid Response page objects
-  rapidResponseHomePage: async ({ page }, use) => {
-    const rapidResponseHomePage = new RapidResponseHomePage(page);
-    await use(rapidResponseHomePage);
-  },
-
-  allJobsPage: async ({ page }, use) => {
-    const allJobsPage = new AllJobsPage(page);
-    await use(allJobsPage);
-  },
-
-  runHistoryPage: async ({ page }, use) => {
-    const runHistoryPage = new RunHistoryPage(page);
-    await use(runHistoryPage);
-  },
-
-  auditLogPage: async ({ page }, use) => {
-    const auditLogPage = new AuditLogPage(page);
-    await use(auditLogPage);
-  },
+export const test = baseTest.extend<FoundryFixtures>({
+  foundryHomePage: async ({ page }, use) => { await use(new FoundryHomePage(page)); },
+  appManagerPage: async ({ page }, use) => { await use(new AppManagerPage(page)); },
+  appCatalogPage: async ({ page }, use) => { await use(new AppCatalogPage(page)); },
+  rapidResponseHomePage: async ({ page }, use) => { await use(new RapidResponseHomePage(page)); },
+  allJobsPage: async ({ page }, use) => { await use(new AllJobsPage(page)); },
+  runHistoryPage: async ({ page }, use) => { await use(new RunHistoryPage(page)); },
+  auditLogPage: async ({ page }, use) => { await use(new AuditLogPage(page)); },
+  appName: async ({}, use) => { await use(config.appName); },
 });
 
-// Export expect from Playwright
 export { expect } from '@playwright/test';

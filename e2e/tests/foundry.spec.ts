@@ -5,7 +5,7 @@
  */
 
 import { test, expect } from '../src/fixtures';
-import { config } from '../src/config/TestConfig';
+import { config } from '@crowdstrike/foundry-playwright';
 
 // Configure tests to run in parallel (app installed in setup phase)
 test.describe.configure({ mode: 'parallel' });
@@ -13,7 +13,7 @@ test.describe.configure({ mode: 'parallel' });
 test.describe('Rapid Response App E2E Tests', () => {
   // Print configuration before tests
   test.beforeAll(() => {
-    config.printSummary();
+    config.logSummary();
   });
 
   // Cleanup after each test
@@ -30,6 +30,7 @@ test.describe('Rapid Response App E2E Tests', () => {
   });
 
   test('should navigate to Rapid Response app', async ({
+    page,
     rapidResponseHomePage,
     appName,
   }) => {
@@ -42,7 +43,7 @@ test.describe('Rapid Response App E2E Tests', () => {
     await rapidResponseHomePage.navigateToInstalledApp();
 
     // Verify app loaded by checking for navigation links
-    const currentUrl = rapidResponseHomePage.getCurrentUrl();
+    const currentUrl = page.url();
     expect(currentUrl).toContain('foundry');
 
     console.log(`✅ Successfully navigated to ${appName}`);
@@ -125,6 +126,7 @@ test.describe('Rapid Response App E2E Tests', () => {
   });
 
   test('should verify Create Job button is accessible', async ({
+    page,
     rapidResponseHomePage,
     allJobsPage,
   }) => {
@@ -143,9 +145,9 @@ test.describe('Rapid Response App E2E Tests', () => {
 
     // Click it and verify the form opens
     await allJobsPage.clickCreateJob();
-    await allJobsPage.waiter.delay(1000);
+    await page.waitForLoadState('domcontentloaded');
 
-    const url = allJobsPage.getCurrentUrl();
+    const url = page.url();
     console.log(`Create Job form accessible: ${url.includes('create-job')}`);
 
     console.log('✅ Create Job button accessibility verified');
