@@ -14,10 +14,8 @@
   "engines": {
     "node": ">=22.0.0"
   },
-  "dependencies": {
-    "@crowdstrike/foundry-playwright": "file:../../foundry-playwright/crowdstrike-foundry-playwright-0.5.0.tgz"
-  },
   "devDependencies": {
+    "@crowdstrike/foundry-playwright": "0.5.0",
     "@types/node": "latest"
   }
 }
