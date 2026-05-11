@@ -3,9 +3,9 @@
  */
 
 import { Page, expect } from '@playwright/test';
-import { BasePage } from './BasePage';
-import { config } from '../config/TestConfig';
-import { RetryHandler } from '../utils/SmartWaiter';
+import { BasePage } from '@crowdstrike/foundry-playwright';
+import { config } from '@crowdstrike/foundry-playwright';
+import { RetryHandler } from '@crowdstrike/foundry-playwright';
 
 export class RapidResponseHomePage extends BasePage {
   constructor(page: Page) {
@@ -20,15 +20,15 @@ export class RapidResponseHomePage extends BasePage {
 
   protected async verifyPageLoaded(): Promise<void> {
     const currentUrl = this.page.url();
-    this.logger.info(`Current URL after navigation: ${this.sanitizeUrl(currentUrl)}`);
+    this.logger.info(`Current URL after navigation: ${currentUrl}`);
 
     // Primary verification: Check for app page URL pattern
     const isFoundryPage = /\/foundry\/page\/[a-f0-9]+/.test(currentUrl);
     if (!isFoundryPage) {
-      throw new Error(`Expected Foundry app page URL pattern, but got: ${this.sanitizeUrl(currentUrl)}`);
+      throw new Error(`Expected Foundry app page URL pattern, but got: ${currentUrl}`);
     }
 
-    this.logger.success(`Successfully navigated to Foundry app page: ${this.sanitizeUrl(currentUrl)}`);
+    this.logger.success(`Successfully navigated to Foundry app page: ${currentUrl}`);
 
     // Wait for app to load - check for navigation tabs or main content
     try {
@@ -49,7 +49,7 @@ export class RapidResponseHomePage extends BasePage {
       this.logger.warn('App navigation tabs not immediately visible - may still be loading');
     }
 
-    this.logger.success(`Rapid Response app navigation completed: ${this.sanitizeUrl(currentUrl)}`);
+    this.logger.success(`Rapid Response app navigation completed: ${currentUrl}`);
   }
 
   /**
