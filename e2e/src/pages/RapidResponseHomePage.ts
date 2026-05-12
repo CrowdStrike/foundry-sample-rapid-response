@@ -126,7 +126,7 @@ export class RapidResponseHomePage extends BasePage {
   private async tryOpenAppViaCatalog(appName: string): Promise<boolean> {
     try {
       this.logger.info('Trying to open app via App Catalog "Open app" button');
-      const baseUrl = config.baseUrl;
+      const baseUrl = config.falconBaseUrl;
       const filterParam = encodeURIComponent(`name:~'${appName}'`);
       await this.page.goto(`${baseUrl}/foundry/app-catalog?filter=${filterParam}`);
       await this.page.waitForLoadState('domcontentloaded');
