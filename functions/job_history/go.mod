@@ -4,7 +4,7 @@ go 1.25
 
 require (
 	github.com/CrowdStrike/foundry-fn-go v0.24.1
-	github.com/crowdstrike/gofalcon v0.20.0
+	github.com/crowdstrike/gofalcon v0.20.1
 	github.com/eapache/go-resiliency v1.7.0
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/sirupsen/logrus v1.9.4
@@ -14,6 +14,7 @@ require (
 require (
 	github.com/asaskevich/govalidator v0.0.0-20230301143203-a9d515a09cc2 // indirect
 	github.com/blang/semver/v4 v4.0.0 // indirect
+	github.com/cenkalti/backoff/v5 v5.0.3 // indirect
 	github.com/go-logr/logr v1.3.0 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-openapi/analysis v0.22.2 // indirect
