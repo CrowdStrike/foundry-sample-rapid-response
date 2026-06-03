@@ -5,7 +5,7 @@ go 1.25
 require (
 	github.com/CrowdStrike/foundry-fn-go v0.24.1
 	github.com/crowdstrike/gofalcon v0.20.1
-	github.com/go-openapi/runtime v0.32.1
+	github.com/go-openapi/runtime v0.32.2
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/sirupsen/logrus v1.9.4
 	github.com/spaolacci/murmur3 v1.1.0
