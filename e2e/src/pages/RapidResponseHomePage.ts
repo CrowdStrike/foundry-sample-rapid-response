@@ -196,7 +196,7 @@ export class RapidResponseHomePage extends BasePage {
     await this.page.keyboard.press('Enter');
 
     // Wait for search results to load
-    await this.page.waitForLoadState('networkidle');
+    await this.page.waitForLoadState('domcontentloaded');
 
     // Check if app exists in catalog
     const appLink = this.page.getByRole('link', { name: appName, exact: true });
@@ -208,12 +208,12 @@ export class RapidResponseHomePage extends BasePage {
       // Try refresh and retry
       this.logger.debug(`App not immediately visible, refreshing...`);
       await this.page.reload();
-      await this.page.waitForLoadState('networkidle');
+      await this.page.waitForLoadState('domcontentloaded');
 
       const refreshedSearchBox = this.page.getByRole('searchbox', { name: 'Search' });
       await refreshedSearchBox.fill(appName);
       await this.page.keyboard.press('Enter');
-      await this.page.waitForLoadState('networkidle');
+      await this.page.waitForLoadState('domcontentloaded');
 
       const refreshedAppLink = this.page.getByRole('link', { name: appName, exact: true });
       await expect(refreshedAppLink).toBeVisible({ timeout: 10000 });
@@ -235,7 +235,7 @@ export class RapidResponseHomePage extends BasePage {
     this.logger.step('Checking app installation status');
 
     // Wait for page to be fully loaded
-    await this.page.waitForLoadState('networkidle');
+    await this.page.waitForLoadState('domcontentloaded');
     await this.waiter.delay(2000);
 
     // Check if app is already installed by looking for "Installed" status indicator
@@ -403,7 +403,7 @@ export class RapidResponseHomePage extends BasePage {
 
     // Fallback: Try App manager approach
     await this.navigateToPath('/foundry/app-manager', 'App manager page');
-    await this.page.waitForLoadState('networkidle');
+    await this.page.waitForLoadState('domcontentloaded');
 
     const appLink = this.page.getByRole('link', { name: appName, exact: true });
 
@@ -435,7 +435,7 @@ export class RapidResponseHomePage extends BasePage {
     this.logger.step('Attempting navigation via Custom apps menu');
 
     await this.navigateToPath('/foundry/home', 'Foundry home page');
-    await this.page.waitForLoadState('networkidle');
+    await this.page.waitForLoadState('domcontentloaded');
 
     // Retry with page refresh if Custom apps menu or app button doesn't appear
     const appName = config.appName;
@@ -444,7 +444,7 @@ export class RapidResponseHomePage extends BasePage {
       const menuButton = this.page.getByTestId('nav-trigger');
       await menuButton.waitFor({ state: 'visible', timeout: 30000 });
       await menuButton.click();
-      await this.page.waitForLoadState('networkidle');
+      await this.page.waitForLoadState('domcontentloaded');
 
       const customAppsButton = this.page.getByRole('button', { name: 'Custom apps' });
       try {
@@ -455,7 +455,7 @@ export class RapidResponseHomePage extends BasePage {
       } catch (e) {
         this.logger.warn(`Custom apps not visible on attempt ${attempt}, refreshing page...`);
         await this.page.reload();
-        await this.page.waitForLoadState('networkidle');
+        await this.page.waitForLoadState('domcontentloaded');
         await this.waiter.delay(3000);
         continue;
       }
@@ -470,7 +470,7 @@ export class RapidResponseHomePage extends BasePage {
       } catch (e) {
         this.logger.warn(`App '${appName}' not in Custom apps on attempt ${attempt}, refreshing page...`);
         await this.page.reload();
-        await this.page.waitForLoadState('networkidle');
+        await this.page.waitForLoadState('domcontentloaded');
         await this.waiter.delay(3000);
       }
     }
@@ -501,7 +501,7 @@ export class RapidResponseHomePage extends BasePage {
    */
   async navigateToAllJobs(): Promise<void> {
     this.logger.step('Navigate to All Jobs page');
-    await this.page.waitForLoadState('networkidle');
+    await this.page.waitForLoadState('domcontentloaded');
     await this.waiter.delay(2000);
 
     // The app content is in an iframe - find it first
@@ -522,7 +522,7 @@ export class RapidResponseHomePage extends BasePage {
    */
   async navigateToRunHistory(): Promise<void> {
     this.logger.step('Navigate to Run History page');
-    await this.page.waitForLoadState('networkidle');
+    await this.page.waitForLoadState('domcontentloaded');
     await this.waiter.delay(2000);
 
     // The app content is in an iframe - find it first
@@ -543,7 +543,7 @@ export class RapidResponseHomePage extends BasePage {
    */
   async navigateToAuditLog(): Promise<void> {
     this.logger.step('Navigate to Audit Log page');
-    await this.page.waitForLoadState('networkidle');
+    await this.page.waitForLoadState('domcontentloaded');
     await this.waiter.delay(2000);
 
     // The app content is in an iframe - find it first
@@ -575,7 +575,7 @@ export class RapidResponseHomePage extends BasePage {
           const searchBox = this.page.getByRole('searchbox', { name: 'Search' });
           await searchBox.fill(appName);
           await this.page.keyboard.press('Enter');
-          await this.page.waitForLoadState('networkidle');
+          await this.page.waitForLoadState('domcontentloaded');
 
           // Find the app link
           const appLink = this.page.getByRole('link', { name: appName, exact: true });
