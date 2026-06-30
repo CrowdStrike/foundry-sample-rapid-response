@@ -19,7 +19,7 @@
     "react-dom": "19.2.1",
     "react-hook-form": "7.62.0",
     "react-hot-toast": "2.6.0",
-    "react-router-dom": "7.13.0",
+    "react-router-dom": "7.15.1",
     "react-select": "5.10.2",
     "temporal-polyfill": "0.1.1",
     "zod": "4.1.8"
@@ -49,7 +49,7 @@
     "rollup-plugin-visualizer": "6.0.3",
     "tailwindcss": "3.3.3",
     "typescript": "5.8.3",
-    "vite": "7.3.2",
+    "vite": "7.3.5",
     "vitest": "4.1.7"
   },
   "resolutions": {
@@ -66,7 +66,11 @@
       "flatted": "3.4.2",
       "picomatch@2": "2.3.2",
       "picomatch@4": "4.0.4",
+      "yaml@1": "1.10.3",
       "yaml@2": "2.8.3",
+      "@babel/core": "7.29.7",
+      "esbuild": "0.28.1",
+      "motion-dom": "12.23.12",
       "brace-expansion@2": "2.0.3"
     }
   }
