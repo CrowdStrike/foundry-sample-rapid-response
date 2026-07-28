@@ -86,7 +86,7 @@ export const jobRR01: RRJobType = {
   name: "First Job RR",
   description: "First Job RR description",
   notification_emails: null,
-  notifications: ["paul.rosset@crowdstrike.com"],
+  notifications: ["current.user@crowdstrike.com"],
   draft: true,
   tags: null,
   host_count: hostsEntities.length,
