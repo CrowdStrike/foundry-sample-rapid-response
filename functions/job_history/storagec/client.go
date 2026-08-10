@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"strconv"
 	"strings"
 	"sync"
 
@@ -245,10 +244,8 @@ func (f *Client) Search(ctx context.Context, req SearchObjectsRequest) (SearchOb
 
 	sor := SearchObjectsResponse{}
 	if pagination := payload.Meta.Pagination; pagination != nil {
-		if pagination.Total != nil {
-			sor.Total = int(*pagination.Total)
-		}
-		sor.Offset, _ = strconv.Atoi(pagination.Offset)
+		sor.Total = int(pagination.Total)
+		sor.Offset = int(pagination.Offset)
 	}
 	res := payload.Resources
 	if len(res) == 0 {
