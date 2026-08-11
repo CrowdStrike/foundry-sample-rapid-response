@@ -19,7 +19,7 @@
     "react-dom": "19.2.1",
     "react-hook-form": "7.62.0",
     "react-hot-toast": "2.6.0",
-    "react-router-dom": "7.15.1",
+    "react-router-dom": "7.18.2",
     "react-select": "5.10.2",
     "temporal-polyfill": "0.1.1",
     "zod": "4.1.8"
@@ -44,7 +44,7 @@
     "eslint-plugin-react-refresh": "0.4.20",
     "globals": "17.1.0",
     "jsdom": "27.0.0",
-    "postcss": "8.5.14",
+    "postcss": "8.5.18",
     "prettier": "3.6.2",
     "rollup-plugin-visualizer": "6.0.3",
     "tailwindcss": "3.3.3",
@@ -55,6 +55,13 @@
   "resolutions": {
     "@types/react": "19.1.13",
     "@types/react-dom": "19.1.9"
+  },
+  "overrides": {
+    "brace-expansion@1": "1.1.16",
+    "brace-expansion@5": "5.0.7",
+    "js-yaml": "4.3.0",
+    "fast-uri": "3.1.5",
+    "motion-dom": "12.23.12"
   },
   "pnpm": {
     "overrides": {
