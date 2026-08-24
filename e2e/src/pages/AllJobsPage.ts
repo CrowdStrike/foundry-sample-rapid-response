@@ -79,12 +79,12 @@ export class AllJobsPage extends BasePage {
     this.logger.step('Verify All Jobs page renders');
 
     const frame = this.page.frameLocator('iframe[name="portal"]').first();
-    const heading = frame.locator('h1', { hasText: /all jobs/i });
-    const hasHeading = await this.elementExists(heading, 10000);
+    const allJobsTab = frame.locator('a', { hasText: /all jobs/i });
+    const hasTab = await this.elementExists(allJobsTab, 10000);
     const hasButton = await this.hasCreateJobButton();
 
-    const renders = hasHeading && hasButton;
-    this.logger.info(`All Jobs page renders: ${renders} (heading: ${hasHeading}, button: ${hasButton})`);
+    const renders = hasTab && hasButton;
+    this.logger.info(`All Jobs page renders: ${renders} (tab: ${hasTab}, button: ${hasButton})`);
 
     return renders;
   }
