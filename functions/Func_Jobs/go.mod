@@ -7,7 +7,7 @@ require (
 	github.com/crowdstrike/gofalcon v0.22.0
 	github.com/go-openapi/runtime v0.33.0
 	github.com/robfig/cron/v3 v3.0.1
-	github.com/sirupsen/logrus v1.10.0
+	github.com/sirupsen/logrus v1.10.1
 	github.com/spaolacci/murmur3 v1.1.0
 )
 
