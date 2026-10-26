@@ -1,3 +1,27 @@
 # False positives - sample/placeholder values, not real secrets
 \.github/*
 \.githooks/*
+
+# file already deleted but preserved in history with false positive so excluding
+e2e/src/authenticate.cjs
+
+# Additional false positives (build output, lock files, sample data)
+ui/pages/rapid-response-react/yarn.lock
+ui/pages/rapid-response-react/dist/assets/index-0ba7db08.js
+ui/pages/rapid-response-react/dist/assets/index-31243ef1.js
+ui/pages/rapid-response-react/dist/assets/index-7106e5dc.js
+ui/pages/rapid-response-react/dist/assets/index-BMS7TK9R.js
+ui/pages/rapid-response-react/dist/assets/index-B_GYHVf2.js
+ui/pages/rapid-response-react/dist/assets/index-BfwZvjci.js
+ui/pages/rapid-response-react/dist/assets/index-CQq7ZMLi.js
+ui/pages/rapid-response-react/dist/assets/index-CfYe0c0r.js
+ui/pages/rapid-response-react/dist/assets/index-D14ahjnO.js
+ui/pages/rapid-response-react/dist/assets/index-D6ioG9ai.js
+ui/pages/rapid-response-react/dist/assets/index-DELGkD9y.js
+ui/pages/rapid-response-react/dist/assets/index-DQXhczRD.js
+ui/pages/rapid-response-react/dist/assets/index-DYd7P8o5.js
+ui/pages/rapid-response-react/dist/assets/index-JP1FwTIV.js
+ui/pages/rapid-response-react/dist/assets/index-KbzydjdV.js
+ui/pages/rapid-response-react/dist/assets/index-Nt4HL8kt.js
+ui/pages/rapid-response-react/dist/assets/index-a6fd7a94.js
+ui/pages/rapid-response-react/dist/assets/index-v0H9ulix.js
