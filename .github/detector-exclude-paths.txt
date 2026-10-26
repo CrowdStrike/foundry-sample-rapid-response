@@ -1,0 +1,3 @@
+# False positives - sample/placeholder values, not real secrets
+\.github/*
+\.githooks/*
