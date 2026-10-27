@@ -259,3 +259,10 @@ detectors:
       #    a case-insensitive version would also match mixed-case JWTs and silence a
       #    real leak. Does NOT catch camelCase JS member chains - exclude those by path.
       - '^[a-z_][a-z0-9_]*(?:\.[a-z_][a-z0-9_]*)+$'
+      # 4. Bare snake_case identifier (letters+underscores, no digits) - a symbol name,
+      #    e.g. a function being called: next_token = extract_next_token_from_meta(...)
+      - '^[a-z]+(?:_[a-z]+)+$'
+      # 5. Letters-only dotted member chain - catches camelCase JS/TS member access
+      #    (cachedResponse.usage) that rule 3 deliberately misses. Letters-only is what
+      #    keeps it safe: JWT segments and real secrets carry digits.
+      - '^[A-Za-z]+(?:\.[A-Za-z]+)+$'
