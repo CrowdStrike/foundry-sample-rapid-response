@@ -141,8 +141,8 @@ You should be able to create a job and save it.
 
 ## Foundry resources
 
-- Foundry documentation: [US-1](https://falcon.crowdstrike.com/documentation/category/c3d64B8e/falcon-foundry) | [US-2](https://falcon.us-2.crowdstrike.com/documentation/category/c3d64B8e/falcon-foundry) | [EU](https://falcon.eu-1.crowdstrike.com/documentation/category/c3d64B8e/falcon-foundry)
-- Foundry learning resources: [US-1](https://falcon.crowdstrike.com/foundry/learn) | [US-2](https://falcon.us-2.crowdstrike.com/foundry/learn) | [EU](https://falcon.eu-1.crowdstrike.com/foundry/learn)
+- [Falcon Foundry documentation](https://docs.crowdstrike.com/access?ft:originId=c3d64B8e)
+- [Getting started with Falcon Foundry](https://docs.crowdstrike.com/access?ft:originId=ae43a973)
 
 ---
 
