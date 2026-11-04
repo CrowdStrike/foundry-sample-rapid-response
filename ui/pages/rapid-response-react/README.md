@@ -25,7 +25,7 @@ In the following section, most of the commands need to be run from the **ui app 
 First, install the dependencies for this app (from the UI app directory):
 
 ```
-yarn install
+pnpm install
 ```
 
 ### Running the app in standalone mode
@@ -35,7 +35,7 @@ In standalone mode, the Foundry Bridge is mocked. Calling `falcon.connect()` ret
 To build the app in standalone mode, from the UI app directory run:
 
 ```
-yarn vite
+pnpm vite
 ```
 
 In your browser, visit: [http://localhost:5173/]() (or whichever port Vite advises you to).
@@ -47,7 +47,7 @@ The Foundry App, a part of Falcon Console, lets you launch pages such as this Ra
 From the UI app directory, run:
 
 ```
-yarn dev
+pnpm dev
 ```
 
 This compiles the `index.html` and contents of the `src` directory into a bundle in the `foundry-sample-rapid-response/ui/pages/rapid-response-react/dist` directory.
@@ -63,7 +63,7 @@ This serves the contents of the `foundry-sample-rapid-response/ui/pages/rapid-re
 Optionally, if you'd like to run in developer mode using mock data, you can do so:
 
 ```
-VITE_MOCK_BRIDGE_ENABLED=true yarn dev
+VITE_MOCK_BRIDGE_ENABLED=true pnpm dev
 ```
 
 This is useful for UI developers.
@@ -73,7 +73,7 @@ This is useful for UI developers.
 When running
 
 ```
-yarn build
+pnpm build
 ```
 
 It will create for you a `stats.html` file that will represent the modules and how much space they take.
@@ -84,10 +84,10 @@ It's very handy to analyze library size and adjust their size.
 
 Tests are written using [Vitest](https://vitest.dev/).
 
-To run the tests, change to the UI app directory directory. Run `yarn install` to fetch dependencies, then:
+To run the tests, change to the UI app directory. Run `pnpm install` to fetch dependencies, then:
 
 ```
-yarn test
+pnpm test
 ```
 
 
