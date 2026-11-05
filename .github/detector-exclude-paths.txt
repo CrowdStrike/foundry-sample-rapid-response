@@ -7,4 +7,4 @@ e2e/src/authenticate.cjs
 
 # Additional false positives (build output, lock files, sample data)
 ui/pages/rapid-response-react/yarn.lock
-ui/pages/rapid-response-react/dist/
+ui/pages/rapid-response-react/dist/*
