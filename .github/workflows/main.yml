@@ -52,3 +52,35 @@ jobs:
       - name: Test the React app
         run: pnpm test
         working-directory: ui/pages/rapid-response-react
+
+  code-lint:
+    name: Code lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8  # v6.0.1
+        with:
+          fetch-depth: 0
+      - name: Run Validation
+        id: trufflehog
+        run: |
+          docker run --rm -v "$PWD":/workspace -w /workspace \
+            ghcr.io/trufflesecurity/trufflehog:latest \
+            git file:///workspace/ --branch HEAD \
+            --config=.github/custom_detectors.yaml --no-verification \
+            --exclude-paths=.github/detector-exclude-paths.txt \
+            --results=verified,unknown,unverified --json --no-update --fail \
+            > trufflehog-results.json 2>/dev/null
+        continue-on-error: true
+      - name: Validation summary
+        if: steps.trufflehog.outcome == 'failure'
+        run: |
+          echo "## Validation Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| # | Detector | File | Line | Commit |" >> $GITHUB_STEP_SUMMARY
+          echo "|---|----------|------|------|--------|" >> $GITHUB_STEP_SUMMARY
+          jq -r 'select(.SourceMetadata) | "\(if .DetectorName == "CustomRegex" then (.ExtraData.name // "CustomRegex") else .DetectorName end) | \(.SourceMetadata.Data.Git.file) | L\(.SourceMetadata.Data.Git.line) | \(.SourceMetadata.Data.Git.commit)"' trufflehog-results.json | sort -u | awk '{printf "| %d | %s |\n", NR, $0}' >> $GITHUB_STEP_SUMMARY || true
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Validation findings - failing build." >> $GITHUB_STEP_SUMMARY
+      - name: Fail on validation findings
+        if: steps.trufflehog.outcome == 'failure'
+        run: exit 1

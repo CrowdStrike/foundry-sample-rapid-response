@@ -1,0 +1,268 @@
+# Detectors used by Foundry team
+detectors:
+  - name: MacaroonRootKeyDetector
+    keywords:
+      - MACAROON_ROOT_KEY
+      - macaroon_root_key
+      - macaroon-root-key
+    regex:
+      root_key: (?i)MACAROON[_-]?ROOT[_-]?KEY\s*(?::=|=>|->|[:=])\s*["']?((?:[A-Za-z0-9+/\-_]{4}){4,}(?:[A-Za-z0-9+/\-_]{2}==|[A-Za-z0-9+/\-_]{3}=)?)["']?
+      # root_key matches and captures the base64 value from:
+      # MACAROON_ROOT_KEY: "BASE64_ENCODED_DATA"
+      # MACAROON_ROOT_KEY="BASE64_ENCODED_DATA"
+      # MACAROON_ROOT_KEY=BASE64_ENCODED_DATA
+    entropy: 3.5
+
+  - name: MacaroonStaticKeysDetector
+    keywords:
+      - MACAROON_STATIC_KEYS
+      - macaroon_static_keys
+      - macaroon-static-keys
+    regex:
+      static_keys: (?i)MACAROON[_-]?STATIC[_-]?KEYS\s*(?::=|=>|->|[:=])\s*["']?\{.*?((?:[A-Za-z0-9+/\-_]{4}){8,}(?:[A-Za-z0-9+/\-_]{2}==|[A-Za-z0-9+/\-_]{3}=)?).*?\}["']?
+      # static_keys matches JSON containing base64 values (>=32 chars) from:
+      # MACAROON_STATIC_KEYS={"MAo=":"dnPszMx3slh...nGffQ="}
+      # MACAROON_STATIC_KEYS="{"BASE64":"BASE64"}"
+      # MACAROON_STATIC_KEYS={\"BASE64\":\"BASE64\"}"
+      # Handles multiple key-value pairs and short keys.
+    entropy: 3.5
+
+  - name: RavenOAuth2Credentials
+    keywords:
+      - rak-
+    regex:
+      client_id: \brak-[A-Z0-9]{20}\b
+      client_secret: \b[A-Za-z0-9]{40,48}\b
+      # client_id matches: rak-ABCDEFGHIJ1234567890
+      # client_secret matches: ABCDEFGHIJ1234567890ABCDEFGHIJ1234567890
+      # Both must be present in the same file for a finding to be reported.
+    entropy: 3.0
+    exclude_words:
+      - "11111111112222222222"
+      - "3333333333444444444455555555556666666666"
+      - "12345678901234567890"
+      - "1234567890123456789012345678901234567890"
+
+  - name: HumioHECDetector
+    keywords:
+      - humio
+      - hec
+      - logscale
+    regex:
+      token: (?i)["']?\w*token\w*["']?\s*(?::=|=>|->|[:=])\s*["']?([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}|[A-Za-z0-9~+/]{40,80})["']?
+      # token matches UUID-format tokens, base64-encoded UUIDs, or LogScale API tokens from assignments
+      # Requires keyword (humio, hec, logscale) in the file AND "token" in the variable name.
+    entropy: 3.0
+    exclude_words:
+      - "00000000-0000-0000-0000-000000000000"
+      - "12345678-abcd-1234-5678-1234abcd5678"
+
+  - name: InfraAccessKeyCredentials
+    keywords:
+      - iak-
+    regex:
+      access_key: \biak-[A-Z0-9]{20}\b
+      access_secret: (?:^|[^A-Za-z0-9+/])([A-Za-z0-9]{40,48})(?:[^A-Za-z0-9+/]|$)
+      # access_key matches: iak-ABCDEFGHIJ1234567890
+      # access_secret matches: ABCDEFGHIJ1234567890ABCDEFGHIJ1234567890
+      # The access_secret regex uses explicit boundary checks instead of \b to avoid
+      # false positives on base64 substrings (where + and / act as \b boundaries).
+      # Capturing group (group 1) tells TruffleHog to extract just the secret value.
+      # Both must be present in the same file for a finding to be reported.
+    entropy: 3.0
+    exclude_words:
+      - "12345678901234567890"
+      - "1234567890123456789012345678901234567890"
+
+  - name: CrowdStrike API Credentials
+    keywords:
+      - client_id
+      - client-id
+      - clientid
+      - cs_client_id
+      - cs-client-id
+      - falcon_client_id
+      - falcon-client-id
+      - falcon_api_client_id
+      - falcon-api-client-id
+      - client_secret
+      - clientsecret
+      - cs_client_secret
+      - cs-client-secret
+      - falcon_client_secret
+      - falcon_api_secret
+      - falcon-client-secret
+      - falcon-api-secret
+    regex:
+      client_id: '(?i)client[_\-]?id\w*\s*[''"]?\s*(?::=|=>|->|[:=])\s*[''"]?([0-9a-fA-F]{32})(?:[^0-9a-fA-F]|$)'
+      client_secret: '(?i)[\w\-]*(?:client[_\-]?secret|falcon[_\-]?(?:api[_\-]?)?(?:client[_\-]?)?secret)[\w\-]*\s*[''"]?\s*(?::=|=>|->|[:=])\s*[''"]?([0-9a-zA-Z]{40})(?:[^0-9a-zA-Z]|$)'
+    entropy: 3.0
+    exclude_words:
+      - "00000000000000000000000000000000"
+      - "0000000000000000000000000000000000000000"
+      - "ABCDEFGHtwfk6c0U4l72EsnjXxS1mH9123456789"
+
+  - name: Snowflake Connection String
+    keywords:
+      - snowflake
+    regex:
+      secret: snowflake://[^:/@\s"']+:([^\s"'@]{6,}?)@(?:[a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+(?:/|["'\s]|$)
+    entropy: 3.3
+    exclude_words:
+      - replace_me
+      - changeme
+      - change_me
+      - redacted
+      - example
+      - placeholder
+      - dummy
+      - notreal
+      - mock
+      - fake
+
+  - name: Connection String with Credentials
+    keywords:
+      - mongodb
+      - postgres
+      - mysql
+      - redis
+      - amqp
+      - "jdbc:"
+    regex:
+      secret: (?i)(?:mongodb(?:\+srv)?|postgres(?:ql)?|mysql|redis(?:s)?|amqps?|jdbc:[a-z0-9]+)://[^:/@\s"']+:([^\s"'@]{8,}?)@(?:[a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+(?:[:/]|["'\s]|$)
+    entropy: 3.0
+    exclude_words:
+      - replace_me
+      - changeme
+      - change_me
+      - redacted
+      - example
+      - placeholder
+      - dummy
+      - notreal
+      - mock
+      - fake
+
+  # ----------------- #
+  # GENERIC DETECTORS #
+  # ----------------- #
+
+  - name: Hardcoded Password
+    keywords:
+      - password
+      - passwd
+      - pwd
+      - passphrase
+    regex:
+      secret: '(?i)(?:^|[^A-Za-z0-9])[\w-]*?(?:password|passwd|pwd|passphrase)\w*["'']?\s*(?::=|=>|->|[=:])\s*["'']?([^\s"''\r\n,;)}\]]{8,80})'
+    entropy: 2.5
+    exclude_words:
+      - replace_me
+      - changeme
+      - change_me
+      - redacted
+      - example
+      - placeholder
+      - dummy
+      - notreal
+      - mock
+      - fake
+    # exclude_regexes_capture tests the EXTRACTED VALUE (capture group 1) and drops
+    # the finding on any match (custom_detectors.go:169-173). Use it for structural
+    # shapes exclude_words cannot express. Inline (?i) here is explicit and reliable.
+    # RE2: no backreferences, no lookarounds - an invalid pattern rejects the WHOLE
+    # config, and TruffleHog then scans with zero detectors while reporting 0 findings.
+    exclude_regexes_capture:
+      # 0. Placeholder prefixes (your_/your-, password/passwd/passphrase, pas_/pas-)
+      #    OR a mid-string "your-<tenant|client|secret|key|token>" sample identifier.
+      - '(?i)^(?:your[_-]|pass(?:word|phrase)?[_-]?|pas[_-])|your-.*(?:tenant|client|secret|key|token)'
+      # 1. Runtime lookup / secret-manager call - the correct pattern, not a hardcode.
+      - '(?i)(getenv|environ|env\[|env\.|process\.env|vault|secretsmanager|secret_manager|keyring|keychain|param(eter)?_?store|config\.get|settings\.|self\.|get_password|prompt|input\()'
+      # 2. Value starts with a dict/JSON/tuple opener or shell expansion: {"a":1}, $(cmd).
+      - '^\s*[\$%]?[\{\(]'
+      # 3. Template/interpolation placeholder: ${VAR}, {{ tpl }}, %(name)s, <%= %>, #{}.
+      - '\$\{|\{\{|%\(|%[sdv]\b|<%|#\{'
+      # 4. Contains paren/bracket => code (call, index), not a literal value.
+      - '[\(\)\[\]]'
+      # 5. Bracketed fill-me-in placeholder: <your-key>, <PASSWORD>.
+      - '^[<\[].*[>\]]$'
+      # 6. Masked/filler run, anchored so real secrets merely containing a run still alert.
+      - '(?i)^(x{6,}|\*{4,}|\.{4,}|-{6,}|0{8,}|1{8,}|a{8,})$'
+      # 7. Language "no value" literal (only "undefined" reaches the 8-char min here).
+      - '(?i)^(none|null|nil|true|false|undefined|n/a)$'
+      # 8. Bare lowercase dotted identifier chain (a.b.c). Lowercase-only ON PURPOSE:
+      #    a case-insensitive version would also match mixed-case JWTs and silence a
+      #    real leak. Does NOT catch camelCase JS member chains - exclude those by path.
+      - '^[a-z_][a-z0-9_]*(?:\.[a-z_][a-z0-9_]*)+$'
+
+  - name: Generic Secret or Token
+    keywords:
+      - secret
+      - token
+      - apikey
+      - api_key
+      - api-key
+      - accesskey
+      - access_key
+      - accesstoken
+      - access_token
+      - authtoken
+      - auth_token
+      - auth_key
+      - privatekey
+      - private_key
+      - signingkey
+      - signing_key
+      - encryptionkey
+      - encryption_key
+      - secretkey
+      - secret_key
+      - clientid
+      - client_id
+      - client-id
+      - clientsecret
+      - client_secret
+      - client-secret
+      - bearer
+      - credentials
+      - conn_string
+      - connection_string
+      - connectionstring
+    regex:
+      secret: '(?i)(?:^|[^A-Za-z0-9])[\w-]*?(?:secret|token|api[_-]?key|access[_-]?(?:key|token)|auth[_-]?(?:token|key)|private[_-]?key|signing[_-]?key|encryption[_-]?key|client[_-]?(?:id|secret)|secret[_-]?key|bearer[_-]?token|bearer|credentials?|conn(?:ection)?[_-]?string)\w*["'']?\s*(?::=|=>|->|[=:])\s*["'']?([A-Za-z0-9+/=_\-.]{20,200})'
+    entropy: 3.0
+    exclude_words:
+      - replace_me
+      - changeme
+      - change_me
+      - redacted
+      - example
+      - placeholder
+      - dummy
+      - notreal
+      - mock
+      - fake
+    exclude_regexes_capture:
+      # Patterns here are limited to what the capture charset [A-Za-z0-9+/=_.-]
+      # (len >=20) can actually produce. Bracket/template/URL/nullish patterns from
+      # the Hardcoded Password rule are intentionally omitted: those characters can
+      # never appear in this capture, so they would be dead code.
+      #
+      # 0. Placeholder prefixes (your_/your-, password/passwd/passphrase, pas_/pas-)
+      #    OR a mid-string "your-<tenant|client|secret|key|token>" sample identifier.
+      - '(?i)^(?:your[_-]|pass(?:word|phrase)?[_-]?|pas[_-])|your-.*(?:tenant|client|secret|key|token)'
+      # 1. Runtime lookup / secret-manager call - the correct pattern, not a hardcode.
+      - '(?i)(getenv|environ|env\[|env\.|process\.env|vault|secretsmanager|secret_manager|keyring|keychain|param(eter)?_?store|config\.get|settings\.|self\.|get_password|prompt|input\()'
+      # 2. Masked/filler run, anchored so real secrets merely containing a run still alert.
+      - '(?i)^(x{6,}|\*{4,}|\.{4,}|-{6,}|0{8,}|1{8,}|a{8,})$'
+      # 3. Bare lowercase dotted identifier chain (a.b.c). Lowercase-only ON PURPOSE:
+      #    a case-insensitive version would also match mixed-case JWTs and silence a
+      #    real leak. Does NOT catch camelCase JS member chains - exclude those by path.
+      - '^[a-z_][a-z0-9_]*(?:\.[a-z_][a-z0-9_]*)+$'
+      # 4. Bare snake_case identifier (letters+underscores, no digits) - a symbol name,
+      #    e.g. a function being called: next_token = extract_next_token_from_meta(...)
+      - '^[a-z]+(?:_[a-z]+)+$'
+      # 5. Letters-only dotted member chain - catches camelCase JS/TS member access
+      #    (cachedResponse.usage) that rule 3 deliberately misses. Letters-only is what
+      #    keeps it safe: JWT segments and real secrets carry digits.
+      - '^[A-Za-z]+(?:\.[A-Za-z]+)+$'
